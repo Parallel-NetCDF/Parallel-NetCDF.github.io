@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+      Release Note of version 1.8.1
+    </title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview');
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+  </head>
+  <body>
+<h1 id="ReleaseNoteof1.8.1">Release Note of version 1.8.1</h1>
+Release date: January 28, 2017<p>
+The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html">Download Page</a>
+<p>
+This release is mainly for fixing the following bug.
+</p>
+<ul><li>Bug fixes:
+<ul><li>Fortran parameters NF_MAX_DIMS, NF_MAX_ATTRS, NF_MAX_VARS, and NF_MAX_NAME
+defined in the Fortran header file, pnetcdf.inc, were set to obsolete
+values and have been fixed in this release to conform with their
+corresponding C constants. Because these four parameters were not used
+by PnetCDF internally, the end users can safely skip this release and
+1.8.1 should perform the same as 1.8.0. If your programs explicitly use
+these four parameters, then updating to 1.8.1 is recommended.
+</li></ul></li></ul><ul><li>Other updates:
+<ul><li>To conform with GNU Coding Standards, the installation location for man
+pages are changed to ${prefix}/share/man.
+</li><li>Support of DESTDIR for Building Binary Packages has been added, as
+suggested by sunpoet@FreeBSD.org. Ticket <a href=http://trac.mcs.anl.gov/projects/parallel-netcdf/ticket/25>#25</a>
+</li></ul></li></ul>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
+</html>
