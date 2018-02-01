@@ -77,6 +77,32 @@
 </table>
 
 <h2 id="ANoteAboutLargeFileSupport">Example Program</h2>
+<figure>
+  <pre>
+    <code>
+#include&lt;stdio.h&gt; <br/>
+#include&lt;stdlib.h&gt;<br/>
+#include&lt;pnetcdf.h&gt;<br/>
+<br/>
+int main(int argc, char *argv[]){<br/> 
+&nbsp int ncid; <br/>
+&nbsp MPI_Info info; <br/>
+&nbsp MPI_Info_create(&amp;info); <br/>
+&nbsp /* Enable the DataWarp driver. <br/>
+&nbsp * The hint is not required if it is set in the enviroment variable PNETCDF_HINTS <br/>
+&nbsp */ <br/>
+&nbsp MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;); <br/>
+&nbsp /* Create new netcdf file with hint to enable DataWarp driver*/ <br/>
+&nbsp ncmpi_create(MPI_COMM_WORLD, filename, NC_CLOBBER, info, &amp;ncid); <br/>
+&nbsp /* Use PnetCDF as usual */ <br/>
+&nbsp /* The data in the burst buffer will be flushed to the PFS when the file is closed */ <br/>
+&nbsp mpi_close(ncid); <br/>
+&nbsp MPI_Info_free(&amp;info); <br/>
+&nbsp return 0 <br/>
+}<br/>
+    </code>
+  </pre>
+</figure>
 	  <p>#include&lt;stdio.h&gt; <br/>
 		  #include&lt;stdlib.h&gt;<br/>
 		  #include&lt;pnetcdf.h&gt;<br/>
