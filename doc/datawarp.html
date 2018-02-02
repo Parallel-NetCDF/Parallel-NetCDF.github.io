@@ -23,16 +23,33 @@
 	  <h2 id="OverviewofPnetCDF">Building PnetCDF with DataWarp Driver</h2>
 <p>
 	To build PnetCDF with DataWarp driver support, simply set &quot;--enable-datawarp&quot; option at configure time:</p>
-<p>
 
-	./configure --prefix=/path/to/install --enable-datawarp
-</p>
+<figure>
+  <pre>
+ <code style="font-family: &quot;Courier New&quot;">
+./configure --prefix=/path/to/install --enable-datawarp
+</code>
+</pre>
+</figure>
 	  <h2 id="ABriefBackgroundAboutNetCDF">Running with DataWarp Driver</h2>
 	  <p>The DataWarp driver is enable by setting file hints on file creation/opening. To enable DataWarp driver, set the hint &quot;nc_dw&quot; to enable.</p>
-	  <p>MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;);</p>
+	  <figure>
+  <pre>
+<code style="font-family: &quot;Courier New&quot;">
+MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;);
+</code>
+</pre>
+</figure>
+	  
 	  <p>The hint can also be set using environment variable PNETCDF_HINTS.</p>
-	  <p>
-		  export PNETCDF_HINTS=&quot;nc_dw=enable&quot;</p>
+<figure>
+  <pre>
+ <code style="font-family: &quot;Courier New&quot;">
+export PNETCDF_HINTS=&quot;nc_dw=enable&quot;
+</code>
+</pre>
+</figure>
+
 <h2 id="ABriefHistoryofPnetCDF">Supported Hints</h2>
 <p>
 	The DataWarp can be configured using hints. Here&#39;s a list of supported hints:</p>
@@ -79,64 +96,44 @@
 <h2 id="ANoteAboutLargeFileSupport">Example Program</h2>
 <figure>
   <pre>
-    <code>
-#include&lt;stdio.h&gt; <br/>
-#include&lt;stdlib.h&gt;<br/>
-#include&lt;pnetcdf.h&gt;<br/>
-<br/>
-int main(int argc, char *argv[]){<br/> 
-&nbsp int ncid; <br/>
-&nbsp MPI_Info info; <br/>
-&nbsp MPI_Info_create(&amp;info); <br/>
-&nbsp /* Enable the DataWarp driver. <br/>
-&nbsp * The hint is not required if it is set in the enviroment variable PNETCDF_HINTS <br/>
-&nbsp */ <br/>
-&nbsp MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;); <br/>
-&nbsp /* Create new netcdf file with hint to enable DataWarp driver*/ <br/>
-&nbsp ncmpi_create(MPI_COMM_WORLD, filename, NC_CLOBBER, info, &amp;ncid); <br/>
-&nbsp /* Use PnetCDF as usual */ <br/>
-&nbsp /* The data in the burst buffer will be flushed to the PFS when the file is closed */ <br/>
-&nbsp mpi_close(ncid); <br/>
-&nbsp MPI_Info_free(&amp;info); <br/>
-&nbsp return 0 <br/>
-}<br/>
-    </code>
-  </pre>
+ <code style="font-family: &quot;Courier New&quot;">
+#include&lt;stdio.h&gt; 
+#include&lt;stdlib.h&gt;
+#include&lt;pnetcdf.h&gt;
+int main(int argc, char *argv[]){ 
+&nbsp int ncid; 
+&nbsp MPI_Info info; 
+&nbsp MPI_Info_create(&amp;info); 
+&nbsp /* Enable the DataWarp driver. 
+&nbsp  * The hint is not required if it is set in the enviroment variable PNETCDF_HINTS 
+&nbsp  */ 
+&nbsp MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;); 
+&nbsp /* Create new netcdf file with hint to enable DataWarp driver*/ 
+&nbsp ncmpi_create(MPI_COMM_WORLD, filename, NC_CLOBBER, info, &amp;ncid); 
+&nbsp /* Use PnetCDF as usual */ 
+&nbsp /* The data in the burst buffer will be flushed to the PFS when the file is closed */ 
+&nbsp mpi_close(ncid); 
+&nbsp MPI_Info_free(&amp;info); 
+&nbsp return 0 
+}   </code>  </pre>
 </figure>
-	  <p>#include&lt;stdio.h&gt; <br/>
-		  #include&lt;stdlib.h&gt;<br/>
-		  #include&lt;pnetcdf.h&gt;<br/>
-		  <br/>
-		  int main(int argc, char *argv[]){<br/> 
-		  &nbsp int ncid; <br/>
-		  &nbsp MPI_Info info; <br/>
-		  &nbsp MPI_Info_create(&amp;info); <br/>
-		  &nbsp /* Enable the DataWarp driver. <br/>
-		  &nbsp * The hint is not required if it is set in the enviroment variable PNETCDF_HINTS <br/>
-		  &nbsp */ <br/>
-		  &nbsp MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;); <br/>
-		  &nbsp /* Create new netcdf file with hint to enable DataWarp driver*/ <br/>
-		  &nbsp ncmpi_create(MPI_COMM_WORLD, filename, NC_CLOBBER, info, &amp;ncid); <br/>
-		  &nbsp /* Use PnetCDF as usual */ <br/>
-		  &nbsp /* The data in the burst buffer will be flushed to the PFS when the file is closed */ <br/>
-		  &nbsp mpi_close(ncid); <br/>
-		  &nbsp MPI_Info_free(&amp;info); <br/>
-		  &nbsp return 0 <br/>
-		  }
-</p>
 	<h2 id="Submitting Job">Submitting Job that Enables DataWarp Driver</h2>
 	  <p>We show an example script for enabling DataWarp driver on Cori at NERSC</p>
-<p>
-#!/bin/bash <br/>
-#SBATCH -p debug <br/>
-#SBATCH -N 1  <br/>
-#SBATCH -C haswell <br/>
-#SBATCH -t 00:10:00 <br/>
-#SBATCH -o output.txt <br/>
-#DW jobdw capacity=1289GiB access_mode=private type=scratch pool=sm_pool <br/>
-export PNETCDF_HINTS="nc_dw=enable;nc_dw_del_on_close=disable;nc_dw_dirname=${DW_JOB_PRIVATE}" <br/>
-srun -n 1 ./myapplication <br/>
-</p>
+
+<figure>
+  <pre>
+ <code style="font-family: &quot;Courier New&quot;">
+#!/bin/bash
+#SBATCH -p debug
+#SBATCH -N 1 
+#SBATCH -C haswell
+#SBATCH -t 00:10:00 
+#SBATCH -o output.txt 
+#DW jobdw capacity=1289GiB access_mode=private type=scratch pool=sm_pool 
+export PNETCDF_HINTS="nc_dw=enable;nc_dw_del_on_close=disable;nc_dw_dirname=${DW_JOB_PRIVATE}"
+srun -n 1 ./myapplication 
+</code>  </pre>
+</figure>
 
 <h2 id="ANoteAboutLargeFileSupport">Known Problems</h2>
 	  <p>While we design the DataWarp driver to be as transparent as possible. There are some behaviors that can change when the DataWarp driver is used. Here&#39;s a list of different behaviors:</p>
