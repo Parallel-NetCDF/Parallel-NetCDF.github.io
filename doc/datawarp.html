@@ -18,135 +18,154 @@
 </script>
   </head>
   <body>
-<h1 id="ParallelnetCDF:AParallelIOLibraryforNetCDFFileAccess">Using DataWarp as Burst Buffers in PnetCDF</h1>
-	  <p>DataWarp driver is a I/O driver in PnetCDF that implements a log-based I/O aggregation for write related I/O requests that is designed to work on Cray DataWarp.</p>
-	  <h2 id="OverviewofPnetCDF">Building PnetCDF with DataWarp Driver</h2>
-<p>
-	To build PnetCDF with DataWarp driver support, simply set &quot;--enable-datawarp&quot; option at configure time:</p>
+<h2 id="ParallelnetCDF:AParallelIOLibraryforNetCDFFileAccess">Using DataWarp as Burst Buffers in PnetCDF</h2>
+PnetCDF now implements a new I/O driver that uses Cray's DataWarp as burst buffers.
+Through this driver, write requests are first stored in DataWarp and later flushed to the parallel file system at file close or explicitly flushed by users.
+This new driver is still under development and has been tested on the <a href=http://www.nersc.gov/users/computational-systems/cori>Cori</a> parallel computer at NERSC.
+It will soon be merged to the official release.
 
-<figure>
-  <pre>
- <code style="font-family: &quot;Courier New&quot;">
-./configure --prefix=/path/to/install --enable-datawarp
-</code>
+<h3 id="OverviewofPnetCDF">Enable the DataWarp Driver</h3>
+To build PnetCDF with DataWarp driver support, add &quot;<tt>--enable-datawarp</tt>&quot; option at the configure command line.
+<pre>
+    ./configure --prefix=/path/to/install --enable-datawarp
 </pre>
-</figure>
-	  <h2 id="ABriefBackgroundAboutNetCDF">Running with DataWarp Driver</h2>
-	  <p>The DataWarp driver is enable by setting file hints on file creation/opening. To enable DataWarp driver, set the hint &quot;nc_dw&quot; to enable.</p>
-	  <figure>
-  <pre>
-<code style="font-family: &quot;Courier New&quot;">
-MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;);
-</code>
-</pre>
-</figure>
-	  
-	  <p>The hint can also be set using environment variable PNETCDF_HINTS.</p>
-<figure>
-  <pre>
- <code style="font-family: &quot;Courier New&quot;">
-export PNETCDF_HINTS=&quot;nc_dw=enable&quot;
-</code>
-</pre>
-</figure>
 
-<h2 id="ABriefHistoryofPnetCDF">Supported Hints</h2>
-<p>
-	The DataWarp can be configured using hints. Here&#39;s a list of supported hints:</p>
+<h3 id="ABriefBackgroundAboutNetCDF">Use DataWarp Driver</h3>
+The use of DataWarp driver is controlled by PnetCDF I/O hints.
+There are two ways of setting PnetCDF I/O hints.
+<ul>
+<li> One is by setting MPI file info object and passing it through the call to file create API
+     <tt>ncmpi_create</tt> or file open API <tt>ncmpi_open</tt>.</li>
+<li> The other is by setting the environment variable <tt>PNETCDF_HINTS</tt>.</li>
+</ul>
+For instance, to enable the DataWarp driver, add the MPI-IO info object with hint &quot;nc_dw&quot; to enable.</p>
+<pre>
+    MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;);
+</pre>
+The hint can also be set using environment variable PNETCDF_HINTS.</p>
+<pre>
+    export PNETCDF_HINTS=&quot;nc_dw=enable&quot;
+</pre>
+See more information on how to set a PnetCDF hint through the environment variable in the <a href=http://cucis.eecs.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/PNETCDF_005fHINTS.html>PnetCDF C Interface Guide</a>.
 
-	  <table style="width:100%", border="1">
-  <tr>
-    <th>Hint</th>
-    <th>Values</th> 
-    <th>Default</th>
-	<th>Description</th>
-  </tr>
-  <tr>
+<h3 id="ABriefHistoryofPnetCDF">PnetCDF Hints for Controlling DataWarp Driver</h3>
+Below is a list or hints for controlling the use of the DataWarp.
+
+<table style="width:100%", border="1">
+<tr>
+    <th>Hint Key</th>
+    <th>Value</th> 
+    <th>Default Value</th>
+    <th>Description</th>
+</tr>
+<tr>
     <td>nc_dw</td>
-    <td>enable/disable</td> 
+    <td>enable or disable</td> 
     <td>disable</td>
-	<td>Whether DataWarp driver is enabled.</td>
-  </tr>
-  <tr>
+    <td>Whether to use DataWarp driver or not.</td>
+</tr>
+<tr>
     <td>nc_dw_dirname</td>
-    <td>&lt;Valid POSIX Directory&gt;</td> 
-    <td>&lt;Current Working Directory&gt;</td>
-	<td>Where (directory) should log file be placed. This is usually set to the path where burst buffer is mounted.</td>
-  </tr>
-		    <tr>
+    <td>a directory name</td> 
+    <td>current directory</td>
+    <td>The location on DataWarp system to store I/O data. This is usually set to the value of variable DW_JOB_PRIVATE or DW_JOB_STRIPED, depending on the access_mode set in the batch script.
+See the user guide of <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer</a> on Cori for picking the access mode.</td>
+</tr>
+<tr>
     <td>nc_dw_del_on_close</td>
-    <td>enable/disable</td> 
+    <td>enable or disable</td> 
     <td>enable</td>
-	<td>Whether logfile should be deleted after closing the NetCDF file. It can be disabled when the scheduler will clean up the burst buffer automatically after the job is completed.</td>
+    <td>Whether the files created by the DataWarp driver should be deleted after closing the NetCDF file.
+When it is disabled, the SLUM scheduler may stage out the data automatically after the job is completed or keep the data, depending on the setting in the job script.
+See section of Persistent Reservations in the Cori user guide for more information.</td>
   </tr>
-		    <tr>
+<tr>
     <td>nc_dw_flush_buffer_size</td>
-    <td>&lt;integer&gt;</td> 
+    <td>an integer in bytes</td> 
     <td>0</td>
-	<td>Amount of memory that can be used to flush the log. The unit is in bytes. 0 means unlimited. Any write request that is larger than the buffer size will not be buffered, instead, it will be written to PFS directly.</td>
+    <td>Amount of memory in each MPI process that allows PnetCDF to use for flushing the data store in DataWarp to the parallel file system.
+0 means unlimited.
+Note that any single write request that is larger than the buffer size will not be buffered.
+Instead, it will be written to the parallel file system directly, bypassing DataWarp.</td>
   </tr>
-		    <tr>
+<tr>
     <td>nc_dw_shared_logs</td>
-    <td>enable/disable</td> 
+    <td>enable or disable</td> 
     <td>disable</td>
-	<td>When enabled, processes within a node will share the same log file. It is recommended when the burst buffer is set to striped mode. By default, each process will create it&#39;s own log file</td>
-  </tr>
+    <td>When enabled, all MPI processes within the same compute node will share the same files on DataWarp to store their write requests.
+It is recommended when the burst buffer is set to striped mode.
+By default, each process will create it&#39;s own files, not shared with other processes.</td>
+</tr>
 </table>
 
-<h2 id="ANoteAboutLargeFileSupport">Example Program</h2>
-<figure>
-  <pre>
- <code style="font-family: &quot;Courier New&quot;">
-#include&lt;stdio.h&gt; 
-#include&lt;stdlib.h&gt;
-#include&lt;pnetcdf.h&gt;
-int main(int argc, char *argv[]){ 
-&nbsp int ncid; 
-&nbsp MPI_Info info; 
-&nbsp MPI_Info_create(&amp;info); 
-&nbsp /* Enable the DataWarp driver. 
-&nbsp  * The hint is not required if it is set in the enviroment variable PNETCDF_HINTS 
-&nbsp  */ 
-&nbsp MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;); 
-&nbsp /* Create new netcdf file with hint to enable DataWarp driver*/ 
-&nbsp ncmpi_create(MPI_COMM_WORLD, filename, NC_CLOBBER, info, &amp;ncid); 
-&nbsp /* Use PnetCDF as usual */ 
-&nbsp /* The data in the burst buffer will be flushed to the PFS when the file is closed */ 
-&nbsp mpi_close(ncid); 
-&nbsp MPI_Info_free(&amp;info); 
-&nbsp return 0 
-}   </code>  </pre>
-</figure>
-	<h2 id="Submitting Job">Submitting Job that Enables DataWarp Driver</h2>
-	  <p>We show an example script for enabling DataWarp driver on Cori at NERSC</p>
+<h3 id="ANoteAboutLargeFileSupport">Example Program</h3>
+<pre>
+    #include&lt;stdio.h&gt; 
+    #include&lt;stdlib.h&gt;
+    #include&lt;pnetcdf.h&gt;
 
-<figure>
-  <pre>
- <code style="font-family: &quot;Courier New&quot;">
-#!/bin/bash
-#SBATCH -p debug
-#SBATCH -N 1 
-#SBATCH -C haswell
-#SBATCH -t 00:10:00 
-#SBATCH -o output.txt 
-#DW jobdw capacity=1289GiB access_mode=private type=scratch pool=sm_pool 
-export PNETCDF_HINTS="nc_dw=enable;nc_dw_del_on_close=disable;nc_dw_dirname=${DW_JOB_PRIVATE}"
-srun -n 1 ./myapplication 
-</code>  </pre>
-</figure>
+    int main(int argc, char *argv[]){ 
+        int ncid, err; 
+        MPI_Info info; 
 
-<h2 id="ANoteAboutLargeFileSupport">Known Problems</h2>
-	  <p>While we design the DataWarp driver to be as transparent as possible. There are some behaviors that can change when the DataWarp driver is used. Here&#39;s a list of different behaviors:</p>
-	<ul>
-		<li>Log buffering delays actual file write to replay time. If there are errors caused by put operations, it will be hide by logging until the log is replayed.</li>
-	</ul>
-<h2 id="FileandVariableLimits">FAQ</h2>
+        MPI_Info_create(&amp;info); 
+
+        /* Enable the DataWarp driver. 
+        * The hint is not required if it is set in the environment variable PNETCDF_HINTS 
+        */ 
+        MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;); 
+
+        /* Create a NetCDF file with hint to enable DataWarp driver*/ 
+        ncmpi_create(MPI_COMM_WORLD, filename, NC_CLOBBER, info, &amp;ncid); 
+
+        /* Use PnetCDF as usual */ 
+
+        /* data stored in the burst buffer will be flushed to the PFS when the file is closed */ 
+        mpi_close(ncid); 
+
+        MPI_Info_free(&amp;info); 
+        return 0 
+    }
+</pre>
+
+<h3 id="Submitting Job">Example Job Script</h3>
+Below is an example script for using DataWarp on Cori at NERSC.
+For detailed information about DataWarp settings, users are referred to <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer on Cori</a>.
+<pre>
+    #!/bin/bash
+    #SBATCH -p debug
+    #SBATCH -N 1 
+    #SBATCH -C haswell
+    #SBATCH -t 00:10:00 
+    #SBATCH -o output.txt 
+    #DW jobdw capacity=1289GiB access_mode=private type=scratch pool=sm_pool 
+
+    export PNETCDF_HINTS="nc_dw=enable;nc_dw_del_on_close=disable;nc_dw_dirname=${DW_JOB_PRIVATE}"
+
+    srun -n 1 ./myapplication 
+</pre>
+
+<h3 id="ANoteAboutLargeFileSupport">Known Issues</h3>
+While we design the DataWarp driver to be as transparent as possible,
+there are some behaviors that can change when the DataWarp driver is used.
+<ul>
+<li>Error reporting: The error codes returned from write APIs are the errors encountered when writing to the DataWarp system.
+When flushing data from DataWarp to the parallel file system, the error code returned will be the first error encountered.
+</li>
+</ul>
+<h3 id="FileandVariableLimits">Questions and Answers</h3>
 <p>
-	Q: Can I run the DataWarp driver on other burst buffer implementation or architecture?
-	<br/>
-	A: It is only tested on Cray DataWarp. However, it should, in theory, also work on other burst buffer implementations where the burst buffer is mounted as a file system. </p>
-	  <p>
-	Q: Can I run the DataWarp driver without the burst buffer?<br/>
-		  A: Yes, as long as there is place for log files. However, the performance will be affected if the log is placed on a slow file system. </p>
+Q: Can I run the DataWarp driver on a different machine with a different burst buffer configuration?
+<br/>
+A: We currently tested the DataWarp driver on Cori at NERSC and the Cray DataWarp system installed there.
+It may also work on other burst buffer implementations where the burst buffer is mounted as a file system.
+<p>
+Q: Can I run the DataWarp driver without the burst buffer?<br/>
+A: Yes, as long as the hint "nc_dw_dirname" is a valid directory, PnetCDF will use it as a burst buffer.
+However, the performance will be affected depending on the performance of the devices.
+<p>
+<hr>
+Please email your questions to &lt;parallel-netcdf@lists.mcs.anl.gov&gt;
+<p>
 </body>
 </html>
