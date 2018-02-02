@@ -86,7 +86,7 @@ export PNETCDF_HINTS=&quot;nc_dw=enable&quot;
 	<td>Amount of memory that can be used to flush the log. The unit is in bytes. 0 means unlimited. Any write request that is larger than the buffer size will not be buffered, instead, it will be written to PFS directly.</td>
   </tr>
 		    <tr>
-    <td>nc_dw_shared_log</td>
+    <td>nc_dw_shared_logs</td>
     <td>enable/disable</td> 
     <td>disable</td>
 	<td>When enabled, processes within a node will share the same log file. It is recommended when the burst buffer is set to striped mode. By default, each process will create it&#39;s own log file</td>
