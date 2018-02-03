@@ -84,12 +84,13 @@ Below is a list of hints for controlling the
     <td>(see description)</td>
     <td>The location on DataWarp system to store I/O data. This is usually set to the value of variable DW_JOB_PRIVATE or DW_JOB_STRIPED, depending on the access_mode set in the batch script.
 See the user guide of <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer</a> on Cori for picking the access mode.<br />
-	The log files are named as &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.&lt;meta/data&gt;. The 
-	DataWarp driver will not proceed when the log files already exist to prevent 
-	overwriting other files by accident. It is recommanded to clean up the 
-	directory to store log files.<br />
-	If nc_dw_dirname is not set by the user, PnetCDF will set it to the first 
-	variable below that is defined:<br />
+	The files used to store data are named as &lt;NetCDF file 
+	name&gt;_&lt;ncid&gt;_&lt;rank&gt;.&lt;meta/data&gt;. The DataWarp driver will not proceed when 
+	file with the same name exist to prevent overwriting other files by 
+	accident. It is recommanded that the user clean up the directory before 
+	running with DataWarp.<br />
+	If nc_dw_dirname is not set by the user, PnetCDF will display a warning and 
+	set it to the first variable below that is defined:<br />
 	1. DW_JOB_PRIVATE <br />
 	2. DW_JOB_STRIPED<br />
 	3. (Current working directory)</td>
