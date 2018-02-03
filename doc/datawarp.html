@@ -81,10 +81,18 @@ Below is a list of hints for controlling the
 <tr>
     <td>nc_dw_dirname</td>
     <td>a directory name</td> 
-    <td>current directory</td>
+    <td>(see description)</td>
     <td>The location on DataWarp system to store I/O data. This is usually set to the value of variable DW_JOB_PRIVATE or DW_JOB_STRIPED, depending on the access_mode set in the batch script.
 See the user guide of <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer</a> on Cori for picking the access mode.<br />
-	The log file is named</td>
+	The log files are named as &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.&lt;meta/data&gt;. The 
+	DataWarp driver will not proceed when the log files already exist to prevent 
+	overwriting other files by accident. It is recommanded to clean up the 
+	directory to store log files.<br />
+	If nc_dw_dirname is not set by the user, PnetCDF will set it to the first 
+	variable below that is defined:<br />
+	1. DW_JOB_PRIVATE <br />
+	2. DW_JOB_STRIPED<br />
+	3. (Current working directory)</td>
 </tr>
 <tr>
     <td>nc_dw_del_on_close</td>
@@ -112,7 +120,8 @@ We give an example that creates an empty NetCDF file using the DataWarp driver. 
 transparent to the applications, using it for more complex IO operations is the 
 same way as in this example.</p>
   <p>
-  More eamples can be found under example/datawarp folder in the source code.</p>
+  More eamples can be found under 
+  <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/datawarp/examples/datawarp">example/datawarp</a> folder in the source code.</p>
 <pre>
     #include&lt;stdio.h&gt; 
     #include&lt;stdlib.h&gt;
@@ -147,9 +156,12 @@ same way as in this example.</p>
 
 <h3 id="Submitting Job">Example Job Script</h3>
 
-Below is an example script for running the FLASH benchmark using DataWarp on Cori at NERSC.
+Below is an example script for running the 
+  <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/benchmarks/FLASH-IO">FLASH</a> benchmark 
+  that comes with PnetCDF using DataWarp on Cori at NERSC.
 For detailed information about DataWarp settings, users are referred to <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer on Cori</a>.<p>
-  You can find this exmple script under example/datawarp folder in the source 
+  You can find this exmple script under 
+  <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/datawarp/examples/datawarp">example/datawarp</a> folder in the source 
   code.</p>
 <pre>
     #!/bin/bash
@@ -176,9 +188,14 @@ there are some behaviors that can change when the DataWarp driver is used.
 <li>Error reporting: The error codes returned from write related APIs are the errors encountered when writing to the DataWarp system.
 When flushing data from DataWarp to the parallel file system, the error code returned will be the first error encountered.
 </li>
-<li>Nonblocking IO: The error codes returned from write related APIs are the errors encountered when writing to the DataWarp system.
-When flushing data from DataWarp to the parallel file system, the error code returned will be the first error encountered.
-</li>
+<li>Non-blocking IO: Non-blocking write requests are buffered as well. However, 
+for perofrmance consideration, non-blocking requests can be flushed to the PFS 
+before
+<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fwait_002fwait_005fall.html">
+ncmpi_wait or ncmpi_wait_all</a> is called. It such case, users are not able to 
+cancel the non-blocking operation. Calling
+<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcancel.html">
+ncmpi_cancel</a> on flushed requests will get the error code NC_EFLUSHED.</li>
 
 </ul>
 <h3 id="QA">Questions and Answers</h3>
