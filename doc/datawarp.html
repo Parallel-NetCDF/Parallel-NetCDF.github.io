@@ -176,6 +176,10 @@ there are some behaviors that can change when the DataWarp driver is used.
 <li>Error reporting: The error codes returned from write related APIs are the errors encountered when writing to the DataWarp system.
 When flushing data from DataWarp to the parallel file system, the error code returned will be the first error encountered.
 </li>
+<li>Nonblocking IO: The error codes returned from write related APIs are the errors encountered when writing to the DataWarp system.
+When flushing data from DataWarp to the parallel file system, the error code returned will be the first error encountered.
+</li>
+
 </ul>
 <h3 id="QA">Questions and Answers</h3>
 <p>
@@ -192,18 +196,25 @@ However, the performance will be affected depending on the performance of the de
 <p>
 The source code of DataWarp driver can be found under src/drivers/ncdwio in the 
 <a href="https://github.com/Parallel-NetCDF/PnetCDF">PnetCDF source code</a>.
-To checkout the source code, run:</p>
+  The development branch of DataWarp driver can be found
+  <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/datawarp">here</a>. </p>
+  <p>
+  To download the source code, run:</p>
 <pre>
 git clone https://github.com/Parallel-NetCDF/PnetCDF.git</pre>
   <p>
-  The development branch of DataWarp driver can be found
-  <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/datawarp">here</a>. 
   To checkout the development branch, run:</p>
 <pre>
-git clone -b datawarp https://github.com/Parallel-NetCDF/PnetCDF.git
+git checkout datawarp
+</pre>
+  <p>
+  To initialize it for building, run:</p>
+<pre>
+autoreconf -i
 </pre>
 
-&nbsp;<hr>
+
+  <hr>
 Please email your questions to &lt;<a href="mailto:parallel-netcdf@lists.mcs.anl.gov">parallel-netcdf@lists.mcs.anl.gov</a>&gt;
 <p>
 </body>
