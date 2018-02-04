@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>
@@ -31,7 +31,7 @@ It will soon be merged to the official release.
 <div>Figure 1. Design of the DataWarp driver.
 	The green lines show the data flow for write operations when the DataWarp driver is disabled. The 
 	blue lines indicate the write requests are first stored in the DataWarp system. The red line shows the 
-	data flow when flushing the data from the DataWarp to parallel file system.</div>
+	data flow when flushing the data from the DataWarp to the parallel file system.</div>
 </div>
 
 <h3 id="OverviewofPnetCDF">Enable the DataWarp Driver</h3>
@@ -39,24 +39,30 @@ To build PnetCDF with DataWarp driver support, add &quot;<tt>--enable-datawarp</
 <pre>
     ./configure --prefix=/path/to/install --enable-datawarp
 </pre>
+The remaining steps are the same as usual, to build PnetCDF library, run:
+<pre>
+    make
+</pre>
+To install PnetCDF, run:
+<pre>
+    make install
+</pre>
 
 <h3 id="ABriefBackgroundAboutNetCDF">Use DataWarp Driver</h3>
 The use of DataWarp driver is controlled by PnetCDF I/O hints.
 There are two ways of setting PnetCDF I/O hints.
 <ul>
-<li> One is by setting MPI file info object and passing it through the call to file create API
+<li> One is by setting MPI file info object and passing it through the call to file creating API
      <tt>
 <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcreate.html">ncmpi_create</a></tt> or file open API <tt>
 <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fopen.html">ncmpi_open</a></tt>.</li>
 <li> The other is by setting the environment variable <tt>PNETCDF_HINTS</tt>.</li>
 </ul>
 For instance, to enable the DataWarp driver, add 
-  to the MPI-IO info object the hint &quot;nc_dw&quot; and set it to &quot;enable&quot;.</p>
-<pre>
+  to the MPI-IO info object the hint &quot;nc_dw&quot; and set it to &quot;enable&quot;.<pre>
     MPI_Info_set(info, &quot;nc_dw&quot;, &quot;enable&quot;);
 </pre>
-The hint can also be set using environment variable PNETCDF_HINTS.</p>
-<pre>
+The hint can also be set using environment variable PNETCDF_HINTS.<pre>
     export PNETCDF_HINTS=&quot;nc_dw=enable&quot;
 </pre>
 See more information on how to set PnetCDF hints through the environment variable in the <a href=http://cucis.eecs.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/PNETCDF_005fHINTS.html>PnetCDF C Interface Guide</a>.
@@ -85,11 +91,6 @@ Below is a list of hints for controlling the
     <td>(see description)</td>
     <td>The location on DataWarp system to store I/O data. This is usually set to the value of variable DW_JOB_PRIVATE or DW_JOB_STRIPED, depending on the access_mode set in the batch script.
 See the user guide of <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer</a> on Cori for picking the access mode.<br />
-	The files used to store data are named as &lt;NetCDF file 
-	name&gt;_&lt;ncid&gt;_&lt;rank&gt;.&lt;meta/data&gt;. The DataWarp driver will not proceed when 
-	file with the same name exist to prevent overwriting other files by 
-	accident. It is recommanded that the user clean up the directory before 
-	running with DataWarp.<br />
 	If nc_dw_dirname is not set by the user, PnetCDF will display a warning and 
 	set it to the first variable below that is defined:<br />
 	1. DW_JOB_PRIVATE <br />
@@ -100,16 +101,21 @@ See the user guide of <a href=http://www.nersc.gov/users/computational-systems/c
     <td>nc_dw_del_on_close</td>
     <td>enable or disable</td> 
     <td>enable</td>
-    <td>Whether the files created by the DataWarp driver should be deleted after closing the NetCDF file.
-When it is disabled, the <a href="https://slurm.schedmd.com">SLURM</a> scheduler may stage out the data automatically after the job is completed or keep the data, depending on the setting in the job script.
+    <td>Whether the intermediate files created by the DataWarp driver on the 
+	burst buffer should be deleted after closing the NetCDF file. If the job schedular will recycle the burst buffer space automatically, users can disable this option 
+	to improve performance.
+<!--This is not supported for now. Log files will become empty (entries set to 0) after flush, there's no use to stage it out -->
+<!--When it is disabled, the <a href="https://slurm.schedmd.com">SLURM</a> scheduler may stage out the data automatically after the job is completed or keep the data, depending on the setting in the job script.
 See section of 
-	<a href="http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts/#toc-anchor-4">Persistent Reservations</a> in the Cori user guide for more information.</td>
+	<a href="http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts/#toc-anchor-4">Persistent Reservations</a> in the Cori user guide for more information. -->
+	</td>
   </tr>
 <tr>
     <td>nc_dw_flush_buffer_size</td>
     <td>an integer in bytes</td> 
     <td>0</td>
-    <td>Amount of memory in each MPI process that allows PnetCDF to use for flushing the data stored in DataWarp to the parallel file system.
+    <td>Amount of memory in each MPI process that allows PnetCDF to use for flushing the data stored in 
+	the DataWarp to the parallel file system.
 0 means unlimited.
 Note that any single write request that is larger than the buffer size will not be buffered.
 Instead, it will be written to the parallel file system directly, bypassing the DataWarp.</td>
@@ -117,7 +123,7 @@ Instead, it will be written to the parallel file system directly, bypassing the 
 </table>
 
 <h3 id="Example Program">Example Program</h3>
-Below is an example that creates a NetCDF file using the DataWarp driver.
+Below is an example that creates a NetCDF file using DataWarp driver.
 Other than adding a new MPI-IO hint, the PnetCDF program appears the same as before.
 <p>
 More example programs can be found under 
@@ -159,7 +165,7 @@ More example programs can be found under
 Below is an example script for running the 
 <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/benchmarks/FLASH-IO">FLASH I/O</a> benchmark 
 using DataWarp on Cori at NERSC.
-For detailed information about DataWarp settings, users are referred to <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer on Cori</a>.
+For detailed information about DataWarp settings, users can refer to <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer on Cori</a>.
 This exmple script can also be found in 
 <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/datawarp/examples/datawarp">example/datawarp</a> folder.</p>
 <pre>
@@ -188,13 +194,19 @@ there are some behaviors that can change when the DataWarp driver is used.
 When flushing data from DataWarp to the parallel file system, the error code returned will be the first error encountered.
 </li>
 <li>Non-blocking IO: Non-blocking write requests are written to DataWarp as well. However, 
-for perofrmance consideration, non-blocking requests may be flushed to the PFS 
-before the wait API,
+for perofrmance consideration, non-blocking requests may be flushed to the 
+parallel file system before the wait API,
 <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fwait_002fwait_005fall.html">
 ncmpi_wait or ncmpi_wait_all</a>, is called. In such case, users are not able to 
-cancel the those non-blocking requests and calling
+cancel those non-blocking requests and calling
 <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcancel.html">
 ncmpi_cancel</a> will receive error code NC_EFLUSHED.</li>
+	<li>Unsupported API type: Currently, the DataWarp driver does not support 
+	buffering on
+	<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fput_005fvard.html">
+	ncmpi_put_vard and ncmpi_put_vard_all</a>. When these APIs are called, the 
+	data will be written to the parallel file system directly, bypassing the 
+	DataWarp.</li>
 
 </ul>
 <h3 id="QA">Questions and Answers</h3>
@@ -208,7 +220,43 @@ Q: Can I run the DataWarp driver without the burst buffer?<br/>
 A: Yes, as long as the hint "nc_dw_dirname" is a valid directory, PnetCDF will use it as a burst buffer.
 However, the performance will be affected depending on the performance of the devices.
 
-<h3 id="Src">Source Code Checkout</h3>
+  <p>
+  Q: Do I need to enable DataWarp module on Cori to build PnetCDF with DataWarp 
+  driver support?<br/>
+  A: No, we currently do not use DataWarp APIs in the implementation.<p>
+  Q: Can I leave the data on burst buffer without flushing it to the parallel 
+  file system?<br/>
+  A: No, in this version, the data will always be flushed when the file is 
+  closed. We do not recommand terminating the program without closing the file. 
+  <p>
+  Q: What is the file name of intermediate files DataWarp driver used to buffer 
+  I/O data? Will it overwrite my existing file if there is a name conflict? <br/>
+  A: 
+  The intermediate files are named as &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.meta and 
+  &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.data. To prevent overwriting other files by 
+  accident, DataWarp driver will not proceed when there is a file name conflict. 
+  In such case, 
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcreate.html">ncmpi_create</a> 
+  and
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fopen.html">ncmpi_open</a> will fail with error code NC_EEXISTS. 
+  <p>
+  Q: Does the directory used by DataWarp to store I/O data need to be an empty folder?<br/>
+  A: No, there's no such restriction. However, we strongly recommend the use of 
+  an empty folder to prevent errors caused by file name conflict. <p>
+  Q: Can I access intermediate files DataWarp driver created for buffering I/O 
+  data?<br/>
+  A: Yes, there is an   <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/datawarp/src/utils/ncmpilogdump">
+  utility program</a> that can be used to read intermediate files. However, 
+  flushed data will nolonger exist in intermediate files. We recommend the 
+  user to make copies right before calling
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fclose.html">
+  ncmpi_close</a> if they want to 
+  study or analyze intermediate files later.<p>
+  Q: Is there a way to trigger a flush without closing the NetCDF file?<br/>
+  A: Yes, calling
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fsync.html">
+  ncmpi_sync</a> triggers a flsuh. A flush can also be triggered if the user 
+  waits on a non-blocking write request that is still buffered on DataWarp. <h3 id="Src">Source Code Checkout</h3>
 Use the following command to download the source codes.
 <pre>
     git clone https://github.com/Parallel-NetCDF/PnetCDF.git
@@ -223,7 +271,8 @@ Initialize autoconf utility settings using command:
     autoreconf -i
 </pre>
 Next, run configure command to build the PnetCDF library.
-For more information about running configure commands, readers are referred to the README files under folder doc.
+For more information about running configure commands, readers are referred to the README files under folder 
+  <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/doc">doc</a>.
 
 <hr>
 Please email your questions to &lt;<a href="mailto:parallel-netcdf@lists.mcs.anl.gov">parallel-netcdf@lists.mcs.anl.gov</a>&gt;
