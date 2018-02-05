@@ -160,7 +160,47 @@ More example programs can be found under
     }
 </pre>
 
-<h3 id="Submitting Job">Example Job Script</h3>
+<h3 id="Submitting the Job">Running Jobs Using the DataWarp Driver</h3>
+Here we give a brief instruction of submitting jobs that uses the DataWarp driver on Cori at NERSC.
+<h4 id="envbb">Requesting Burst Buffer Access</h4>
+  To request burst buffer access for a job, users add "#DW jobdw " command to 
+  the batch script. Users can specify the capacity, access mode, and type of the burst buffer. We highly recommand the use of private access mode. The only type supported for now is scratch in which the burst buffer is mounted as a file system to the user application.
+<br/>
+  Users can also choose form 2 granularity levels, wlm_pool and sm_pool.
+  A burst buffer server hosts 82 GiB and 20.14 GiB of data in wlm_pool and sm_pool respectively. As a result, the 
+  stripe count is determined by the capacity of the burst buffer space. For example, if we want the stripe count to be 
+  at least 64, we have to set the capacity to at least 20.14 * 64 = 1288.96 GiB 
+  even if we don't need such large space.   The stripe size is fixed at 8 MiB. 
+  Users have no&nbsp; control on stripe size.
+  <p>Here is an example command of requesting a burst buffer space in sm_pool with 
+  stripe count at least 64.</p>
+<pre>
+#DW jobdw capacity=1289GiB access_mode=private type=scratch pool=sm_pool</pre>
+<p>
+For more information, please refer to "<a href="http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts/">How to use the Burst Buffer</a>" and "<a href="http://www.nersc.gov/users/computational-systems/cori/burst-buffer/performance-tuning/">Performance Tuning</a>" page on NERSC website.
+</p>
+  <h4 id="env">Configuring the Parallel File System</h4>
+The DataWarp driver does not require any specific support from the parallel file 
+  system that stores the NetCDF file. However, for best performance, we suggest 
+  using stripe count and stripe size no smaller than that used on the burst 
+  buffer. To set stripe count and stripe size for a directory under Lustre on Cori, 
+  run "lfs setstripe" command.
+<p>
+Here's an example of setting the stripe count to 64 and stripe size to 8 MiB on current working directory 
+that is using Lustre on Cori:
+</p>
+<pre>
+lfs setstripe -c 64 -s 8m .
+</pre>
+<p>
+For more information, please refer to "<a href="http://www.nersc.gov/users/storage-and-file-systems/i-o-resources-for-scientific-applications/optimizing-io-performance-for-lustre/">Optimizing I/O performance on the Lustre file system</a>" page on NERSC website 
+and "<a href="http://wiki.lustre.org/index.php/Configuring_Lustre_File_Striping">Configuring 
+Lustre File Striping</a>" on <a href="http://wiki.lustre.org/Main_Page">Lustre 
+wiki site</a>.
+</p>
+
+<h4 id="Job Script">Example Job Script</h4>
+
 
 Below is an example script for running the 
 <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/benchmarks/FLASH-IO">FLASH I/O</a> benchmark 
