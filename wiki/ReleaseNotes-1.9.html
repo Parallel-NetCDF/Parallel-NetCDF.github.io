@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  
+<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/ReleaseNotes-1.9.0 by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <title>
+      ReleaseNotes-1.9.0 – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="../search.html" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="./ReleaseNotes-1.9.0?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="../wiki.html" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="../search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="../../parallel-netcdf.html"><img src="../chrome/common/trac_banner.png" alt="(please configure the [header_logo] section in trac.ini)" /></a>
+      </div>
+      <form id="search" action="https://trac.mcs.anl.gov/projects/parallel-netcdf/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="../login.html">Login</a></li><li><a href="../prefs.html">Preferences</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li class="last"><a href="../about.html">About Trac</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="../wiki.html">Wiki</a></li><li><a href="../timeline.html">Timeline</a></li><li><a href="../roadmap.html">Roadmap</a></li><li><a href="../browser.html">Browse Source</a></li><li><a href="../report.html">View Tickets</a></li><li><a href="../newticket.html">New Ticket</a></li><li class="last"><a href="../search.html">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="../wiki.html">wiki:</a><a class="pathentry" href="ReleaseNotes-1.9.html" title="View ReleaseNotes-1.9.0">ReleaseNotes-1.9.0</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="./ReleaseNotes-1.9.0?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="./ReleaseNotes-1.9.0?action=diff&amp;version=1" title="Version 1 by wkliao: create 1.9.0 release note">Last modified</a> <a class="timeline" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/timeline?from=2017-12-19T16%3A00%3A12-06%3A00&amp;precision=second" title="2017-12-19T16:00:12-06:00 in Timeline">6 weeks</a> ago</span>
+            <span class="trac-print">Last modified on 12/19/17 16:00:12</span>
+          </div>
+          <div id="wikipage"><h1 id="ReleaseNoteof1.9.0">Release Note of 1.9.0</h1>
+<ul><li>Release date: December 19, 2017.
+</li><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a>
+</li></ul><h2 id="Newfeatures">New features</h2>
+<ul><li>The configure environment has been migrated to use GNU automake and
+libtool.
+</li><li>Building shared libraries is now supported with configure option
+--enable-shared. However, the default configuration is to build static
+library only. Note linking shared libraries is not recommended due to
+the likely performance degradation.
+</li></ul><h2 id="Newoptimization">New optimization</h2>
+<ul><li>Use hash function for faster attribute name lookup. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3335" title="use hash function for faster attribute name lookup">r3335</a>.
+</li></ul><h2 id="NewLimitations">New Limitations</h2>
+<ul><li>PnetCDF now requires the underlying MPI library define data type
+MPI_Offset an 8-byte integer. Configuration process will be aborted if
+MPI_Offset is detected to be of size 4 bytes. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2944" title="PnetCDF now requires MPI_Offset be of size 8 bytes. Abort building PnetCDF ...">r2944</a>.
+</li><li>The maximum number of files that can be simultaneously opened by an MPI
+process is now limited to 1024 (a new constant NC_MAX_NFILES defined in
+pnetcdf.h). When this limit is reached, error code NC_ENFILE will be
+thrown.
+</li><li>NC_MAX_VAR_DIMS, the maximum number of dimensions per variable is raised
+to 2147483647, i.e. NC_MAX_INT
+</li><li>NC_MAX_DIMS, the maximum number of dimensions per file is raised to
+2147483647, i.e. NC_MAX_INT
+</li><li>NC_MAX_ATTRS, the maximum number of attributes per file is raised to
+2147483647, i.e. NC_MAX_INT
+</li><li>NC_MAX_VARS, the maximum number of variables per file is raised to
+2147483647, i.e. NC_MAX_INT
+</li><li>NC_EMAX_REQ error code will be thrown when a single request of a get/put
+API call or the aggregated size of nonblocking requests in a wait API
+call exceeds INT_MAX (max of 4-byte integer).  Note the size limit is per
+MPI process, not across all processes. This is due to MPI-IO may not
+support a single MPI-IO request of size larger then INT_MAX. A new
+configure command-line option "--enable-large-req" has been added
+available to disable the checking. Use this option is recommended only
+when the underneath MPI-IO library supports large single requests.
+</li></ul><h2 id="Newconstants">New constants</h2>
+<ul><li>NC_FORMAT_UNKNOWN, NF_FORMAT_UNKNOWN, and NF90_FORMAT_UNKNOWN are new
+constants that are one of the returned values of argument formatp in the
+API ncmpi_inq_file_format when the file under inquiry is unrecognizable
+by PnetCDF library.
+</li><li>NC_MAX_NFILES, NF_MAX_NFILES, and NF90_MAX_NFILES define the maximum
+number of files that can be kept opened by an MPI process.
+</li></ul><h2 id="NewAPIs">New APIs</h2>
+<ul><li>none
+</li></ul><h2 id="APIsyntaxchanges">API syntax changes</h2>
+<ul><li>Add C type qualifier "const" to argument fill_value of ncmpi_def_var_fill
+to indicate the contents pointed by fill_value is immutable.
+</li></ul><h2 id="Semanticsupdates">Semantics updates</h2>
+<ul><li>Calling ncmpi_end_indep_data() in collective data mode is no longer
+considered illegal, starting from this release 1.9.0. In this case, the
+API simply returns NC_NOERR. Note calling ncmpi_begin_indep_data() in
+independent data mode has been allowed since PnetCDF 1.2.0. Thanks to
+Gregory Sjaardema for pointing out the asymmetry between the two APIs.
+See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3517" title="allow ncmpi_end_indep_data in collective data mode, thanks to Gregory ...">r3517</a>.
+</li><li>For CDF-5 files, the maximum size of a variable or a variable's record
+is NC_MAX_INT64-3 (i.e. 2<sup>64</sup>-4).
+</li><li>When the file create/open modes are not consistent among processes, the
+modes on all processes will be replaced by rank 0's mode and PnetCDF
+library will still try to create/open the file. Error code
+NC_EMULTIDEFINE_CMODE or NC_EMULTIDEFINE_OMODE will be returned on
+processes whose modes disagree with rank 0's. If safe mode is on, then
+all processes will also get the same error code.
+</li><li>API ncmpi_inq_nreqs() - allows argument nreqs to be NULL. In this case,
+the API is equivalent to checking the validity of argument ncid. In
+previous releases, NC_EINVAL is returned when argument nreqs is NULL.
+</li><li>API ncmpi_inq_buffer_usage() - allows argument usage to be NULL. In this
+case, the API is equivalent to checking the validity of argument ncid. In
+previous releases, NC_EINVAL is returned when argument usage is NULL.
+</li><li>API ncmpi_inq_buffer_size() - allows argument usage to be NULL. In this
+case, the API is equivalent to checking the validity of argument ncid. In
+previous releases, NC_EINVAL is returned when argument buf_size is NULL.
+</li></ul><h2 id="Newerrorcodeprecedence">New error code precedence</h2>
+<ul><li>none
+</li></ul><h2 id="Updatederrorstrings">Updated error strings</h2>
+<ul><li>The error string corresponding to error code NC_EMAXDIMS is changed to
+cover the case when NC_MAX_DIMS or NC_MAX_VAR_DIMS is exceeded.
+</li></ul><h2 id="Newerrorcode">New error code</h2>
+<ul><li>NC_EMAX_REQ - indicates a single request of a get/put API call or the
+aggregated size of nonblocking requests in a wait API call exceeds
+INT_MAX (max of 4-byte integer). The corresponding F77 and F90 error
+codes are NF_EMAX_REQ and NF90_EMAX_REQ, respectively.
+</li><li>NC_ENULLPAD - indicates the file fails strict null-byte header check. The
+corresponding F77 and F90 error codes are NF_ENULPAD and NF90_ENULPAD,
+respectively. The same error code has also been defined in NetCDF since
+4.5.1. Note this error is not considered fatal. PnetCDF will continue
+the file open procedure if there is no other error found. Therefore, when
+encountering this error code returned from the file open API, ncmpi_open,
+user can safely ignore it. See section "Conflict with NetCDF library"
+below for further discussion.
+</li></ul><h2 id="NewPnetCDFhint">New PnetCDF hint</h2>
+<ul><li>none
+</li></ul><h2 id="Newrun-timeenvironmentvariables">New run-time environment variables</h2>
+<ul><li>none
+</li></ul><h2 id="Newbuildrecipe">New build recipe</h2>
+<ul><li>doc/README.Ubuntu provides build instructions for Ubuntu Linux OS.
+</li></ul><h2 id="Newupdatedutilityprogram">New/updated utility program</h2>
+<ul><li>Utility program ncmpivalid is renamed to ncvalidator to reflect its
+purpose. It is now running in serial and thus no longer requires an MPI
+compiler to build it. In fact, its source codes are all in a single file,
+ncvalidator.c, which can be compiled using gcc, i.e. command "gcc -o
+ncvalidator ncvalidator.c".  This utility program can be used to validate
+a classic CDF file, and report the locations that fail to comply with CDF
+formats. It can also repair a file whose header fails to use null bytes
+for paddings, when the command-line option "-x" is used. See its man page
+for further description of usage.
+</li></ul><h2 id="Otherupdates:">Other updates:</h2>
+<ul><li>Update UTF8 encoding utility to use utf8proc library version 2.1.0 from
+the Julia Language project, <a class="ext-link" href="https://github.com/JuliaLang/utf8proc"><span class="icon">​</span>https://github.com/JuliaLang/utf8proc</a>
+License <a class="ext-link" href="https://github.com/JuliaLang/utf8proc/blob/master/LICENSE.md"><span class="icon">​</span>https://github.com/JuliaLang/utf8proc/blob/master/LICENSE.md</a>
+</li><li>Add quiet mode command-line option "-q" to utility program ncvalidator.
+</li><li>Add an internal check for whether the file starting offsets of all
+variables are in an increasing order as the variables defines. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3369" title="add ncmpio_NC_check_voffs() to check variable starting file offsets ...">r3369</a>.
+</li><li>All build recipes (README files) have been moved to folder doc. Most of
+the recipes have been updated with instructions for building shared
+libraries.
+</li><li>Rename configure-time variables TEST_SEQRUN, TEST_MPIRUN, and TEST_OUTDIR
+to TESTSEQRUN, TESTMPIRUN, and TESTOUTDIR, respectively. This change
+avoids conflict to the name convention reserved by automake.
+</li><li>Fix TESTMPIRUN default value to use full path specified in --with-mpi at
+configure command line
+</li></ul><h2 id="Bugfixes">Bug fixes</h2>
+<ul><li>Fix a bug in nonblocking APIs when two separate nonblocking requests that
+can be coalesced into a contiguous MPI fileview or buffer type but the
+coalesced length becomes too big and overflows a 4-byte integer, data
+type of argument blocklengths of MPI_Type_create_hindexed, coalescing
+should be skipped. I.e. such two requests should be treated as two
+separate blocks in MPI_Type_create_hindexed.  Thanks Jim Edwards for
+reporting. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3565" title="turn safe mode off for slow. large tests">r3565</a>.
+</li><li>Fix a bug in nonblocking APIs when one request's access region covers
+more than one other non-interleaved requests. PnetCDF fails to identify
+them as a single group of interleaved requests. Test program
+test/nonblocking/interleaved.c has been revised to test the fix.
+See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3389" title="bug fix: nonblocking APIs for the case one request whose access region ...">r3389</a>.
+</li><li>Fix a bug in string parsing the environment variable PNETCDF_HINTS and
+print warning messages when hint strings are ill-formed. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3284" title="fix bug: string parsing for PNETCDF_HINTS">r3284</a>.
+</li><li>Fix a bug in F90 APIs for reading and writing scalar variables, i.e.
+number of dimensions is zero. The bugs appear only when using Intel
+Fortran compiler which does not allow checking presence of an argument
+and its contents in the same if condition. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3009" title="special handle for scalar variables, i.e. numDims=0, as Intel ifort is ...">r3009</a>, <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3012" title="take care case when numDims = 0">r3012</a>, <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3013" title="take care case when numDims = 0">r3013</a>.
+</li><li>Conform with CDF-2 file format specification on using 2<sup>32</sup>-1 for vsize
+when the variable size is larger than 2<sup>32</sup>-4 bytes. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2957" title="conform with CDF-2 specification: use 2^32^-1 for vsize when the variable ...">r2957</a>.
+</li><li>Fix a bug in nc_test when running on an ARMv7 architecture, a raspberry
+pi, where char is unsigned and which is little Endian, 32-bit machine.
+See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2922" title="a fix for ARMv7 architecture, a raspberry pi, where char is unsigned and ...">r2922</a>.
+</li><li>Fix a bug that fails to do byte-swap when retrieving user-defined fill
+values. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2864" title="bug fix: values stored in NC_attrarray.attrs.value[].xvalue are in ...">r2864</a>. This fix is critical when PnetCDF is configured with
+option erange-fill enabled (default mode) and the target platform is a
+Little Endian.
+</li></ul><h2 id="Newexampleprograms">New example programs</h2>
+<ul><li>none
+</li></ul><h2 id="NewprogramsforIObenchmarks">New programs for I/O benchmarks</h2>
+<ul><li>none
+</li></ul><h2 id="Newtestprogram">New test program</h2>
+<ul><li>test/testcases/tst_vars_fill.m4 - tests strided put (vars) APIs with
+fill mode on.
+</li><li>test/largefile/large_coalesce.c - tests a bug fixed in <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3565" title="turn safe mode off for slow. large tests">r3565</a> when two
+separate nonblocking requests that can be coalesced into a contiguous MPI
+fileview or buffer type but the coalesced length becomes too big and
+overflows a 4-byte integer.
+</li><li>test/testcases/tst_info.c - tests an internal bug in heap memory
+allocation trace mechanism. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3514" title="bug fix: provided by Kai-yuan Hou, heap memory allocated by strdup() ...">r3514</a>.
+</li><li>test/cdf_format/tst_corrupt.c
+<ol><li>tests whether NC_EMAXDIMS can be thrown when opening a corrupted file
+header with number of dimensions being larger than NC_MAX_DIMS.
+</li><li>tests whether NC_EMAXATTS can be thrown when opening a corrupted file
+header with number of attributes being larger than NC_MAX_ATTRS.
+</li><li>tests whether NC_EBADDIM can be thrown when opening a corrupted file
+header with dimension ID of a variable is beyond the number of
+dimensions defined in the file.
+</li><li>tests whether NC_EBADTYPE can be thrown when opening a corrupted file
+header with nc_type of a variable is not within the legal NC atomic
+data type allowed by the file format.
+</li></ol></li><li>test/testcases/tst_max_var_dims.c - tests the number of dimensions
+against NC_MAX_VAR_DIMS when calling ncmpi_def_var API.
+</li><li>test/largefile/tst_cdf5_begin.c - tests CDF-5 file header corruption for
+the case when the starting file offsets of variables are not in an
+increasing order as they defined.
+</li><li>test/cdf_format/tst_open_cdf5.c - tests whether NC_ENOTNC can be
+correctly thrown when opening a corrupted CDF-5 (bad_begin.nc5) which
+contains two variables and the second variable's starting file offset is
+less than the first variable's end offset.
+</li><li>test/testcases/large_var_cdf5.c - tests whether NC_EVARSIZE can be
+correctly thrown when a variable or a variable record is larger than
+NC_MAX_INT64-3.
+</li><li>test/testcases/mix_collectives.c - tests collective get/put APIs that
+allow different processes to call different kinds of APIs (i.e. var1,
+vara, vars, varm, etc.) and use different var IDs. In other words, the
+API kinds can be different among processes in a collective call.
+</li><li>test/largefile/high_dim_var.c - tests blocking vars APIs for high-
+dimensional variables. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3164" title="flatten stride access so only one call to hindexed constructor is needed, ...">r3164</a>.
+</li><li>test/largefile/large_dims_vars_attrs.c - tests large number of
+dimensions, large number of variables, and large number of attributes.
+</li><li>test/testcases/put_all_kinds.m4 - tests various blocking put APIs.
+</li><li>test/testcases/tst_dimsizes.c - borrowed from NetCDF library to test
+define/inquire APIs for the maximum allowable dimension sizes. This test
+program is similar to (or a subset of) test/cdf_format/dim_cdf12.c
+</li><li>test/testcases/null_args.c - tests whether the correct error codes can
+be returned when using NULL arguments for start, count, stride, or imap
+</li></ul><h2 id="ConformitywithNetCDFlibrary">Conformity with NetCDF library</h2>
+<ul><li>API ncmpi_open now checks the number of large variables that is legal
+for CDF-1 and CDF-2 files. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2961" title="enable ncmpi_open to check the number of large variables allowed in CDF-1 ...">r2961</a>. For the information about the
+number of large variables allowed in the classic formats can be found in
+<a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/docs/file_structure_and_performance.html#classic_format_limitations"><span class="icon">​</span>http://www.unidata.ucar.edu/software/netcdf/docs/file_structure_and_performance.html#classic_format_limitations</a>
+</li><li>Add checking for error code NC_ELATEFILL. Setting a variable's attribute
+_FillValue must be done in the variable's initial define mode.
+</li><li>NetCDF-4 documents in 4.4.1 and prior state that setting attribute
+_FillValue for global variable NC_GLOBAL is not allowed and error code
+NC_EINVAL will be thrown. Revisions <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2954" title="bug fix: NC_EINVAL is returned when trying to set attribute _FillValue for ...">r2954</a>, <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2955" title="move global _FillValue checking to dispatchers/attr_getput.m4">r2955</a>, and <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2956" title="change error code from NC_EINVAL to NC_EGLOBAL when trying to set global ...">r2956</a> enforce this
+rule. However, because the rule has never been implemented in any NetCDF
+official release, NetCDF developers have decided to abandon this rule
+by revising the NetCDF document starting from v4.5. See discussion in
+NetCDF <a class="missing wiki">GitHub?</a> pull request 458. To be consistent with NetCDF, PnetCDF
+follows the same decision by wrapping the checking with preprocessor
+conditional #ifdef NO_NC_GLOBAL_FILLVALUE (see <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3403" title="allow defining FillValue for Global variables">r3403</a>). Note NC_EGLOBAL
+will be thrown when using NC_GLOBAL in ncmpi_def_var_fill(). This is
+due to no data type information for the fill value can be passed.
+</li><li>From the releases of 1.6.1 through 1.8.1, putting attribute _FillValue
+automatically turns on the fill mode for the variable. Similarly,
+deleting attribute _FillValue turns off the fill mode. However, this
+behavior does not conform with NetCDF library. This release fixes this
+inconsistency, so putting or deleting attribute _FillValue does not
+affect a variable's fill mode. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/2951" title="bug fix: to conform with netCDF that putting or deleting attribute ...">r2951</a>.
+</li></ul><h2 id="ConflictwithNetCDFlibrary">Conflict with NetCDF library</h2>
+<ul><li>Null-byte padding for attribute values in file header -- The classic CDF
+specifications require header padding uses null (\x00) bytes. However,
+prior to version 4.5.0, NetCDF did not implement this specification
+entirely. In particular, it has never enforced the null-byte padding for
+attribute values (it has for others, such as names of dimension,
+variables, and attributes.) It also appears that files created by <a class="missing wiki">SciPy?</a>
+NetCDF module or NetCDF Java module, both developed independent from
+NetCDF-C, also fail to respect this padding specification.  This becomes
+a problem for PnetCDF to read such netCDF files, because PnetCDF enforces
+the header padding from its very first release.  The files violating the
+padding specification will not be readable by PnetCDF of all releases
+prior to 1.9.0 and error code NC_EINVAL or NC_ENOTNC will be thrown when
+opening such files.  Note if the sizes of all attribute values of your
+files are aligned with 4-byte boundaries, then the files are readable by
+PnetCDF.  In order to keep the files in question readable by PnetCDF,
+checking for null-byte padding has been disabled in 1.9.0 by default. A
+new configure command-line option "--enable-null-byte-header-padding" has
+been made available to enable the checking and error code NC_ENULLPAD
+will be thrown when opening files. Note NC_ENULLPAD is not considered a
+fatal error. Users can safely ignore it. However, we keep this checking
+in ncvalidator no matter the new configure option is set or not.
+ncvalidator is a utility program reports whether a CDF file violates the
+file format specification, including this null-byte padding. See <a class="changeset" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/changeset/3528" title="relax header null-byte padding check when opening a file reading">r3528</a>
+for source codes changed and discussion in NetCDF Github issue
+<a class="ext-link" href="https://github.com/Unidata/netcdf-c/issues/657"><span class="icon">​</span>https://github.com/Unidata/netcdf-c/issues/657</a>.
+</li></ul><h2 id="IssuesrelatedtoMPIlibraryvendors:">Issues related to MPI library vendors:</h2>
+<ul><li>When using OpenMPI 2.0.0 through the latest 2.1.2 to build PnetCDF 1.8.1
+and prior, the following message may appear when running make check:
+<pre class="wiki">          "MPI error (MPI_File_open) : MPI_ERR_FILE: invalid file"
+</pre>but the test programs report "pass". This message can be safely ignored.
+It is due to OpenMPI failing to translate system error code ENOENT into
+MPI_ERR_NO_SUCH_FILE, but returns MPI_ERR_FILE instead. Thanks to Edgar
+Gabriel, a trick to silence the messages is to add the following to the
+command line of make check:
+<pre class="wiki">        TEST_SEQRUN="/path/to/OpenMPI/2.x.x/bin/mpirun --mca io romio314 -n 1"
+</pre>See discussion thread in OpenMPI:
+<a class="ext-link" href="https://github.com/open-mpi/ompi/issues/4412"><span class="icon">​</span>https://github.com/open-mpi/ompi/issues/4412</a>
+Note this error message does not appear in PnetCDF 1.9.0 and after.
+</li><li>When using OpenMPI 2.1.1 and priors built with Intel compilers 17.0.0,
+the test program nonblocking/mcoll_testf.f90 fails with segmentation
+fault. This is due to a bug in OpenMPI. See discussion thread in OpenMPI:
+<a class="ext-link" href="https://github.com/open-mpi/ompi/issues/3695"><span class="icon">​</span>https://github.com/open-mpi/ompi/issues/3695</a>
+</li><li>PnetCDF can no longer be built on 32-bit machines if using OpenMPI
+versions 2.0.2 and 1.10.6 and earlier versions. This is because OpenMPI
+configures type MPI_Offset as a 4-byte integer on all 32-bit machines,
+even if the machines allow 64-bit file offsets, known as large-file
+support. We suggest to use other MPI libraries to build PnetCDF on 32-bit
+machines. See the discussion thread in OpenMPI:
+<a class="ext-link" href="https://github.com/open-mpi/ompi/issues/3195"><span class="icon">​</span>https://github.com/open-mpi/ompi/issues/3195</a>
+</li><li>Fix test/nc_test/test_read.m4 and test/testcases/modes.c which test
+whether the correct error codes can be returned when opening a
+non-existing file. Thanks to Mark Dixon for testing various MPI
+libraries, C compilers, and file systems, we found that when using
+MVAPICH2 2.2, its Lustre driver always adds O_CREAT flag to the open()
+calls. Because of this behavior, the non-existing file will be created
+with zero length, which causes PnetCDF to spew NC_ENOTNC instead of
+NC_ENOENT. A bug report has been filed to MVAPICH. The fix shall come in
+the next release of MVAPICH. The bug report can be found in
+<a class="ext-link" href="http://mailman.cse.ohio-state.edu/pipermail/mvapich-discuss/2017-February/006300.html"><span class="icon">​</span>http://mailman.cse.ohio-state.edu/pipermail/mvapich-discuss/2017-February/006300.html</a>
+</li></ul><h2 id="IssuesrelatedtoDarshanlibrary:">Issues related to Darshan library:</h2>
+<ul><li>When using Darshan in conjunction with PnetCDF, if you encounter
+link-time or run-time errors with messages shown below, then we recommend
+to use Darshan library version 3.1.5 and later.
+</li></ul><blockquote>
+<blockquote>
+<p>
+During compile/link time:
+</p>
+<pre class="wiki">      /soft/perftools/darshan/lib/libdarshan-mpi-io.a(darshan-pnetcdf.o):
+      In function `__wrap_ncmpi_create': darshan-pnetcdf.c:62: undefined
+      reference to `ncmpi_create'
+</pre><p>
+During run time:
+</p>
+<pre class="wiki">      WARNING: Darshan ncmpi_create() stub called; this is probably the result
+      of a link-time problem.
+</pre></blockquote>
+</blockquote>
+<h2 id="Clarifications">Clarifications</h2>
+<ul><li>The NetCDF CDF formats define a set of external NC data types and
+describe their intents of use, shown below.
+<pre class="wiki">      External type  No. Bits  Intent of use
+      -------------  --------  ---------------------------------
+      NC_CHAR         8        text data (the only non-numerical type in NetCDF)
+      NC_BYTE         8        1-byte integer
+      NC_SHORT       16        2-byte signed integer
+      NC_INT         32        4-byte signed integer
+      NC_FLOAT       32        4-byte floating point number
+      NC_DOUBLE      64        8-byte real number in double precision
+      NC_UBYTE        8        unsigned 1-byte integer
+      NC_USHORT      16        unsigned 2-byte integer
+      NC_UINT        32        unsigned 4-byte integer
+      NC_INT64       64        signed 8-byte integer
+      NC_UINT64      64        unsigned 8-byte integer
+</pre>Note NC_CHAR is the only non-numerical data type available in NetCDF
+realm.  All other external types are considered numerical, which are
+illegal to be converted (type-casted) to and from a NetCDF variable
+defined in NC_CHAR type (error code NC_ECHAR will be thrown). The only
+legal APIs to read/write a variable of type NC_CHAR are the "_text" APIs.
+</li></ul><ul><li>Starting from 1.7.0, PnetCDF translates internal data types (i.e. data
+types of the I/O buffer and also used in the API name such as text,
+schar, uchar, short, int, etc.) to MPI data types based on the table
+below. Note MPI_BYTE does no correspond to any internal data type used
+in NetCDF/PnetCDF APIs. Thus, when MPI_BYTE is used to construct an MPI
+derived data type which is later used as argument buftype in a flexible
+API, the error code NC_EBADTYPE will be thrown (Not a valid data type).
+<pre class="wiki">      Data type of                                  Corresponding
+      internal I/O buffer   Example API             MPI datatype
+      -------------         ----------------------  -----------------
+      text                  ncmpi_put_var_text      MPI_CHAR
+      schar                 ncmpi_put_var_schar     MPI_SIGNED_CHAR
+      uchar                 ncmpi_put_var_uchar     MPI_UNSIGNED_CHAR
+      short                 ncmpi_put_var_short     MPI_SHORT
+      ushort                ncmpi_put_var_ushort    MPI_UNSIGNED_SHORT
+      int                   ncmpi_put_var_int       MPI_INT
+      uint                  ncmpi_put_var_uint      MPI_UNSIGNED
+      long                  ncmpi_put_var_long      MPI_LONG
+      float                 ncmpi_put_var_float     MPI_FLOAT
+      double                ncmpi_put_var_double    MPI_DOUBLE
+      longlong              ncmpi_put_var_longlong  MPI_LONG_LONG_INT
+      ulonglong             ncmpi_put_var_ulonglong MPI_UNSIGNED_LONG_LONG
+</pre></li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="./ReleaseNotes-1.9.0?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="../about.html"><strong>Trac 0.12.5</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+
+<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/ReleaseNotes-1.9.0 by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  
+<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/QuickTutorial by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <title>
+      QuickTutorial – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="../search.html" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="./QuickTutorial?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="../wiki.html" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="../search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h2 id="Introduction">Introduction</h2>
+<p>
+Parallel netCDF (officially abbreviated PnetCDF) is a library for parallel I/O providing higher-level data structures (e.g. multi-dimensional arrays of typed data).  PnetCDF creates, writes, and reads the same file format as the serial netCDF library, meaning PnetCDF can operate on existing datasets, and existing serial analysis tools can process PnetCDF-generated files.
+</p>
+<p>
+The most distinguishing feature of both netCDF and PnetCDF is the <em>bi-modal</em> programming interface.  An application creating a file will first enter <em>define mode</em>, in which it can describe all attributes, dimensions, types and structures of variables.  The program will then exit "define mode" and enter <em>data mode</em>, in which it actually performs I/O.  We'll see that often in the following examples.  This "declaration-before-use" model can be a little restrictive, but does allow for some aggressive optimization when carrying out I/O.  
+</p>
+<p>
+This brief tutorial was written with the assumption the reader has some familiarity with serial netcdf.  If serial netcdf concepts like attributes, dimensions, and variables are not familiar, start with the <a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/docs/netcdf/"><span class="icon">​</span>NetCDF Users Guide</a>. 
+</p>
+<h2 id="IOfromMaster">I/O from Master</h2>
+<p>
+In the old days, there were no parallel I/O facilities for netCDF.   Applications would run in parallel, but when it came time to do I/O, a master process (typically MPI rank 0) would handle all the I/O.   This approach can work for small amounts of I/O, but will not scale as the number of processes increases:
+</p>
+<ul><li>When writing, the master process needs to allocate enough memory to hold the data from all the other processes.
+</li><li>Again when writing, the master process becomes a serialization point as it receives data from all other processes.
+</li><li>Reading requires the master process to send a message for how much data to expect to all processes, then send the actual data.
+</li><li>I/O from one process means no parallel I/O can happen, limiting performance to one (serial) stream.
+</li></ul><p>
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-from-master.c">Example writer</a>
+and
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-read-from-master.c">Example reader</a>
+demonstrate this less than ideal approach. 
+</p>
+<h2 id="Separatefiles">Separate files</h2>
+<p>
+We present the "one-file-per-process" approach not to recommend it, but rather because it is commonly seen. 
+</p>
+<p>
+This approach has some significant drawbacks.   What if the number of writers differs from the number of readers?  What if there are a million processes?  What contextual information about the application data is lost in such an approach?
+</p>
+<p>
+On some platforms, however, the "one-file-per-process" approach is the most straightforward way to achieve acceptable I/O performance.   Observe the trade-offs made in this example:
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-nfiles.c">Write one file per process</a>
+and
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-read-nfiles.c">Read one file per process</a>.
+</p>
+<h2 id="RealparallelIOonsharedfiles">Real parallel I/O on shared files</h2>
+<p>
+The previous approaches either bypass parallel I/O entirely or hide a great deal of application context from PnetCDF.   We now present a more natural way of carrying out I/O in a parallel program: operating on a shared file.
+</p>
+<p>
+Shared-file I/O provides several benefits.  First of all, because all processes can participate in collective I/O, the underlying MPI-IO library can make use of several powerful optimizations, such as file access alignment and collective buffering.   Opening or creating a dataset (file) is a collective operation as well, meaning processes store and query metadata (the number, size, and location in file of attributes and variables) in an efficient manner.   Data decomposition may be more sophisticated, but it is also more likely to match how the scientific application has already split up the data among processes. 
+</p>
+<p>
+Examples:
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-standard.c">Writing data with standard API</a>
+and
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-read-standard.c">Reading data via standard API</a>
+</p>
+<h2 id="Flexibleinterface">Flexible interface</h2>
+<p>
+The standard netCDF and PnetCDF APIs explicitly specify the type of the application data (an array of integers, double precision, or floating point values, e.g. <tt>ncmpi_put_vara_float_all</tt>).  We have further extended the PnetCDF API to accept arbitrary MPI datatypes.  Say an application's data structures are more complex than a multidimensional array of a basic type, or if the application needs to write a non-contiguous selection of a given memory region to the dataset.  In these situations, an MPI datatype can describe the desired data.  
+</p>
+<p>
+In these examples, we use <tt>ncmpi_put_vara_all</tt>, even though the datatype is a basic MPI_INT type:
+</p>
+<p>
+Examples:
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-flexible.c">Writing data with Flexible API</a>
+and
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-read-flexible.c">Reading data via Flexible API</a>
+</p>
+<h2 id="Non-blockinginterface">Non-blocking interface</h2>
+<p>
+A set of "non-blocking" APIs is available in PnetCDF. They can aggregate multiple smaller requests into larger ones for better I/O performance.  These routines follow the MPI model of posting operations, then waiting for completion of those operations. 
+</p>
+<p>
+The PnetCDF and netCDF APIs are variable oriented: if an application writes 50 variables to a dataset (file), it must make 50 calls where each call is carried out by a separate MPI-IO write call.  With the PnetCDF non-blocking API, however, the library can take this collection of pending operations and then stitch them together into one larger, more efficient MPI-IO request.  
+</p>
+<p>
+Examples:
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-nb.c">Non-blocking write</a>
+and
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-read-nb.c">Non-blocking read</a>
+</p>
+<h2 id="Bufferedwriteinterface">Buffered write interface</h2>
+<p>
+The non-blocking APIs require users not to access any part of the I/O buffer after a non-blocking API is called, until a call to the the wait API completes. This requirement may result in changes to the application programs if they use the same intermediate buffers for multiple write operations. Using intermediate buffers to convert/average the raw data into data for visualization and data analysis purposes is a common practice in many applications. In this case, the programs must allocate separate intermediate buffers for each non-blocking write operations.
+</p>
+<p>
+PnetCDF includes a set of "buffered write" APIs that makes a copy of write request data into a user attached buffer. Hence, once the buffered write call returns, the contents of user's write buffers are free to change. However, users are required to explicitly call ncmpi_buffer_attach to allow PnetCDF to allocate an internal buffer for accommodating the write requests. In addition, a call to ncmpi_buffer_detach is required when this buffer is no longer needed.
+</p>
+<p>
+Examples:
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-buffered.c">Non-blocking buffered write in C</a>
+and
+<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf.F">Non-blocking buffered write in Fortran</a>
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="./QuickTutorial?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    </body>
+
+<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/QuickTutorial by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+</html>

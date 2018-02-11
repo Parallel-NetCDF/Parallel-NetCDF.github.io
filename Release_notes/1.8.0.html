@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+    <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h1 id="ReleaseNoteof1.8.0">Release Note of 1.8.0</h1>
+<ul><li>Release date: December 19, 2016.
+</li><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a>
+</li></ul><h2 id="Newfeatures">New features</h2>
+<ul><li>Copy fill values to data elements that cause out-of-bound error (i.e.
+NC_ERANGE.) In netCDF v4.4.1 and priors, type conversion for out-of-
+bound elements proceeds even if the out-of-bound error is detected, and
+the contents (in both files and read buffers) are left up to the user
+to handle. See the URL below for details.
+<a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/docs/group__error.html"><span class="icon">​</span>http://www.unidata.ucar.edu/software/netcdf/docs/group__error.html</a>
+Instead of carrying out the type conversion, PnetCDF fills the out-of-
+bound data elements with their "fill values", as specified by the
+variable's attribute "_FillValue" or default CDF fill values if the
+attribute is not defined. Specifically, for PnetCDF put APIs, the value
+of attribute _FillValue, if defined, will be used when writing to files.
+For get APIs, the default CDF _FillValue corresponding to the internal
+data type will be used to fill the read buffer. This feature can be
+disabled by adding option "--disable-erange-fill" to the configure
+command line. In this case, the conventional NetCDF method described
+above is used.
+</li><li>A new configure option --enable-relax-coord-bound is added to provide a
+more relaxed boundary check for argument start. Traditionally, both
+NetCDF and PnetCDF detect the error code NC_EINVALCOORDS when the value
+of start is larger than or equal to the defined dimension size. This can
+be inconvenient for some applications that make a zero-length request
+with start being the dimension size, usually the last process. The new
+configure option relaxes the boundary check by allowing the above
+exception, i.e. start[i] can be the size of dimension i only when
+count[i] is zero. The default of this feature is disabled. For more
+detailed information, see discussion in:
+<a class="ext-link" href="http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2016-March/001839.html"><span class="icon">​</span>http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2016-March/001839.html</a>
+</li><li>New macros have been added to PnetCDF header file, pnetcdf.h, to indicate
+the configurable options that were enabled/disabled. These macros are
+PNETCDF_ERANGE_FILL, PNETCDF_SUBFILING, PNETCDF_RELAX_COORD_BOUND, and
+PNETCDF_DEBUG_MODE. Their values are set to 1 when enabled, 0 otherwise.
+</li><li>API ncmpi_inq_file_format can now detect HDF5 file signature and report
+NC_FORMAT_NETCDF4.
+</li><li>Enable ncmpidump to check whether input file is in HDF5 format when -k
+option is used at the command line.
+</li><li>In ncmpi_open, add a checking for HDF5 file signature and return error
+code NC_ENOTNC3 if detected.
+</li></ul><h2 id="NewAPIs">New APIs</h2>
+<ul><li>ncmpi_strerrno, nfmpi_strerrno, nf90mpi_strerrno return the string name
+of a NC error code.
+</li><li>ncmpi_inq_path, nfmpi_inq_path, nf90mpi_inq_path for inquiring the file
+pathname which was used to open/create the CDF file.
+</li></ul><h2 id="Newoptimization">New optimization</h2>
+<ul><li>Use Bernstein hash function for checking whether the name of a variable
+or dimension has already been used.
+</li><li>Replace the use of linked lists with arrays for storing the pending
+nonblocking requests. This could save time for traversing the linked
+list.
+</li></ul><h2 id="Syntaxchanges">Syntax changes</h2>
+<ul><li>ncmpi_cancel can now be called in define mode.
+</li></ul><h2 id="Semanticsupdates">Semantics updates</h2>
+<ul><li>For collective APIs, the following errors are considered fatal:
+NC_EBADID, NC_EPERM, NC_EINDEFINE, NC_EINDEP, and NC_ENOTINDEP. Once
+detects these errors the calling APIs return immediately. If the fatal
+errors happen only to a subset of processes, the running program may
+hang, due to other processes being waiting at an MPI collective call.
+(Note hanging will never occur to independent APIs.) To debug a hanging
+problem, users can run the program in safe mode by setting the
+environment variable PNETCDF_SAFE_MODE to 1. In safe mode, error codes
+are synchronized among all processes. Error codes other than the above,
+if detected, are not as fatal. The processes encountering the non-fatal
+errors will continue to the collective call but with zero-length
+requests. Thus, the collective calls can nicely complete without hanging.
+</li><li>Consistency check for header data (defining dimensions, variables, and
+attributes) is moved to individual APIs and only enabled when safe mode
+is enabled. Header data consistency check is no longer performed in
+ncmpi_enddef. As a reminder, PnetCDF APIs that change header data are
+all collective and their arguments are required to be consistent among
+the calling processes.
+</li><li>In netCDF-3, whether the contents of an NC_BYTE variable in CDF-1 or
+CDF-2 files are signed or unsigned is determined by the calling APIs. See
+<a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/docs/data_type.html#type_conversion"><span class="icon">​</span>http://www.unidata.ucar.edu/software/netcdf/docs/data_type.html#type_conversion</a>
+"In netcdf-3, we treat NC_BYTE as signed for the purposes of conversion
+to short, int, long, float, or double. (Of course, no conversion takes
+place when the internal type is signed char.) In the _uchar functions, we
+treat NC_BYTE as if it were unsigned. Thus, no NC_ERANGE error can occur
+converting between NC_BYTE and unsigned char." In other words, if called
+from signed APIs, NC_BYTE variables are treated as signed. If called from
+unsigned APIs (i.e. _uchar APIs, the only unsigned APIs in netCDF-3) they
+are unsigned. NetCDF-3 specifically makes an exception to skip NC_ERANGE
+check when calling _uchar APIs on NC_BYTE variables. However, in netCDF-4
+and CDF-5, because of the introduction of the new data type NC_UBYTE, an
+unsigned 8-bit integer, which makes NC_BYTE an signed 8-bit integer and
+thus renders the above exception less sense. Starting from this release,
+for CDF-5 files, regular NC_ERANGE check is performed in PnetCDF for all
+APIs that access NC_BYTE variables. For CDF-1 and 2 files, PnetCDF still
+honors that exception.
+</li><li>Prior to version 1.7.0, any outstanding nonblocking requests detected at
+file close are automatically cancelled without reporting an error.
+Starting from this 1.8.0 release, error code NC_EPENDING will be returned
+when pending requests are detected at the file close.
+</li><li>API ncmpi_set_default_format is changed to an independent API. However,
+it is expected to be called by all processes that intend to create a file
+later. Inconsistency in default format setting will be detected at file
+create time.
+</li></ul><h2 id="Newutilityprogram">New utility program</h2>
+<ul><li>Added pnetcdf-config shell script to display the options used in building
+PnetCDF.
+</li></ul><h2 id="Newerrorcodeprecedence">New error code precedence</h2>
+<ul><li>When two or more errors are detected by the PnetCDF library (e.g. due to
+the use of more than one bad API argument), the error code returned from
+an API will follow the precedence below. In principle, the errors related
+to ncid is the most serious, followed by varid.
+</li></ul><blockquote>
+<blockquote>
+<p>
+For put attribute APIs:
+</p>
+<blockquote>
+<p>
+NC_EBADID, NC_EPERM, NC_ENOTVAR, NC_EBADNAME, NC_EBADTYPE, NC_ECHAR,
+NC_EINVAL, NC_ENOTINDEFINE, NC_ERANGE
+</p>
+</blockquote>
+<p>
+For get attribute APIs:
+</p>
+<blockquote>
+<p>
+NC_EBADID, NC_ENOTVAR, NC_EBADNAME, NC_ENOTATT, NC_ECHAR, NC_EINVAL,
+NC_ERANGE
+</p>
+</blockquote>
+<p>
+For put/get variable APIs:
+</p>
+<blockquote>
+<p>
+NC_EBADID, NC_EPERM, NC_EINDEFINE, NC_ENOTVAR, NC_ECHAR,
+NC_EINVALCOORDS, NC_EEDGE, NC_ESTRIDE, NC_EINVAL, NC_ERANGE
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="Newerrorcode">New error code</h2>
+<ul><li>NC_EPENDING: Pending nonblocking request is found at file close.
+</li><li>NC_EINVAL_OMODE: invalid file open mode. This separates the case from the
+file create API which uses NC_EINVAL_CMODE mode. The error messages for
+both error codes are revised accordingly.
+</li><li>NC_EMULTIDEFINE_CMODE: inconsistent file create mode. This separates the
+case from NC_EMULTIDEFINE_OMODE. The error messages for both error codes
+are revised accordingly.
+</li><li>The Fortran error codes corresponding to the above are also added.
+</li></ul><h2 id="Newtestprogram">New test program</h2>
+<ul><li>test/testcases/scalar.c to test whether arguments start, count, stride,
+and imap are properly ignored when getting/putting a scalar variable
+</li><li>test/testcases/erange_fill.m4 to test the new configure-time feature of
+--enable-erange-fill
+</li></ul><h2 id="Otherupdates:">Other updates:</h2>
+<ul><li>Check file open/create mode for NC_DISKLESS and NC_MMAP and return error
+code NC_EINVAL_OMODE/NC_EINVAL_CMODE if either of these two modes is
+used. These modes are currently not supported.
+</li><li>Clarify support for CDF-2 and CDF-5 formats. When the size of MPI_Offset
+is less than 8 bytes, support for CDF-2 and CDF-5 is disabled.
+</li><li>When using OpenMPI 2.0.1 to build PnetCDF, users may encounter an error
+message of "test_write.c: file ./scratch.nc should not exist" or "FAILURE
+at line 429 of test_ncmpi_abort in test_write.c: expecting NC_ENOENT or
+NC_EFILE but got NC_NOERR" while running "make check". The cause is due
+to a bug in OpenMPI 2.0.1 that fails to return the correct MPI error
+class MPI_ERR_NO_SUCH_FILE when deleting a non-existing file. The bug fix
+will appear in OpenMPI 2.0.2. See the OpenMPI bug report in
+<a class="ext-link" href="https://github.com/open-mpi/ompi/issues/2232"><span class="icon">​</span>https://github.com/open-mpi/ompi/issues/2232</a>
+</li><li>When using OpenMPI 1.10.2 and 1.8.5 to build PnetCDF, users may encounter
+an error message of "An error occurred in MPI_Type_create_hindexed" when
+running "make check". This is due to a bug in OpenMPI that fails to
+create a zero-size datatype in MPI_Type_create_hindexed. The bug fix has
+appeared in the releases of 1.10.3, 1.8.6, and 2.0.1. See the bug report
+in <a class="ext-link" href="https://github.com/open-mpi/ompi/issues/1611"><span class="icon">​</span>https://github.com/open-mpi/ompi/issues/1611</a>
+</li><li>When using SGI MPI with MPT 2.14 to build PnetCDF, users may encounter an
+error message of "function:MPI_TYPE_CREATE_HVECTOR, Invalid argument".
+The bug fix will appear in 2.15 to be released in November 2016.
+</li><li>The quiet mode of utility program ncmpidiff, command-line option -q, now
+print no message when two files or two variables in comparison are the
+same.
+</li></ul><h2 id="InteroperabilitywithnetCDF-4">Interoperability with netCDF-4</h2>
+<ul><li>When using 1.8.0 release to build netCDF version 4.4.1.1 and earlier,
+users may encounter errors with message like "test_put.c: NetCDF: Numeric
+conversion not representable" from running command "make test".  This is
+due to an incorrect implementation of uchar APIs for accessing variables
+of type NC_BYTE for CDF-2 files in both PnetCDF and NetCDF. If not using
+such a special case, users can ignore this error. See more information
+above under "Semantics updates".
+</li></ul><h2 id="Bugfixes">Bug fixes</h2>
+<ul><li>Fix to allow argument no_fill in API ncmpi_inq_var_fill to be NULL. See
+<a class="changeset" href="/projects/parallel-netcdf/changeset/2609" title="argument no_fill can be NULL">r2609</a>
+</li><li>Fix to allow putting global attribute _FillValue. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2560" title="bug fix: allow put global attribute _FillValue">r2560</a>
+</li><li>Fix some missing character string normalizations for names of attributes,
+dimensions, and variables.
+</li><li>Fix the return unlimited dimension ID of value -1, not 0, by Fortran API
+nfmpi_inq_unlimdim when no unlimited dimension is defined. This conforms
+with netCDF convention. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2396" title="bug fix: dim ID returned by nfmpi_inq_unlimdim should be -1 when no ...">r2396</a> and <a class="changeset" href="/projects/parallel-netcdf/changeset/1372" title="according to netCDF, if no unlimited length dimension has been defined, -1 ...">r1372</a>
+</li><li>Fix string processing of the environment variables for PnetCDF I/O hints
+See <a class="changeset" href="/projects/parallel-netcdf/changeset/2385" title="bug fix: should not modify env string, do that on a copy of it">r2385</a>
+</li><li>Fix utility ncmpidiff to use collective read APIs in collective data mode
+See <a class="changeset" href="/projects/parallel-netcdf/changeset/2382" title="bug fix: should have use collective APIs">r2382</a>
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.8.0?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    </body>
+</html>

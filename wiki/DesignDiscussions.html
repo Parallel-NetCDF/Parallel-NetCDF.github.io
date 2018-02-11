@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      DesignDiscussions – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/DesignDiscussions?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h2 id="UseofMPI_File_set_view">Use of MPI_File_set_view</h2>
+<p>
+MPI_File_set_view() is a collective call, and we don't like having to call it as often as we do.  However, that's the way MPI is written, so we end up needing nearly every MPI_File_read_all() and MPI_File_write_all() call to partner with an MPI_File_set_view.
+</p>
+<p>
+Prior version 1.6.0, we also reset the file view right after each MPI read/write call, because root process may need to write to file header, e.g. to update the number of records, and this write is an independent I/O (for this we cannot reset fileview because MPI_File_set_view() is collective). Starting from 1.6.0, the call to MPI_File_set_view() right after each MPI read/write call is drop, since root process's fileview has been changed to always include file header.
+</p>
+<p>
+We do try to limit the number of MPI_File_set_view calls: we can avoid setting the fileview entirely when the request is a single
+contiguous file region. In this case, MPI-IO calls with explicit offset functions are used.
+</p>
+<h2 id="Someclarifications:">Some clarifications:</h2>
+<ul><li>PnetCDF keeps two MPI file handles internally:
+<ul><li>One is for use in collective data mode. This file handle is created using the MPI communicator passed into ncmpi_create() or ncmpi_open().
+</li><li>The other is for use in independent data mode. This file handle is created using MPI_COMM_SELF.
+</li></ul></li></ul><blockquote>
+<p>
+When switching between collective and independent data modes, PnetCDF will select the right handle to call MPI-IO functions.
+</p>
+</blockquote>
+<ul><li>Why must PnetCDF call MPI_File_set_view in the collective data mode?
+<ul><li>Setting an MPI fileview allows PnetCDF to let MPI-IO to carry out non-contiguous requests
+</li><li>PnetCDF calls MPI_File_set_view before and after a call to a collective MPI-IO function. The after is to clear the view to make the entire file visible.
+</li><li>The after is necessary because some PnetCDF APIs may write to file header, for example the root process to update the number of records in the file. Without reseting the fileview, the root process may not be able to see the file header (at least for the current implementation of PnetCDF, i.e. 1.5.0).
+</li><li>MPI_File_set_view is collective, i.e. all processes must participate to call.
+</li><li>A possible optimization to avoid the second MPI_File_set_view is to construct root's fileview data type, so the entire header is always visible to the root. However, this will change all MPI collective I/O calls used in PnetCDF from the ones without explicit offset to the one with explicit offset, e.g. change from MPI_File_write_all to MPI_File_write_at_all.
+</li></ul></li></ul><ul><li>Why must PnetCDF call MPI_File_set_view in the independent data mode?
+<ul><li>Setting an MPI fileview allows PnetCDF to let MPI-IO to carry out non-contiguous requests.
+</li><li>PnetCDF calls MPI_File_set_view before and after a call to an independent MPI-IO function. The after is to clear the view to make the entire file visible.
+</li><li>The MPI_File_set_view after MPI-IO function may not be necessary, but is implemented in 1.5.0. Fortunately, since the independent file handle is created using MPI_COMM_SELF, no communication will occur. Removing the second call is in a to-do list.
+</li></ul></li></ul><ul><li>Why can't we just reset the file view in ncmpi_begin_indep_data?
+<ul><li>Because we would like to use the wonderful feature of MPI-IO that sets the fileview for carrying out non-contiguous requests.
+</li><li>Every PnetCDF independent  API calls may access different subarray locations and/or variables, so the fileviews can be different.
+</li></ul></li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/projects/parallel-netcdf/wiki/DesignDiscussions?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    </body>
+</html>

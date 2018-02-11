@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  
+<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/FileLimits by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <title>
+      FileLimits – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="../search.html" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="./FileLimits?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="../wiki.html" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="../search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h2 id="OldFormat">Old Format</h2>
+<p>
+The <a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/old_docs/really_old/guide_15.html"><span class="icon">​</span>CDF-1</a> file format is the default file format which has been in use through netCDF library version 3.5.1.   The definitive resource for these limits can be found at Unidata's <a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/docs/file_structure_and_performance.html#classic_format_limitations"><span class="icon">​</span>NetCDF Classic Format Limitations</a> page.
+</p>
+<h2 id="ExtendingLimits">Extending Limits</h2>
+<p>
+The <a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/docs/file_format_specifications.html"><span class="icon">​</span>CDF-2</a> file format (a.k.a. the 64-bit offset format) relaxes many of the above limitations.  In order to create a CDF-2 formatted file, you must pass the flag NC_64BIT_OFFSET when creating the file.  PnetCDF supports the CDF-2 file format as well, though shares the same limits as serial NetCDF.  Read more at <a class="ext-link" href="http://www.unidata.ucar.edu/"><span class="icon">​</span>Unidata</a>'s <a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/docs/file_structure_and_performance.html#offset_format_limitations"><span class="icon">​</span>64-bit Offset Format Limitations</a> page for limitations on the number of variables allowable per file, maximum sizes of record and non-record variables, and exceptions. The limitations and exceptions are quoted here.
+</p>
+<blockquote>
+<p>
+Although the 64-bit offset format allows the creation of much larger netCDF files than was possible with the classic format, there are still some restrictions on the size of variables.
+</p>
+</blockquote>
+<p>
+  
+</p>
+<blockquote>
+<p>
+It's important to note that without Large File Support (LFS) in the operating system, it's impossible to create any file larger than 2 GiBytes. Assuming an operating system with LFS, the following restrictions apply to the netCDF 64-bit offset format.
+</p>
+</blockquote>
+<blockquote>
+<p>
+No fixed-size variable can require more than (2<sup>32</sup> - 4) bytes (i.e. 4GiB - 4 bytes, or 4,294,967,292 bytes) of storage for its data, unless it is the last fixed-size variable and there are no record variables. When there are no record variables, the last fixed-size variable can be any size supported by the file system, e.g. terabytes.
+A 64-bit offset format netCDF file can have up to (2<sup>32</sup> - 1) fixed sized variables, each under 4GiB in size. If there are no record variables in the file the last fixed variable can be any size.
+</p>
+</blockquote>
+<blockquote>
+<p>
+No record variable can require more than (2<sup>32</sup> - 4) bytes of storage for each record's worth of data, unless it is the last record variable. A 64-bit offset format netCDF file can have up to (2<sup>32</sup> - 1) records, of up to (2<sup>32</sup> - 1) variables, as long as the size of one record's data for each record variable except the last is less than 4 GiB - 4.
+</p>
+</blockquote>
+<blockquote>
+<p>
+Note also that all netCDF variables and records are padded to 4 byte boundaries.
+</p>
+</blockquote>
+<p>
+The <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html"><span class="icon">​</span>CD-5</a> file format further relaxes the limitation to allow large dimensions (i.e. &gt; 2<sup>32</sup>) and more large varibles. To create a CDF-5 file, the file create mode NC_64BIT_DATA must be used when calling ncmpi_create function. Please note that <a class="ext-link" href="http://www.unidata.ucar.edu/"><span class="icon">​</span>Unidata</a>'s NetCDF has also started to support CDF-5 format since its release of version 4.4.0.
+</p>
+<h2 id="Recordvs.Non-RecordVariables">Record vs. Non-Record Variables</h2>
+<p>
+One subtle point about the CDF file format limitations is that record
+variables (those with one NC_UNLIMITED dimension) can be quite large.  The
+product of the fixed-sized dimensions of a record variable defines the size of
+a single record.  There can be quite a few of these records in a record
+variable, though, so that can be one way around the file format limitations on
+record size.
+</p>
+<p>
+The drawback of using record variables is that with multiple record variables,
+the data for each variable are interleaved on a per-record basis.  This data
+layout makes it much harder to figure out the optimal access pattern.
+Ideally, though, programs would read and write record variables one record at
+a time.
+</p>
+<h2 id="AmountofIndividualRequestsisLimitedto2GB">Amount of Individual Requests is Limited to 2GB</h2>
+<p>
+In PnetCDF, a single get/put request is limited to the amount of 2GiB.
+First, the MPI standard specifies that the 'count' argument passed to MPI read and write APIs be a 32-bit signed integer and hence the upper bound of 2<sup>31</sup> elements.
+Secondly, ROMIO (the MPI-I/O implementation used by almost all MPI libraries) further limits the request amount to 2<sup>31</sup> bytes. Future release of ROMIO may fix this problem.
+A solution for PnetCDF users is to break the request to multiple get/put calls so that each is less than amount of 2 GiB.
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="./FileLimits?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+ 
+  </body>
+
+<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/FileLimits by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+</html>

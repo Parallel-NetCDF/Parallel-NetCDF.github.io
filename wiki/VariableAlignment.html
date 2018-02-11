@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      VariableAlignment – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/VariableAlignment?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h1 id="FileHeaderandVariableFileLayoutAlignment">File Header and Variable File Layout Alignment</h1>
+<p>
+From the beginning, PnetCDF has taken an MPI INFO object in the file create
+and open routines.  This object has to this point been used to pass hints down
+to the MPI-IO layer, but nothing precluded using those hint objects at the
+PnetCDF layer.  We added a new feature in <a class="wiki" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.1.0">1.1.0</a> that uses these
+MPI info hints to align the space allocated for file header and the starting file offsets of the non-record variables.
+</p>
+<p>
+Two PnetCDF hints that can be used to control the alignment are "nc_header_align_size" and
+"nc_var_align_size". The former aligns the header size of a newly created file.
+The latter, "nc_var_align_size", is used to align the starting file offsets
+of all non-record variables. (The alignment for record variables is currently in our todo list.)
+</p>
+<h2 id="Usageexamples">Usage examples</h2>
+<pre class="wiki">   MPI_Info_set(info, "nc_header_align_size", "1048576");
+   MPI_Info_set(info, "nc_var_align_size",    "4194304");
+   ncmpi_create(MPI_COMM_WORLD, "filename.nc", mode, info, &amp;ncid);
+</pre><h2 id="Defaultvalues">Default values</h2>
+<p>
+The performance of PnetCDF can be significantly affected by the alignment, especially
+when the aggregate I/O request amounts are large. On parallel file systems, setting the
+hints equal to the file system striping size often results in the best performance.
+Default values of the two alignment hints are calculated below.
+If the MPI-IO hint "striping_unit" is larger than zero (set by the user or obtained from the
+file system) and the total size of all non-record/record variables is lager than N * striping_unit,
+then the default for both hints are set to striping_unit. (Currently, N=4.)
+Otherwise, the default is 512 bytes.
+</p>
+<p>
+The alignment can be disabled by setting both hints to "1".
+</p>
+<h2 id="Whyusenc_header_align_sizehint">Why use "nc_header_align_size" hint?</h2>
+<p>
+This hint allows some extra space between the end of the header
+describing the entire file and the first variable.  If you
+have an application that periodically wishes to add more variables to an
+already existing file, expanding the file header size may result in an expensive
+move of the entire data file to make room for the definition of the new variables.
+Hence, setting this hint to a value that is big enough to accommodate any
+additional variables means you may leave your application code as-is and
+yet still see tremendous performance improvements.
+</p>
+<h2 id="Whyusenc_var_align_sizehint">Why use "nc_var_align_size" hint?</h2>
+<p>
+If you are writing to a block-based parallel file system, such as IBM's
+GPFS or Lustre, then an application write becomes a block write at the file system
+layer.  If a write straddles two blocks, then locks must be acquired for both
+blocks.  Aligning the start of a variable to a block boundary, combined with
+collective I/O optimizations in the MPI-IO library can often eliminate all
+unaligned file system accesses.
+</p>
+<p>
+If you are using independent APIs, then setting this hint is more important than if using collective.
+This is because most of the latest MPI-IO implementations have incorporated the file access alignment in their collective I/O functions, if MPI-IO can successfully retrieve the file striping information from the underlying parallel file system.
+This is another reason we encourage PnetCDF users to use collective APIs whenever possible.
+</p>
+<h2 id="Whytwoseparatehints">Why two separate hints?</h2>
+<p>
+Note that the two alignment hints can be set at the same time, with different values.
+When this happens, the starting file offset of the first variable will be set to
+a number that is a multiple of both hint values. Setting different values may be
+useful in two scenarios:
+1) when a file has a large header and small-sized non-record variables, and
+2) a small header and large-sized non-record variables.
+</p>
+<h2 id="Examplescenarios">Example scenarios</h2>
+<p>
+Alignment for file system:  Argonne's BlueGene system has a GPFS file system
+with a 4MB block size (striping_unit).  By setting the "nc_var_align_size" hint to 4MB, PnetCDF
+will round up the starting offset of each non-record variable to the next 4MB.
+</p>
+<p>
+Padding header for future growth:  An application creates a checkpoint file,
+but has structured the code so that each component writes its own information
+to the checkpoint file.  Since we don't know 100% of the information at the
+initial define mode time, this application has to call <tt>ncmpi_redef()</tt> for each
+component.  If this call results in a bigger header on disk, then PnetCDF
+initiates a very expensive data movement step. However, the application
+could make use of the header alignment hint to ensure there is
+enough room for the header to grow and accommodate additional variables.
+</p>
+<h2 id="Limitations">Limitations</h2>
+<p>
+This hint will have no impact on the alignment of record variables.  I (robl)
+tried but could not get the correctness tests to pass.  Patches welcome!
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/projects/parallel-netcdf/wiki/VariableAlignment?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    </body>
+</html>

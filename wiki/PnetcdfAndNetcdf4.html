@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      PnetcdfAndNetcdf4 – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/PnetcdfAndNetcdf4?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h2 id="PnetCDFandnetCDF-4">PnetCDF and netCDF-4</h2>
+<p>
+A brief history: In the fall of 2008, UCAR released NetCDF4, which took the HDF5 file format and features, and put the serial netCDF interface on top of that.  UCAR modified the serial netCDF API to expose some of the new features HDF5 introduced, including a means for parallel I/O.
+</p>
+<p>
+Some software engineering gave NetCDF-4 the concept of a separation between interface and file format (netCDF API, legacy netCDF or new HDF5 file format).  Soon, UCAR extended this interface and gave NetCDF-4 the ability to use PnetCDF.   Now, with some caveats, the classic netCDF API can read and write the classic netCDF file format either using the classic netCDF library or our PnetCDF library.
+</p>
+<p>
+We think this is terrific, and in no way has UCAR usurped or challenged PnetCDF with this move. Instead, UCAR has provided a valuable option to applications developers.  In order to transition to parallel I/O, the typical "file per process" or "all I/O from rank 0" approaches need to be re-thought, no matter which underlying library will carry out the I/O.  Applications accustomed to serial netCDF can try out PnetCDF while still using an API familiar to them.  If they want to use some of the more sophisticated PnetCDF features, or try out PnetCDF down the road, only minor edits to the names of the functions will be needed -- the application has already done the hard work of domain decomposition.
+</p>
+<h2 id="InteroperabilityofPnetCDFwithnetCDF-4">Interoperability of PnetCDF with netCDF-4</h2>
+<p>
+Starting from version 4.2.1.1, netCDF-4 program can perform parallel I/O on the classic CDF-1 and CDF-2 files through PnetCDF.
+This is done by passing file create mode NC_PNETCDF to nc_create_par(), for instance, 
+</p>
+<pre class="wiki">nc_create_par(filename, NC_PNETCDF, MPI_COMM_WORLD, info, &amp;ncid);
+</pre><p>
+Check the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/#InteroperabilityWithNetCDF4"><span class="icon">​</span>netCDF-4 example programs</a> in C and Fortran.
+</p>
+<p>
+<strong>Note:</strong> Currently, using PnetCDF mode is the only way for a netCDF program to perform parallel I/O on files in classic CDF-1 and 2 formats.
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/projects/parallel-netcdf/wiki/PnetcdfAndNetcdf4?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    </body>
+</html>

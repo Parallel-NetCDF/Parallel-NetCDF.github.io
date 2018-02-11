@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      TestCoverage – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/TestCoverage?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><p>
+The saying goes "untested code is broken code".   
+</p>
+<p>
+PnetCDF has a hodge-podge of tests collected over the years.  How well do these tests cover the code base? Let's find out just how un-tested parts of PnetCDF might be.
+</p>
+<p>
+Right now I (robl) am exploring what's out there. 
+</p>
+<ul><li>the MPICH2 code has a bunch of perl scripts to collect coverage data and display on a web page the lines that are not covered.  Their approach also allows for marking up the code to exclude error handling
+</li><li>lcov (<a class="ext-link" href="http://ltp.sourceforge.net/coverage/lcov.php"><span class="icon">​</span>http://ltp.sourceforge.net/coverage/lcov.php</a>) looks promising, if not really maintained any longer: generate html reports
+</li><li>a person at sandia has made gcovr: <a class="ext-link" href="https://software.sandia.gov/trac/fast/wiki/gcovr"><span class="icon">​</span>https://software.sandia.gov/trac/fast/wiki/gcovr</a>  for a more text-oriented approach to reporting
+</li></ul><h2 id="Preliminaries">Preliminaries</h2>
+<p>
+You will need coverage information before you can begin to worry about how to present it.  <a class="changeset" href="/projects/parallel-netcdf/changeset/1021" title="initial steps towards coverage analysis.  had to fix up only one makefile, ...">r1021</a> (should be part of the 1.3.0 release) has a '--enable-coverage' configure flag. 
+</p>
+<pre class="wiki"> ./configure --enable-coverage --with-mpi=/path/to/mpi --prefix=/whatever 
+</pre><p>
+Then, compile and build as you normally would.  Run 'make testing' and any other tests you can think of.  The tests will deposit a bunch of stuff.gcda and thing.gcno files in the build directory.  
+</p>
+<h2 id="Displayingprofileinformationwithlcov">Displaying profile information with lcov</h2>
+<p>
+Lcov is a funny tool in that it was developed to show coverage of the linux kernel.  So, half of the documentation is about how to display coverage of kernel code, and the other half is for applications.  Just something to bear in mind while reading the documentation.   Quick summary:
+</p>
+<p>
+First, turn the big pile of coverage data (the .gcda and .gcno files) into what lcov calls a "tracefile":
+</p>
+<pre class="wiki">lcov --directory . --capture --output-file pnetcdf.info
+</pre><p>
+This will descend into the directory tree and pick up all the assorted coverage files deposited therein, and put all the coverage information into a single .info file. 
+</p>
+<p>
+Next, make a pretty html report:
+</p>
+<pre class="wiki"> genhtml --legend --output-directory pnetcdf_coverage pnetcdf.info 
+</pre><p>
+Open up pnetcdf_coverage/index.html in a web browser and click away. 
+</p>
+<h2 id="Displayingprofileinformationwithgcovr">Displaying profile information with gcovr</h2>
+<p>
+gcovr is a python script.  Just run it out of the build directory.  Produces a lot of output, but  does tell me that for example our tests 
+</p>
+<blockquote>
+<p>
+execute 40217 out of 51862 lines, or 77% coverage. 
+</p>
+</blockquote>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/projects/parallel-netcdf/wiki/TestCoverage?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    </body>
+</html>

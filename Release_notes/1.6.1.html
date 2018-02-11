@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h1 id="ReleaseNoteof1.6.1">Release Note of 1.6.1</h1>
+<ul><li>Release date: June 1, 2015.
+</li><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a>
+</li></ul><h2 id="NewFeatures:">New Features:</h2>
+<ul><li>PnetCDF now supports fill mode. ncmpi_set_fill() can be used to set the fill mode for the entire data set. Note the differences from netCDF:
+<ol><li>The default mode in PnetCDF is NC_NOFILL.
+</li><li>Setting fill mode for the entire file or individual variables must be done in define mode.
+</li><li>For non-record variables, they are filled at the time ncmpi_enddef() is called.
+</li><li>For record variables, users must explicitly call ncmpi_fill_var_rec() to fill one record at a time before writing to the record of that variable.
+</li></ol></li></ul><h2 id="NewAPIs:">New APIs:</h2>
+<ul><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fdef_005fvar_005ffill.html"><span class="icon">​</span>ncmpi_def_var_fill()</a> sets fill mode for an individual variable. This API must be called in define mode.
+</li><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005finq_005fvar_005ffill.html"><span class="icon">​</span>ncmpi_inq_var_fill()</a> inquires fill mode of a variable.
+</li><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005ffill_005fvar_005frec.html"><span class="icon">​</span>ncmpi_fill_var_rec()</a> is a collective API that fills a record of a record variable. This API must be called at data mode.
+</li><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fset_005fdefault_005fformat.html"><span class="icon">​</span>ncmpi_inq_default_format()</a> for inquiring the default file format for new file creation. Note the default format can be changed by <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fset_005fdefault_005fformat.html"><span class="icon">​</span>ncmpi_set_default_format()</a>.
+</li><li>The above new API are also available in Fortran and C++ versions.
+</li></ul><h2 id="Newerrorcode:">New error code:</h2>
+<ul><li>NC_ENOTRECVAR when attempting operation only for record variables
+</li><li>NC_ENOTFILL when attempting to fill a variable when its fill mode is off
+</li><li>NC_EMULTIDEFINE_FILL_MODE when inconsistent dataset fill mode is detected
+</li><li>NC_EMULTIDEFINE_VAR_FILL_MODE when inconsistent variable fill mode is detected
+</li><li>NC_EMULTIDEFINE_VAR_FILL_VALUE when inconsistent variable fill value is detected
+</li><li>Fortran versions of the above error codes are also added.
+</li></ul><h2 id="Newexampleprograms:">New example programs:</h2>
+<ul><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/examples/C/fill_mode.c">C/fill_mode.c</a> shows the use of ncmpi_set_fill(), ncmpi_def_var_fill(), ncmpi_inq_var_fill() and ncmpi_fill_var_rec()
+<ul><li> <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/examples/F77/fill_mode.f">F77/fill_mode.f</a> is the Fortran version.
+</li><li> <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/examples/F90/fill_mode.f90">F90/fill_mode.f90</a> is the Fortran 90 version.
+</li><li> <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/examples/CXX/fill_mode.cpp">CXX/fill_mode.cpp</a> is the C++ version.
+</li></ul></li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/examples/C/ghost_cell.c">C/ghost_cell.c</a> shows how to use varm API for writing from a user buffer as a 2D array with ghost cells on both ends of every dimension.
+</li></ul><h2 id="Newtestprograms:">New test programs:</h2>
+<ul><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/test/nc_test/tst_nofill.c">nc_test/tst_nofill.c</a> borrowed from netCDF
+</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/test/testcases/ivarn.c">testcases/ivarn.c</a> tests bug fix <a class="changeset" href="/projects/parallel-netcdf/changeset/2023" title="bug fix: when the request IDs are not in an increasing order in a wait ...">r2023</a> when the request IDs stored in argument array_of_requests[] of ncmpi_wait_all() are not in an increasing order.
+</li></ul><h2 id="Otherupdates:">Other updates:</h2>
+<ul><li>Change the chunk size used for moving variable data when the file header extent expands. The default is now 1MB. If the file's striping unit size is known (from MPI-IO hint striping_unit) then the chunk size is set to the striping unit size.
+</li></ul><h2 id="Bugfixes:">Bug fixes:</h2>
+<ul><li>Add missing F90 function overloading for f90mpi_put_var_all, f90mpi_get_var_all, f90mpi_put_vard_all, and f90mpi_get_vard_all, when the user buffer is a scalar.
+</li><li>Fix when the request IDs passed in argument array_of_requests[] of ncmpi_wait_all() are not in an increasing order. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2023" title="bug fix: when the request IDs are not in an increasing order in a wait ...">r2023</a>.
+</li><li>Fix C++ compile error for converting NULL to string. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2039" title="bug fix: Nick Andersen reported a run-time error of ...">r2039</a>.
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.6.1?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    </body>
+</html>
