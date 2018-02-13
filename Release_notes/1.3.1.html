@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      ReleaseNotes-1.3.1 – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.3.1?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><p>
+The Parallel NetCDF team is pleased to announce a new release of Parallel NetCDF Version 1.3.1.  This release is primarily a bug-fix release, tidying up a few issues and incorporating some early feedback on our "buffered put" interface (see <a class="wiki" href="/projects/parallel-netcdf/wiki/BufferedInterface">BufferedInterface</a> for more information)
+</p>
+<h2 id="Newin1.3.1">New in 1.3.1</h2>
+<ul><li>add a new API ncmpi_inq_buffer_usage/nfmpi_inq_buffer_usage for inquiring the current usage of the internal buffer allocated by the "buffered"-put APIs.
+</li><li>bug fix to make bput APIs properly return error code NC_EINSUFFBUF.
+</li><li>bug fixes for ncmpidump to avoid residue contents from a previous read when it read beyond EOF.
+</li><li>bug fixes in the the tutorial example codes.
+</li><li>add more in-line comments for the tutorial example codes.
+</li><li>add the error string for error code NC_ENOENT.
+</li></ul><p>
+ 
+</p>
+<h2 id="DownloadURLs:">Download URLs:</h2>
+<ul><li>bzip2ded tarball (3.4 MB) <a class="ext-link" href="http://ftp.mcs.anl.gov/pub/parallel-netcdf/parallel-netcdf-1.3.1.tar.bz2"><span class="icon">​</span>parallel-netcdf-1.3.1.tar.bz2</a>
+</li><li>gzipped tarball: (13 MB)  <a class="ext-link" href="http://ftp.mcs.anl.gov/pub/parallel-netcdf/parallel-netcdf-1.3.1.tar.gz"><span class="icon">​</span>parallel-netcdf-1.3.1.tar.gz</a>
+</li></ul><h2 id="SHA-1Checksums:">SHA-1 Checksums:</h2>
+<ul><li>f9860d174a4741e7f80a71e29fabbe170402f535  parallel-netcdf-1.3.1.tar.gz
+</li><li>4da2792cd2379e0f0e3cfdefdc6e58095a0f5f17  parallel-netcdf-1.3.1.tar.bz2
+</li></ul><h2 id="SVNtag:">SVN tag:</h2>
+<ul><li><tt> svn co https://svn.mcs.anl.gov/repos/parallel-netcdf/tags/v1-3-1 </tt>
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      ReleaseNotes-1.5.0.pre1 – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.5.0.pre1?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h1 id="ReleaseNoteof1.5.0.pre1">Release Note of 1.5.0.pre1</h1>
+<ul><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a>
+</li></ul><h2 id="Newfeatures">New features</h2>
+<ul><li>A new configure option "--disable-in-place-swap" is added. It disables the byte-swap operations running in-place on the user's write buffers.  The purpose of providing this option is to deal with the problem when a Fortran program uses a immutable buffer for put APIs, e.g. the buffer is declared as a PARAMETER, and in-place byte swap on this buffer causes segmentation fault. See discussion threads of <a class="ext-link" href="http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2013-July/001498.html"><span class="icon">​</span>http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2013-July/001498.html</a>
+</li></ul><blockquote>
+<p>
+Impacts:<br />
+1) It takes effect only on Little Endian machines.<br />
+2) It only affects put/iput data APIs, but not attribute APIs.<br />
+3) The INTENT of buffer arguments in all Fortran 90 put/iput APIs will be declared as "IN". Without this setting, the default is "INOUT".<br />
+4) It has an impact on performance, as an extra internal temporary buffer will be allocated to copy data over from user's put buffer, so byte swap can be run on the temporary buffer.
+</p>
+</blockquote>
+<blockquote>
+<p>
+The default setting is to enable in-place byte swap. PnetCDF tries not to allocate additional memory space, due to performance concern. Users are discouraged to use Fortran PARAMETER buffers in put APIs.
+</p>
+</blockquote>
+<ul><li>A new configure option "--enable-malloc-tracking" is added. It enables a memory allocation tracking mechanism internal in PnetCDF. Default is disabled. When enabled, a user program can call three new APIs below: ncmpi_inq_malloc_size, ncmpi_inq_malloc_max_size, ncmpi_inq_malloc_walk to obtain the size in bytes of current memory allocated internally. This feature uses a binary tree to manage all malloc buffers, e.g. tsearch() and tdelete().
+</li></ul><ul><li>Add three Fortran parameters for PnetCDF library version numbers: PNETCDF_VERSION_MAJOR, PNETCDF_VERSION_MINOR, and PNETCDF_VERSION_SUB.  Similarly in C programs, these are defined in pnetcdf.h as constants.
+</li></ul><h2 id="NewAPIs">New APIs</h2>
+<ul><li>C++ APIs are now available. They are developed based on netCDF-4 C++ library. However, users are encouraged to use C APIs, instead C++.
+</li></ul><ul><li>ncmpi_put_att, ncmpi_get_att, nfmpi_put_att, and nfmpi_get_att - these APIs correspond to nc_put_att, nc_get_att, nf_put_att, and nf_get_att.  Note they are not the "flexible" APIs. Flexible APIs have an MPI derived datatype argument.
+</li></ul><ul><li>ncmpi__enddef, nfmpi__enddef, and nf90mpi_enddef - these APIs correspond to netCDF nc__enddef, nf__enddef, and nf90_enddef (with additional optional arguments).
+</li></ul><ul><li>ncmpi_inq_file_info - the naming for ncmpi_get_file_info may cause confusion, as "get" has a different meaning on PnetCDF. The correct name should use "inq". However, ncmpi_get_file_info is kept for backward compatibility.
+</li></ul><ul><li>ncmpi_inq_striping, nfmpi_inq_striping, nf90mpi_inq_striping report the file system striping settings of the opened file: striping size and striping count, if the underneath MPI-IO can find their values from the file system in use.
+</li></ul><ul><li>ncmpi_inq_malloc_size, ncmpi_inq_malloc_max_size, ncmpi_inq_malloc_walk report the size in bytes of current memory allocated internally by PnetCDF. Similar APIs for Fortran 77 and 90 are also available. These APIs are enabled only when PnetCDF is configured with option --enable-malloc-tracking. When this option is not enabled, calling these APIs will return the error code NC_ENOTENABLED. These APIs are usefully for debugging.
+</li></ul><ul><li>ncmpi_inq_files_opened reports the number of files that are currently opened. Similar API for Fortran 77 and 90 are also available. The API takes 2 arguments: number of files and array of file IDs. If the second argument, array of IDs, is not NULL, then it will filled with the netCDF dataset IDs. This API is useful for debugging.
+</li></ul><h2 id="Syntaxchanges">Syntax changes</h2>
+<ul><li>For all Fortran put/iput APIs, the INTENT of write buffer arguments is changed to "INOUT" on Little Endian machines, if option "--disable-in-place-swap" is not used at configuration. Otherwise, i.e. on Big Endian machines or PnetCDF is configured with "--disable-in-place-swap" on Little Endian machines, the INTENT is "IN".
+</li></ul><h2 id="NewPnetCDFhint">New PnetCDF hint</h2>
+<ul><li>nc_record_align_size - aligns the starting file offset of the record variable section. Note this is for the entire section, not individual records.
+</li></ul><h2 id="Newerrorcode">New error code</h2>
+<ul><li>NC_ENOTENABLED indicates the API is available only when the corresponding feature is enabled. For example, nfmpi_inq_malloc_size() returns this error code when "--enable-malloc-tracking" is not used at configure.
+</li></ul><h2 id="Newrun-timeenvironmentvariables">New run-time environment variables</h2>
+<ul><li>none
+</li></ul><h2 id="Newexampleprograms">New example programs</h2>
+<ul><li>Example programs now report if there is any PnetCDF internal malloc residues yet to be freed, if --enable-malloc-tracking option is used at configure.
+</li></ul><ul><li>Under examples/C, three examples are added: create_open.c, get_vara.c, and global_attributes.c. File examples/README contains their descriptions.
+</li></ul><ul><li>Under examples/CXX, several example programs corresponding to those in examples/C are added.
+</li></ul><h2 id="NewprogramsforIObenchmarks">New programs for I/O benchmarks</h2>
+<ul><li>none
+</li></ul><h2 id="Newtestprogram">New test program</h2>
+<ul><li>Many test programs now report if there is any PnetCDF internal malloc residues yet to be freed, if --enable-malloc-tracking option is used at configure.
+</li></ul><ul><li>add tests for flexible APIs. The tests borrow from nc_test/test_write.c that tests nc_put_var1, nc_put_vara, nc_put_vars, and nc_put_varm.  Similarly for get APIs.
+</li></ul><ul><li>testcases/record.c checks if the number of records is updated correctly.  It writes to a variable's 2nd record followed by the 1st record. A call to ncmpi_inq_dim() or ncmpi_inq_dimlen() should report 2 records after the writes complete.
+</li></ul><ul><li>testcases/noclobber.c checks if error code NC_EEXIST can be returned correctly when NC_NOCLOBBER modes is used in ncmpi_create and in the meantime the file exists.
+</li></ul><ul><li>Some test programs are developed to run in parallel. The test mechanism for parallel runs is command "make ptest". Two environment variables can be used to set the MPI run command and output file directory: TEST_MPIRUN and TEST_OUTDIR. Their defaults are mpiexec and "." (current directory), respectively. For example,
+</li></ul><blockquote>
+<blockquote>
+<p>
+make ptest TEST_MPIRUN=aprun TEST_OUTDIR=/scratch
+</p>
+</blockquote>
+</blockquote>
+<ul><li>A sample PBS script file is provided to test "make ptest" on machines with a batch queue system: pbs.script. This example script can be submitted from the build root directory (where you run "make" command to build PnetCDF library).
+</li></ul><ul><li>For cross compile environment (and batch queue system), the environment variable TEST_SEQRUN can be used to set the MPI run command. For example, the command for testing sequential programs:
+</li></ul><blockquote>
+<blockquote>
+<p>
+make check TEST_SEQRUN="aprun -n 1" TEST_OUTDIR=/scratch
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+For non-cross compile environment, there is no need to set the environment variables, as long as one can run the MPI executable without mpirun or mpiexec.
+</p>
+</blockquote>
+<h2 id="Newoptimization">New optimization</h2>
+<ul><li>none
+</li></ul><h2 id="Newutilityprogram">New utility program</h2>
+<ul><li>pnetcdf_version prints the version information of the PnetCDF library and command-line arguments used at configure
+</li></ul><h2 id="Otherupdates:">Other updates:</h2>
+<ul><li>Revise FLASH-IO benchmark to use nonblocking APIs for both checkpoint and plot writes. The control variable to switch between nonblocking and blocking API is "use_nonblocking_io". Set it to .FALSE. in flash_benchmark_io.F90 to switch to blocking APIs. Using nonblocking APIs is now the default.
+</li></ul><ul><li>To match ncdump, ncmpidump now only supports one input file.
+</li></ul><ul><li>Makefiles are revised for better recursive make and fixed some build target dependency for parallel make.
+</li></ul><ul><li>File creation was revised for handling NC_CLOBBER and NC_NOCLOBBER modes.  On systems where Unix calls access() and unlink() are available, they are used to check if a file exits and to delete an existing file.
+</li></ul><ul><li>subfiling is now enabled by default. Users can use --disable-subfiling to disable it
+</li></ul><ul><li>man page of ncmpigen is updated to add the description for option "-v" which lets users to specify the desired output file formats, e.g.  CDF-1, CDF-2, or CDF-5.
+</li></ul><h2 id="Bugfixes">Bug fixes</h2>
+<ul><li>fix ncmpigen.y on parsing CDL file to get the number of records. The bug failed the command "make b-test", due to getting a wrong number of records (current value for the unlimited dimension).
+</li></ul><ul><li>fix the update for number of records when writing to a record that is not the last record.
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    </div>
+  </body>
+</html>

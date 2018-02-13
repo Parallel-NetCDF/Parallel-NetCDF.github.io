@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      ReleaseNotes-1.4.0 – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.4.0?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h2 id="ReleasehighlightsofPnetCDFv1.4.0">Release highlights of PnetCDF v1.4.0</h2>
+<p>
+Here we list a few major changes from the previous release.
+For the full list of detailed changes, please refer to the <a href="https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/tags/v1-4-0/RELEASE_NOTES">release note</a>.
+</p>
+<h2 id="NewAPIs">New APIs</h2>
+<ul><li>Fortran 90 APIs. All F90 APIs have prefix name "nf90mpi_" and support function overloading.
+</li><li>varn APIs - <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fget_005fvarn_005f_003ctype_003e.html#ncmpi_005fget_005fvarn_005f_003ctype_003e"><span class="icon">​</span>ncmpi_get_varn_&lt;type&gt;</a> and <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fput_005fvarn_005f_003ctype_003e.html#ncmpi_005fput_005fvarn_005f_003ctype_003e"><span class="icon">​</span>ncmpi_put_varn_&lt;type&gt;</a> for reading/writing a list of sub-requests to a single variable.
+</li><li>mput/mget APIs - ncmpi_mput_var&lt;kind&gt;_&lt;type&gt; for making multiple put/get requests to multiple variables.
+</li><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005finq_005fput_005fsize.html#ncmpi_005finq_005fput_005fsize"><span class="icon">​</span>ncmpi_inq_put_size</a> - reports the write amount in bytes committed by far
+</li><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005finq_005fget_005fsize.html#ncmpi_005finq_005fget_005fsize"><span class="icon">​</span>ncmpi_inq_get_size</a> - reports the read amount in bytes committed by far
+</li></ul><h2 id="Newrun-timeenvironmentvariable">New run-time environment variable</h2>
+<ul><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/PNETCDF_005fSAFE_005fMODE.html#PNETCDF_005fSAFE_005fMODE"><span class="icon">​</span>PNETCDF_SAFE_MODE</a> environment variable can be used to enable/disable the internal checking for data/argument consistency across all processes. Set it to 1 to enable the checking. Default is 0, i.e. disabled.
+</li><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/PNETCDF_005fHINTS.html#PNETCDF_005fHINTS"><span class="icon">​</span>PNETCDF_HINTS</a> environment variable can be used to pass the I/O hints to PnetCDF library.
+</li></ul><h2 id="Newexampleprograms">New example programs</h2>
+<ul><li>new example programs are added in all C, F77, and F90 versions
+</li><li>Refer <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-4-0/examples/README">README</a> for descriptions of the example programs
+</li></ul><h2 id="NewprogramsforIObenchmarks">New programs for I/O benchmarks</h2>
+<ul><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-4-0/benchmarks/C/aggregation.c">benchmarks/C/aggregation.c</a> -- evaluate PnetCDF's performance on I/O aggregation across multiple requests with different data access patterns.
+</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-4-0/benchmarks/C/write_block_read_column.c">benchmarks/C/write_block_read_column.c</a> -- writes variables and reads back using different data partitioning patterns
+</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-4-0/benchmarks/FLASH-IO">benchmarks/FLASH-IO</a> -- I/O kernel of FLASH, a reacting hydrodynamics code developed at University of Chicago
+</li></ul><h2 id="Newoptimization:IOrequestaggregation">New optimization: I/O request aggregation</h2>
+<ul><li>nonblocking requests are aggregated as much as possible, even for interleaved requests.
+</li></ul><h2 id="Improvedbuildprocess">Improved build process</h2>
+<ul><li>configure process can now detect available MPI compilers and compile flags
+</li></ul><p>
+ 
+</p>
+<h2 id="LatestReleases">Latest Releases</h2>
+<ul><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a> of version 1.4.0
+</li></ul><h2 id="SVNtag:">SVN tag:</h2>
+<ul><li><tt> svn co https://svn.mcs.anl.gov/repos/parallel-netcdf/tags/v1-4-0</tt>
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    	<p class="right">Visit the Trac open source project at<br />
+		<a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

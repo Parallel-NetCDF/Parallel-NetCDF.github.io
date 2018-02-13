@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      ReleaseNotes-1.2.0 – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.2.0?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><p>
+We released version 1.2.0 of parallel-netcdf on 19 August 2010.
+</p>
+<h2 id="Newin1.2.0">New in 1.2.0</h2>
+<ul><li>several bugs fixed, memory leaks reduced, 
+</li><li>internal housekeeping
+</li><li>We have reduced the places where pnetcdf will call MPI_FILE_SYNC
+</li><li>A new 'ncmpidiff' utility to compare two datasets in parallel
+</li><li>Addressed a build failure when compiling with some versions of MVAPICH2.  See <a class="ext-link" href="http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2010-July/001045.html"><span class="icon">​</span>http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2010-July/001045.html</a> for an example of the build failure.
+</li><li>If you build this release and still get "undefined reference to 'yyin'", then you have some stale object files.  "make clean" and re-build.
+</li><li>additional error checking for collective routines
+</li></ul><p>
+We have also made API changes to our non-blocking interface. <a class="wiki" href="/projects/parallel-netcdf/wiki/CombiningOperations">CombiningOperations</a> documents the changes.  Our non-blocking semantics have been relaxed somewhat, and should be more usable in more situations.  Please let us know if you have any comments or issues with the new interface changes.
+</p>
+<h2 id="DownloadURLs:">Download URLs:</h2>
+<ul><li>bzip2ded tarball (3.4 MB) <a class="ext-link" href="http://ftp.mcs.anl.gov/pub/parallel-netcdf/parallel-netcdf-1.2.0.tar.bz2"><span class="icon">​</span>parallel-netcdf-1.2.0.tar.bz2</a>
+</li><li>gzipped tarball: (13 MB)  <a class="ext-link" href="http://ftp.mcs.anl.gov/pub/parallel-netcdf/parallel-netcdf-1.2.0.tar.gz"><span class="icon">​</span>parallel-netcdf-1.2.0.tar.gz</a>
+</li></ul><h2 id="SHA-1Checksums:">SHA-1 Checksums:</h2>
+<ul><li>acdeb28de266926aa99eb566fed4dca3f8f80749  parallel-netcdf-1.2.0.tar.gz
+</li><li>dd2a4e14d4a6bf24c4f0c22cd362d22b5c957df7  parallel-netcdf-1.2.0.tar.bz2
+</li></ul><h2 id="SVNtag:">SVN tag:</h2>
+<ul><li><tt> svn co https://svn.mcs.anl.gov/repos/parallel-netcdf/tags/v1-2-0 </tt>
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    </div>
+  </body>
+</html>

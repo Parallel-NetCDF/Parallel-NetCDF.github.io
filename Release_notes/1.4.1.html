@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      ReleaseNotes-1.4.1 – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.4.1?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h2 id="ReleasehighlightsofPnetCDFv1.4.1">Release highlights of PnetCDF v1.4.1</h2>
+<h2 id="FortranAPIsyntaxchanges">Fortran API syntax changes</h2>
+<ul><li>For nfmpi_put_att and nf90mpi_put_att family, the intent modifier for the put buffer arguments are now declared as INTENT(IN).
+</li><li>For nfmpi_put_var* and nf90mpi_put_var family
+<ul><li>On Big Endian machines, the the intent modifier for the put buffer arguments are now declared as INTENT(IN).
+</li><li>On Little Endian machines, the the intent modifier for the put buffer arguments are still declared as INTENT(INOUT). This is because PnetCDF does in-place byte-swap on user's put buffer. If user's buffer is declared as parameter, then segment fault can happen when PnetCDF tries to byte-swap a read-only memory.
+</li></ul></li></ul><h2 id="Bugfix">Bug fix</h2>
+<ul><li>Improve pnetcdf.inc portability for both fixed and free-form Fortran programs
+</li></ul><h2 id="IntroduceofSubfiling">Introduce of Subfiling</h2>
+<ul><li>Subfiling is a new PnetCDF feature that divides a file transparently into several smaller subfiles, each of which stores subarrays in CDF file formats. The file name supplied by the users serves as a master file that contains all metadata about array partitioning information among the subfiles. Because data partitioning is made transparnetly from users, data accessing is kept the same through the conventional PnetCDF APIs and the master file.
+</li><li>To enable this feature at configure time, add configure option "--enable-subfiling".
+</li></ul><h2 id="SVNtag:">SVN tag:</h2>
+<ul><li><tt> svn co https://svn.mcs.anl.gov/repos/parallel-netcdf/tags/v1-4-1</tt>
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    </div>
+  </body>
+</html>

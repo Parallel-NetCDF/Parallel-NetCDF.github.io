@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      ReleaseNotes-1.6.0.pre1 – parallel-netcdf
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/projects/parallel-netcdf/search" />
+        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
+        <link rel="alternate" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.6.0.pre1?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/projects/parallel-netcdf/wiki" />
+        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+        <div id="content" class="wiki">
+      	  <div class="wikipage searchable">
+        
+          
+          <div id="wikipage"><h1 id="ReleaseNoteof1.6.0.pre1">Release Note of 1.6.0.pre1</h1>
+<ul><li>Release date: January 3 2015.
+</li><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a>
+</li></ul><h2 id="Formatconformationupdates:">Format conformation updates:</h2>
+<ul><li>Conform with netCDF4 on CDF-1 and CDF-2 formats. The only difference now between the two formats are the OFFSET item in the format spec (32 vs.  64 bit integers.) All names (variable, dimension, attribute) now allow extended characters (eg. special2 and MUTF8).
+</li><li>Refer to <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html"><span class="icon">​</span>CDF-5 format specification</a> for the differences among CDF-1, 2, and 5.
+</li></ul><h2 id="NewAPIs">New APIs</h2>
+<ul><li>Nonblocking buffered varn API family.
+<ul><li> For C,   ncmpi_bput_varn_int() etc.
+</li><li> For F77, nfmpi_bput_varn_int() etc.
+</li><li> For F90, nf90mpi_bput_varn() overloading
+</li><li> For C++, NcmpiVar::bputVarn() overloading
+</li></ul></li><li>Nonblocking varn API family.
+<ul><li> For C,   ncmpi_iput_varn_int() ncmpi_iget_varn_int() etc.
+</li><li> For F77, nfmpi_iput_varn_int() nfmpi_iget_varn_int() etc.
+</li><li> For F90, nf90mpi_iput_varn()   nf90mpi_iget_varn() overloading
+</li><li> For C++, NcmpiVar::iputVarn()  NcmpiVar::igetVarn() overloading
+</li></ul></li><li>Blocking vard API family
+<ul><li>takes an argument of MPI derived data type that describes the file access layout, as opposed to vara and vars APIs that use start[] and count[].
+</li><li> For C,   ncmpi_put_vard()    ncmpi_get_vard()
+</li><li> For F77, nfmpi_put_vard()    nfmpi_get_vard()
+</li><li> For F90, nf90mpi_put_vard()  nf90mpi_get_vard()
+</li><li> For C++, NcmpiVar::putVard() NcmpiVar::getVard()
+</li></ul></li><li>Collective var1 API family
+<ul><li> For C,   ncmpi_put_var1_all() ncmpi_get_var1_all()
+</li><li> For F77, nfmpi_put_var1_all() nfmpi_get_var1_all()
+</li><li> For F90, nf90mpi_put_var() overloading
+</li><li> For C++, NcmpiVar::putVar_all() overloading
+</li></ul></li><li>ncmpi_inq_buffer_size()
+<ul><li>returns the size of buffer previously attached for use of bput APIs. With ncmpi_inq_buffer_usage(), one can calculate the space remaining for additional bput requests.
+</li></ul></li><li>ncmpi_inq_recsize()
+<ul><li>returns the size of record block, i.e. the sum of single records of all record variables.
+</li><li> For F77, nfmpi_inq_recsize()
+</li><li> For F90, nf90mpi_inq_recsize()
+</li><li> For C++, NcmpiGroup::getRecSize()
+</li></ul></li><li>ncmpi_inq_num_rec_vars() and ncmpi_inq_num_fix_vars()
+<ul><li>report the number of record and fixed-size variables, respectively.
+</li><li> For F77, nfmpi_inq_num_rec_vars()     and nfmpi_inq_num_fix_vars()
+</li><li> For F90, nf90mpi_inq_num_rec_vars()   and nf90mpi_inq_num_fix_vars()
+</li><li> For C++, NcmpiGroup::getRecVarCount() and NcmpiGroup::getFixVarCount()
+</li></ul></li></ul><h2 id="NewPnetCDFhint">New PnetCDF hint</h2>
+<ul><li>pnetcdf_subfiling -- it can be set in an MPI info object or in the environment variable PNETCDF_HINTS to enable/disable subfiling.  The value is either "enable" or "disable".
+</li></ul><h2 id="PnetCDFhintpriority">PnetCDF hint priority</h2>
+<ul><li>The alignment hints set in the environment variable "PNETCDF_HINTS" have the highest priority, which overwrite the alignment hints set in ncmpi__enddef(), which overwrite the alignment hints set in the MPI_Info object used in the call of ncmpi_create() and ncmpi_open().
+</li></ul><h2 id="Newerrorcode">New error code</h2>
+<ul><li>NC_ESTRICTCDF2 for attempting CDF-5 operation on CDF-2 file. For example, define a variable of type NC_INT64 in a CDF-2 file.
+</li><li>NC_ETYPESIZE when filetype size is bigger than the variable size
+</li><li>NC_ETYPE_MISMATCH when the element type of filetype mismatches the variable type
+</li><li>NC_ETYPESIZE_MISMATCH when filetype size mismatches buffer type size
+</li><li>NC_ENULLSTART when argument start is a NULL pointer
+</li><li>NC_ENULLCOUNT when argument count is a NULL pointer
+</li><li>NC_EINVAL_CMODE when invalid file create mode is set, (e.g. cannot have both NC_64BIT_OFFSET &amp; NC_64BIT_DATA. In PnetCDF 1.5.0 and earlier versions, if both flags were set, then NC_64BIT_DATA triumphs NC_64BIT_OFFSET.)
+</li></ul><h2 id="Newexampleprograms">New example programs</h2>
+<ul><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/C/bput_varn_uint.c">C/bput_varn_uint.c</a> and <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/F77/bput_varn_int8.f">F77/bput_varn_int8.f</a> show the use of nonblocking bput_varn APIs
+</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/C/i_varn_int64.c">C/i_varn_int64.c</a> and <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/F77/i_varn_real.f">F77/i_varn_real.f</a> show the use of nonblocking iput_varn and iget_varn APIs
+</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/C/vard_int.c">C/vard_int.c</a>, <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/F77/vard_int.f">F77/vard_int.f</a>, <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/F90/vard_int.f90">F90/vard_int.f90</a>, and <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/CXX/vard_int.cpp">CXX/vard_int.cpp</a> show the use of vard API to write/read record and fixed-size variables.
+</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0pre1/examples/C/transpose.c">C/transpose.c</a> shows the use of ncmpi_put_vara_int_all to write a 3D array that is dimensional-transposed from the one stored in memory. Six transposed 3D arrays are saved whose dimensions are organized as ZYX, ZXY, YZX, YXZ, XZY, and XYZ. The C++, Fortran 77, and Fortran 90 versions are also provided.
+</li></ul><h2 id="Newtestprogram">New test program</h2>
+<ul><li>nonblocking/wait_after_indep.c tests if ncmpi_end_indep_data() returns properly when nonblocking APIs are called in independent data mode and the wait call is made after exiting the independent mode.
+</li><li>nonblocking/flexible_bput.c tests flexible bput APIs that use noncontiguous buffer type, noncontiguous imap and require type conversion
+</li><li>testcases/flexible2.c tests flexible APIs that perform type conversion
+</li><li>testcases/flexible_varm.c tests flexible varm APIs
+</li><li>testcases/varn_contig.c tests the case when the fileview is actually a contiguous chunk. PnetCDF should be able to merge all.
+</li><li>nonblocking/bput_varn_uint.c tests nonblocking bput_varn APIs
+</li><li>nonblocking/i_varn_int64.c tests nonblocking iput_varn and iget_varn APIs
+</li><li>test/testcases/test_vard.c test/testcases/test_vardf.f test/testcases/test_vardf90.f90 test the new vard APIs.
+</li><li>test/testcases/inq_recsize.c tests if one can correctly inquire the size of record block from in a netCDF file. A similar program in F90, named inq_recsizef.f90, is also added.
+</li><li>In test/nc_test, the test programs below are borrowed from netCDF test programs: t_nc.c tst_misc.c tst_norm.c tst_small.c tst_names.c tst_atts3.c tst_atts.c
+</li><li>test/testcases/one_record.c tests the special case defined in CDF-1 and CDF-2 specification that "A special case: Where there is exactly one record variable, we drop the requirement that each record be four-byte aligned, so in this case there is no record padding."
+</li><li>test/testcases/modes.c tests if correct error codes are returned when various file create/open modes are used.
+</li><li>Under test/testcases, varn_int.c varn_intf.f varn_real.f90 test varn APIs
+</li><li>test/testcases/inq_num_vars.c test if one can correctly inquire the numbers of record and fixed-size variables defined in a netCDF file.  A similar program in F90, named inq_num_varsf.f90, is also added.
+</li><li>test/nonblocking/interleaved.c tests a combination of interleaved file types. This is to test the bug fix in <a class="changeset" href="/projects/parallel-netcdf/changeset/1758" title="bug fix: type should be set before used">r1758</a>.
+</li></ul><h2 id="Newoptimization">New optimization</h2>
+<ul><li>Prior to this release, PnetCDF wraps each MPI read/write call in put/get APIs with two MPI_File_set_view(). One is before the MPI read/write call to take advantage of MPI's fileview feature for accessing non-contiguous file locations. The other is after the MPI read/write call to make the whole file visible, as the root process may write to file header later in the data mode and it alone cannot make a call to MPI_File_set_view() because the function is collective.
+</li></ul><blockquote>
+<p>
+In this release, the second MPI_File_set_view() has been removed. The root process's fileview is changed to always keep the whole file header visible. Saving a collective call to MPI_File_set_view() is expected to improve some performance.
+</p>
+</blockquote>
+<h2 id="Semanticsupdates">Semantics updates</h2>
+<ul><li>Header consistency mechanism has been updated. See README.consistency for details.
+</li><li>The use of NC_SHARE is also revised. See README.consistency for details.
+</li></ul><h2 id="Otherupdates:">Other updates:</h2>
+<ul><li>The subfiling feature is now disabled in ncmpidump and ncmpidiff until a bug fix to allow reading the master file with the number of processes that is smaller than the number of subfiles.
+</li><li>The attribute names reserved for subfiling feature are now changed to use a prefix of "_PnetCDF_SubFiling". The leading "_" underscore is a CDL convention.
+</li><li>The flexible APIs now allow argument buftype to be MPI_DATATYPE_NULL.  In this case, argument bufcount is ignored and argument buf's data type must match the data type of variable defined in the file - no data conversion will be done. This extension makes the flexible APIs be able to correspond to the netCDF APIs whose names do not contain a data type, e.g. nc_put_vara().
+</li><li>Type conversion between NC_BYTE and unsigned char no longer checks for out of range error (NC_ERANGE). CDF file format specification make a special case for this kind of data type conversion. See: "Note on byte data" in the format specification.
+</li><li>Conform with the CDF-2 and CDF-5 formats that names are normalized according to Unicode NFC normalization rules during encoding as UTF-8 for storing in the file header.
+</li><li>A new configure option, --enable-large-file-test, to enable testing I/O on large files and large variables. Note the testing prgrams will run very slowly.
+</li></ul><h2 id="Bugfixes">Bug fixes</h2>
+<ul><li>fix the bug for flexible get_varn API. When buftype is noncontiguous, the bug forgot to "unpacks" the temporary buffer that reads data from file to the user buffer using buftype.
+</li><li>fix the bug in blocking flexible get APIs when buftype is noncontiguous, swap is needed, type conversion is not. The bug sets a NULL pointer to the read buffer and passes it to MPI_File_read functions. See <a class="changeset" href="/projects/parallel-netcdf/changeset/1815" title="bug fix: blocking flexible get APIs may set a NULL pointer to the read ...">r1815</a>.
+</li><li>fix the bug for the NetCDF special case when there is only one record variable and the record size is not four-byte aligned. In this case, NetCDF spec says the alignment must dropped (no padding). See <a class="changeset" href="/projects/parallel-netcdf/changeset/1791" title="bug fix: netCDF special case when there is only one record variable and ...">r1791</a>.
+</li><li>fix the bug in nonblocking APIs when requests are resorted into nonoverlapping groups and the first group of file types are interleaved, it was mistakenly identified as non-interleaved. See <a class="changeset" href="/projects/parallel-netcdf/changeset/1758" title="bug fix: type should be set before used">r1758</a>.
+</li><li>fix the setting for PNETCDF_RELEASE_DATE in configure.in. Using read command together with IFS does not work as expected in bash 4.3.11. See <a class="ext-link" href="http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2014-July/001586.html"><span class="icon">​</span>http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2014-July/001586.html</a> for further detailed discussion.
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    </div>
+  </body>
+</html>
