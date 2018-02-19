@@ -109,7 +109,8 @@
  
 </p>
 <h2 id="a1.2.0">1.2.0</h2>
-<ul><li><strong>19 August 2010</strong>: PnetCDF <strong>1.2.0</strong> released.  See <a class="wiki" href="./ReleaseNotes-1.2.0">ReleaseNotes-1.2.0</a> for more details.
+<ul><li><strong>19 August 2010</strong>: PnetCDF <strong>1.2.0</strong> released.  See 
+	<a class="wiki" href="../Release_notes/1.2.html">ReleaseNotes-1.2.0</a> for more details.
 </li><li>Nonblocking I/O is redesigned in the 1.2.0 release. It defers the I/O requests until "wait" call, so small requests can be aggregated into large ones for better performance.
 </li><li>Two new hints, <tt>nc_header_align_size</tt> and <tt>nc_var_align_size</tt>, are added. The former allows pre-allocation of a larger header size to accommodate new header data in case new variables or attributed are added later. The latter aligns the starting file offsets of non-record variables. Refer to <a class="wiki" href="./VariableAlignment.html">VariableAlignment</a> for a more detailed description.
 </li><li>Data consistency control has been revised. A more strict consistency can be enforced by using <tt>NC_SHARE</tt> mode at the file open/create time. In this mode, the file header is synchronized to the file if its contents have changed. Such file synchronization of calling <tt>MPI_File_sync()</tt> happens in many places, including <tt>ncmpi_enddef()</tt>, <tt>ncmpi_redef()</tt>, all APIs that change global or variable attributes, dimensions, and number of records.
