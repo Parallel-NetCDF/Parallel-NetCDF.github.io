@@ -154,8 +154,8 @@ for further description of usage.
 the Julia Language project, <a class="ext-link" href="https://github.com/JuliaLang/utf8proc"><span class="icon">​</span>https://github.com/JuliaLang/utf8proc</a>
 License <a class="ext-link" href="https://github.com/JuliaLang/utf8proc/blob/master/LICENSE.md"><span class="icon">​</span>https://github.com/JuliaLang/utf8proc/blob/master/LICENSE.md</a>
 </li><li>Add quiet mode command-line option "-q" to utility program ncvalidator.
-</li><li>Add an internal check for whether the file starting offsets of all 
-	variables are in an increasing order as the variables defines.
+</li><li>Add an internal check for whether the file starting offsets of all
+variables are in an increasing order as the variables defines. See <a class="changeset" href="/projects/parallel-netcdf/changeset/3369" title="add ncmpio_NC_check_voffs() to check variable starting file offsets ...">r3369</a>.
 </li><li>All build recipes (README files) have been moved to folder doc. Most of
 the recipes have been updated with instructions for building shared
 libraries.
@@ -165,27 +165,31 @@ avoids conflict to the name convention reserved by automake.
 </li><li>Fix TESTMPIRUN default value to use full path specified in --with-mpi at
 configure command line
 </li></ul><h2 id="Bugfixes">Bug fixes</h2>
-<ul><li>Fix a bug in nonblocking APIs when two separate nonblocking requests 
-	that can be coalesced into a contiguous MPI fileview or buffer type but the 
-	coalesced length becomes too big and overflows a 4-byte integer, data type 
-	of argument blocklengths of MPI_Type_create_hindexed, coalescing should be 
-	skipped. I.e. such two requests should be treated as two separate blocks in 
-	MPI_Type_create_hindexed. Thanks Jim Edwards for reporting.</li><li>Fix a 
-	bug in nonblocking APIs when one request's access region covers more than 
-	one other non-interleaved requests. PnetCDF fails to identify them as a 
-	single group of interleaved requests. Test program 
-	test/nonblocking/interleaved.c has been revised to test the fix.</li><li>Fix 
-	a bug in string parsing the environment variable PNETCDF_HINTS and print 
-	warning messages when hint strings are ill-formed.</li><li>Fix a bug in F90 
-	APIs for reading and writing scalar variables, i.e. number of dimensions is 
-	zero. The bugs appear only when using Intel Fortran compiler which does not 
-	allow checking presence of an argument and its contents in the same if 
-	condition.</li><li>Conform with CDF-2 file format specification on using 2<sup>32</sup>-1 for vsize
-when the variable size is larger than 2<sup>32</sup>-4 bytes.
-</li><li>Fix a bug in nc_test when running on an ARMv7 architecture, a raspberry 
-	pi, where char is unsigned and which is little Endian, 32-bit machine.
-</li><li>Fix a bug that fails to do byte-swap when retrieving user-defined fill 
-	values. This fix is critical when PnetCDF is configured with
+<ul><li>Fix a bug in nonblocking APIs when two separate nonblocking requests that
+can be coalesced into a contiguous MPI fileview or buffer type but the
+coalesced length becomes too big and overflows a 4-byte integer, data
+type of argument blocklengths of MPI_Type_create_hindexed, coalescing
+should be skipped. I.e. such two requests should be treated as two
+separate blocks in MPI_Type_create_hindexed.  Thanks Jim Edwards for
+reporting. See <a class="changeset" href="/projects/parallel-netcdf/changeset/3565" title="turn safe mode off for slow. large tests">r3565</a>.
+</li><li>Fix a bug in nonblocking APIs when one request's access region covers
+more than one other non-interleaved requests. PnetCDF fails to identify
+them as a single group of interleaved requests. Test program
+test/nonblocking/interleaved.c has been revised to test the fix.
+See <a class="changeset" href="/projects/parallel-netcdf/changeset/3389" title="bug fix: nonblocking APIs for the case one request whose access region ...">r3389</a>.
+</li><li>Fix a bug in string parsing the environment variable PNETCDF_HINTS and
+print warning messages when hint strings are ill-formed. See <a class="changeset" href="/projects/parallel-netcdf/changeset/3284" title="fix bug: string parsing for PNETCDF_HINTS">r3284</a>.
+</li><li>Fix a bug in F90 APIs for reading and writing scalar variables, i.e.
+number of dimensions is zero. The bugs appear only when using Intel
+Fortran compiler which does not allow checking presence of an argument
+and its contents in the same if condition. See <a class="changeset" href="/projects/parallel-netcdf/changeset/3009" title="special handle for scalar variables, i.e. numDims=0, as Intel ifort is ...">r3009</a>, <a class="changeset" href="/projects/parallel-netcdf/changeset/3012" title="take care case when numDims = 0">r3012</a>, <a class="changeset" href="/projects/parallel-netcdf/changeset/3013" title="take care case when numDims = 0">r3013</a>.
+</li><li>Conform with CDF-2 file format specification on using 2<sup>32</sup>-1 for vsize
+when the variable size is larger than 2<sup>32</sup>-4 bytes. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2957" title="conform with CDF-2 specification: use 2^32^-1 for vsize when the variable ...">r2957</a>.
+</li><li>Fix a bug in nc_test when running on an ARMv7 architecture, a raspberry
+pi, where char is unsigned and which is little Endian, 32-bit machine.
+See <a class="changeset" href="/projects/parallel-netcdf/changeset/2922" title="a fix for ARMv7 architecture, a raspberry pi, where char is unsigned and ...">r2922</a>.
+</li><li>Fix a bug that fails to do byte-swap when retrieving user-defined fill
+values. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2864" title="bug fix: values stored in NC_attrarray.attrs.value[].xvalue are in ...">r2864</a>. This fix is critical when PnetCDF is configured with
 option erange-fill enabled (default mode) and the target platform is a
 Little Endian.
 </li></ul><h2 id="Newexampleprograms">New example programs</h2>
@@ -195,12 +199,13 @@ Little Endian.
 </li></ul><h2 id="Newtestprogram">New test program</h2>
 <ul><li>test/testcases/tst_vars_fill.m4 - tests strided put (vars) APIs with
 fill mode on.
-</li><li>test/largefile/large_coalesce.c - tests a bug fixed when two
+</li><li>test/largefile/large_coalesce.c - tests a bug fixed in <a class="changeset" href="/projects/parallel-netcdf/changeset/3565" title="turn safe mode off for slow. large tests">r3565</a> when two
 separate nonblocking requests that can be coalesced into a contiguous MPI
 fileview or buffer type but the coalesced length becomes too big and
 overflows a 4-byte integer.
-</li><li>test/testcases/tst_info.c - tests an internal bug in heap memory 
-	allocation trace mechanism.</li><li>test/cdf_format/tst_corrupt.c
+</li><li>test/testcases/tst_info.c - tests an internal bug in heap memory
+allocation trace mechanism. See <a class="changeset" href="/projects/parallel-netcdf/changeset/3514" title="bug fix: provided by Kai-yuan Hou, heap memory allocated by strdup() ...">r3514</a>.
+</li><li>test/cdf_format/tst_corrupt.c
 <ol><li>tests whether NC_EMAXDIMS can be thrown when opening a corrupted file
 header with number of dimensions being larger than NC_MAX_DIMS.
 </li><li>tests whether NC_EMAXATTS can be thrown when opening a corrupted file
@@ -227,8 +232,8 @@ NC_MAX_INT64-3.
 allow different processes to call different kinds of APIs (i.e. var1,
 vara, vars, varm, etc.) and use different var IDs. In other words, the
 API kinds can be different among processes in a collective call.
-</li><li>test/largefile/high_dim_var.c - tests blocking vars APIs for high- 
-	dimensional variables.
+</li><li>test/largefile/high_dim_var.c - tests blocking vars APIs for high-
+dimensional variables. See <a class="changeset" href="/projects/parallel-netcdf/changeset/3164" title="flatten stride access so only one call to hindexed constructor is needed, ...">r3164</a>.
 </li><li>test/largefile/large_dims_vars_attrs.c - tests large number of
 dimensions, large number of variables, and large number of attributes.
 </li><li>test/testcases/put_all_kinds.m4 - tests various blocking put APIs.
@@ -244,22 +249,24 @@ number of large variables allowed in the classic formats can be found in
 <a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/docs/file_structure_and_performance.html#classic_format_limitations"><span class="icon">​</span>http://www.unidata.ucar.edu/software/netcdf/docs/file_structure_and_performance.html#classic_format_limitations</a>
 </li><li>Add checking for error code NC_ELATEFILL. Setting a variable's attribute
 _FillValue must be done in the variable's initial define mode.
-</li><li>NetCDF-4 documents in 4.4.1 and prior state that setting attribute 
-	_FillValue for global variable NC_GLOBAL is not allowed and error code 
-	NC_EINVAL will be thrown. However, because the rule has never been implemented in any NetCDF
+</li><li>NetCDF-4 documents in 4.4.1 and prior state that setting attribute
+_FillValue for global variable NC_GLOBAL is not allowed and error code
+NC_EINVAL will be thrown. Revisions <a class="changeset" href="/projects/parallel-netcdf/changeset/2954" title="bug fix: NC_EINVAL is returned when trying to set attribute _FillValue for ...">r2954</a>, <a class="changeset" href="/projects/parallel-netcdf/changeset/2955" title="move global _FillValue checking to dispatchers/attr_getput.m4">r2955</a>, and <a class="changeset" href="/projects/parallel-netcdf/changeset/2956" title="change error code from NC_EINVAL to NC_EGLOBAL when trying to set global ...">r2956</a> enforce this
+rule. However, because the rule has never been implemented in any NetCDF
 official release, NetCDF developers have decided to abandon this rule
 by revising the NetCDF document starting from v4.5. See discussion in
-NetCDF <a class="missing wiki">GitHub?</a> pull request 458. To be consistent 
-	with NetCDF, PnetCDF follows the same decision by wrapping the checking with 
-	preprocessor conditional #ifdef NO_NC_GLOBAL_FILLVALUE. Note NC_EGLOBAL
+NetCDF <a class="missing wiki">GitHub?</a> pull request 458. To be consistent with NetCDF, PnetCDF
+follows the same decision by wrapping the checking with preprocessor
+conditional #ifdef NO_NC_GLOBAL_FILLVALUE (see <a class="changeset" href="/projects/parallel-netcdf/changeset/3403" title="allow defining FillValue for Global variables">r3403</a>). Note NC_EGLOBAL
 will be thrown when using NC_GLOBAL in ncmpi_def_var_fill(). This is
 due to no data type information for the fill value can be passed.
-</li><li>From the releases of 1.6.1 through 1.8.1, putting attribute _FillValue 
-	automatically turns on the fill mode for the variable. Similarly, deleting 
-	attribute _FillValue turns off the fill mode. However, this behavior does 
-	not conform with NetCDF library. This release fixes this inconsistency, so 
-	putting or deleting attribute _FillValue does not affect a variable's fill 
-	mode.</li></ul><h2 id="ConflictwithNetCDFlibrary">Conflict with NetCDF library</h2>
+</li><li>From the releases of 1.6.1 through 1.8.1, putting attribute _FillValue
+automatically turns on the fill mode for the variable. Similarly,
+deleting attribute _FillValue turns off the fill mode. However, this
+behavior does not conform with NetCDF library. This release fixes this
+inconsistency, so putting or deleting attribute _FillValue does not
+affect a variable's fill mode. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2951" title="bug fix: to conform with netCDF that putting or deleting attribute ...">r2951</a>.
+</li></ul><h2 id="ConflictwithNetCDFlibrary">Conflict with NetCDF library</h2>
 <ul><li>Null-byte padding for attribute values in file header -- The classic CDF
 specifications require header padding uses null (\x00) bytes. However,
 prior to version 4.5.0, NetCDF did not implement this specification

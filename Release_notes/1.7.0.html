@@ -29,8 +29,7 @@
 </li><li>test/nonblocking/i_varn_indef.c tests posting nonblocking requests in define mode.
 </li><li>test/nonblocking/req_all.c tests the use of NC_REQ_ALL for flushing all pending nonblocking requests without providing the requests IDs.
 </li><li>test/last_large_var.c tests the special case when there is no record variable, the last fixed-size variable can be larger than 2GiB in size if its starting file offset is less than 2GiB.
-</li><li>test/testcases/buftype_free.c and test/testcases/buftype_freef.f test 
-	the bug.
+</li><li>test/testcases/buftype_free.c and test/testcases/buftype_freef.f test the bug in <a class="changeset" href="/projects/parallel-netcdf/changeset/2160" title="bug fix: when using flexible API, the user buffer derived data type needs ...">r2160</a>.
 </li><li>testcases/add_var.c checks the starting file offsets of newly added variables from re-entering the define mode.
 </li><li>testcases/attrf.f checks NF_ERANGE is returned instead of coredump. This is particularly for NAG Fortran compiler that may report "Arithmetics exception".
 </li><li>testcases/check_striping.c checks if the file striping unit and factor returned from MPI-IO hints are consistent among processes.
@@ -56,19 +55,12 @@
 </li><li>All Fortran 77 test and example programs (files with .f and .F extensions) have been revised to conform with 77 standard, and was tested using pgf77.
 </li><li>Now provides a pkg-config file (<a class="ext-link" href="http://www.freedesktop.org/wiki/Software/pkg-config/"><span class="icon">​</span>http://www.freedesktop.org/wiki/Software/pkg-config/</a>), making it slightly easier to set the correct pnetcdf include and library paths.
 </li></ul><h2 id="Bugfixes:">Bug fixes:</h2>
-<ul><li>Fix the bus error of invalid address alignment when build with Fujitsu 
-	compiler.
-</li><li>Fix the bug for the special case when there is no record variable, the 
-	last fixed-size variable can be larger than 2GiB in size if its starting 
-	file offset is less than 2GiB.
-</li><li>Fix the nonblocking flexible APIs that fail to save (duplicate) the 
-	user MPI derived data type that later is needed to unpack read data to the 
-	user buffer (a call to MPI_Unpack).
-</li><li>Fix Fortran 77 constants nf_fill_uint and nf_fill_int64 (thanks Jim 
-	Edwards) that pgf77-based MPI compiler does not like &quot;_8&quot; modifier. The same 
-	issue for NAG Fortran compiler is also resolved.</li><li>In the example 
-	program examples/tutorial/pnetcdf-write-nb.c, the write buffers used in two 
-	iput API calls should be different.</li><li>Fix the error reporting mechanism for NC_ERANGE, for when an arithmetic overflow happens. Overflow checking is now performed before I/O.
+<ul><li>Fix the bus error of invalid address alignment when build with Fujitsu compiler. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2171" title="use memcpy instead of assignment to avoid BUS_ADRALN alignment error on ...">r2171</a> and <a class="changeset" href="/projects/parallel-netcdf/changeset/2180" title="mix-typed memory allocation causes bus error invalid address alignment ...">r2180</a>.
+</li><li>Fix the bug for the special case when there is no record variable, the last fixed-size variable can be larger than 2GiB in size if its starting file offset is less than 2GiB. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2166" title="bug fix for the special case when there is no record variable, the last ...">r2166</a>.
+</li><li>Fix the nonblocking flexible APIs that fail to save (duplicate) the user MPI derived data type that later is needed to unpack read data to the user buffer (a call to MPI_Unpack). See <a class="changeset" href="/projects/parallel-netcdf/changeset/2160" title="bug fix: when using flexible API, the user buffer derived data type needs ...">r2160</a>.
+</li><li>Fix Fortran 77 constants nf_fill_uint and nf_fill_int64 (thanks Jim Edwards) that pgf77-based MPI compiler does not like "_8" modifier.  See <a class="changeset" href="/projects/parallel-netcdf/changeset/2045" title="Fix Fortran 77 constants nf_fill_uint and nf_fill_int64. Thanks to Jim ...">r2045</a> and <a class="changeset" href="/projects/parallel-netcdf/changeset/2051" title="revise r2045 by testing Fortran modifier">r2051</a>. The same issue for NAG Fortran compiler is also resolved. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2089" title="patch from Jim Edwards for NAG 6.0 Fortran compiler. Thanks Jim!">r2089</a> and <a class="changeset" href="/projects/parallel-netcdf/changeset/2093" title="Jim's 2nd patch to resolve Fortran modifier issue when using NAG compiler">r2093</a>.
+</li><li>In the example program examples/tutorial/pnetcdf-write-nb.c, the write buffers used in two iput API calls should be different. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2095" title="example program bug fix: write buffers should be different. Thanks to ...">r2095</a>.
+</li><li>Fix the error reporting mechanism for NC_ERANGE, for when an arithmetic overflow happens. Overflow checking is now performed before I/O.
 </li></ul></div>
         
         

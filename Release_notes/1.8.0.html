@@ -194,16 +194,19 @@ of type NC_BYTE for CDF-2 files in both PnetCDF and NetCDF. If not using
 such a special case, users can ignore this error. See more information
 above under "Semantics updates".
 </li></ul><h2 id="Bugfixes">Bug fixes</h2>
-<ul><li>Fix to allow argument no_fill in API ncmpi_inq_var_fill to be NULL.</li><li>
-	Fix to allow putting global attribute _FillValue.
+<ul><li>Fix to allow argument no_fill in API ncmpi_inq_var_fill to be NULL. See
+<a class="changeset" href="/projects/parallel-netcdf/changeset/2609" title="argument no_fill can be NULL">r2609</a>
+</li><li>Fix to allow putting global attribute _FillValue. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2560" title="bug fix: allow put global attribute _FillValue">r2560</a>
 </li><li>Fix some missing character string normalizations for names of attributes,
 dimensions, and variables.
-</li><li>Fix the return unlimited dimension ID of value -1, not 0, by Fortran 
-	API nfmpi_inq_unlimdim when no unlimited dimension is defined. This conforms 
-	with netCDF convention.
-</li><li>Fix string processing of the environment variables for PnetCDF I/O 
-	hints.</li><li>Fix utility ncmpidiff to use collective read APIs in 
-	collective data mode.</li></ul></div>
+</li><li>Fix the return unlimited dimension ID of value -1, not 0, by Fortran API
+nfmpi_inq_unlimdim when no unlimited dimension is defined. This conforms
+with netCDF convention. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2396" title="bug fix: dim ID returned by nfmpi_inq_unlimdim should be -1 when no ...">r2396</a> and <a class="changeset" href="/projects/parallel-netcdf/changeset/1372" title="according to netCDF, if no unlimited length dimension has been defined, -1 ...">r1372</a>
+</li><li>Fix string processing of the environment variables for PnetCDF I/O hints
+See <a class="changeset" href="/projects/parallel-netcdf/changeset/2385" title="bug fix: should not modify env string, do that on a copy of it">r2385</a>
+</li><li>Fix utility ncmpidiff to use collective read APIs in collective data mode
+See <a class="changeset" href="/projects/parallel-netcdf/changeset/2382" title="bug fix: should have use collective APIs">r2382</a>
+</li></ul></div>
         
         
       </div>

@@ -119,8 +119,7 @@
 </li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0/test/testcases/modes.c">testcases/modes.c</a> tests if correct error codes are returned when various file create/open modes are used.
 </li><li>Under test/testcases, <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0/test/testcases/varn_int.c">varn_int.c</a>, <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0/test/testcases/varn_intf.f">varn_intf.f</a>, <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0/test/testcases/varn_real.f90">varn_real.f90</a> test varn APIs
 </li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0/test/testcases/inq_num_vars.c">testcases/inq_num_vars.c</a> tests if one can correctly inquire the numbers of record and fixed-size variables defined in a netCDF file.  A similar program in F90, named <a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0/test/testcases/inq_num_varsf.f90">inq_num_varsf.f90</a>, is also added.
-</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0/test/nonblocking/interleaved.c">nonblocking/interleaved.c</a> 
-	tests a combination of interleaved file types.
+</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-0/test/nonblocking/interleaved.c">nonblocking/interleaved.c</a> tests a combination of interleaved file types. This is to test the bug fix in <a class="changeset" href="/projects/parallel-netcdf/changeset/1758" title="bug fix: type should be set before used">r1758</a>.
 </li></ul><h2 id="Newoptimization:">New optimization:</h2>
 <ul><li>Prior to this release, PnetCDF wraps each MPI read/write call in put/get APIs with two MPI_File_set_view(). One is before the MPI read/write call to take advantage of MPI's fileview feature for accessing non-contiguous file locations. The other is after the MPI read/write call to make the whole file visible, as the root process may write to file header later in the data mode and it alone cannot make a call to MPI_File_set_view() because the function is collective.
 </li></ul><blockquote>
@@ -140,15 +139,9 @@ In this release, the second MPI_File_set_view() has been removed. The root proce
 </li><li>A new configure option, --enable-large-file-test, to enable testing I/O on large files and large variables. Note the testing prgrams will run very slowly.
 </li></ul><h2 id="Bugsfixed:">Bugs fixed:</h2>
 <ul><li>fix the bug for flexible get_varn API. When buftype is noncontiguous, the bug forgot to "unpacks" the temporary buffer that reads data from file to the user buffer using buftype.
-</li><li>fix the bug in blocking flexible get APIs when buftype is 
-	noncontiguous, swap is needed, type conversion is not. The bug sets a NULL 
-	pointer to the read buffer and passes it to MPI_File_read functions.</li><li>
-	fix the bug for the NetCDF special case when there is only one record 
-	variable and the record size is not four-byte aligned. In this case, NetCDF 
-	spec says the alignment must dropped (no padding).
-</li><li>fix the bug in nonblocking APIs when requests are resorted into 
-	nonoverlapping groups and the first group of file types are interleaved, it 
-	was mistakenly identified as non-interleaved.
+</li><li>fix the bug in blocking flexible get APIs when buftype is noncontiguous, swap is needed, type conversion is not. The bug sets a NULL pointer to the read buffer and passes it to MPI_File_read functions. See <a class="changeset" href="/projects/parallel-netcdf/changeset/1815" title="bug fix: blocking flexible get APIs may set a NULL pointer to the read ...">r1815</a>.
+</li><li>fix the bug for the NetCDF special case when there is only one record variable and the record size is not four-byte aligned. In this case, NetCDF spec says the alignment must dropped (no padding). See <a class="changeset" href="/projects/parallel-netcdf/changeset/1791" title="bug fix: netCDF special case when there is only one record variable and ...">r1791</a>.
+</li><li>fix the bug in nonblocking APIs when requests are resorted into nonoverlapping groups and the first group of file types are interleaved, it was mistakenly identified as non-interleaved. See <a class="changeset" href="/projects/parallel-netcdf/changeset/1758" title="bug fix: type should be set before used">r1758</a>.
 </li><li>fix the setting for PNETCDF_RELEASE_DATE in configure.in. Using read command together with IFS does not work as expected in bash 4.3.11. See <a class="ext-link" href="http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2014-July/001586.html"><span class="icon">​</span>http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2014-July/001586.html</a> for further detailed discussion.
 </li></ul></div>
         

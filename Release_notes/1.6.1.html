@@ -39,14 +39,13 @@
 </li></ul></li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/examples/C/ghost_cell.c">C/ghost_cell.c</a> shows how to use varm API for writing from a user buffer as a 2D array with ghost cells on both ends of every dimension.
 </li></ul><h2 id="Newtestprograms:">New test programs:</h2>
 <ul><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/test/nc_test/tst_nofill.c">nc_test/tst_nofill.c</a> borrowed from netCDF
-</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/test/testcases/ivarn.c">testcases/ivarn.c</a> tests bug fix when the request IDs stored in argument array_of_requests[] of ncmpi_wait_all() are not in an increasing order.
+</li><li><a class="source" href="/projects/parallel-netcdf/browser/tags/v1-6-1/test/testcases/ivarn.c">testcases/ivarn.c</a> tests bug fix <a class="changeset" href="/projects/parallel-netcdf/changeset/2023" title="bug fix: when the request IDs are not in an increasing order in a wait ...">r2023</a> when the request IDs stored in argument array_of_requests[] of ncmpi_wait_all() are not in an increasing order.
 </li></ul><h2 id="Otherupdates:">Other updates:</h2>
 <ul><li>Change the chunk size used for moving variable data when the file header extent expands. The default is now 1MB. If the file's striping unit size is known (from MPI-IO hint striping_unit) then the chunk size is set to the striping unit size.
 </li></ul><h2 id="Bugfixes:">Bug fixes:</h2>
 <ul><li>Add missing F90 function overloading for f90mpi_put_var_all, f90mpi_get_var_all, f90mpi_put_vard_all, and f90mpi_get_vard_all, when the user buffer is a scalar.
-</li><li>Fix when the request IDs passed in argument array_of_requests[] of 
-	ncmpi_wait_all() are not in an increasing order.
-</li><li>Fix C++ compile error for converting NULL to string.
+</li><li>Fix when the request IDs passed in argument array_of_requests[] of ncmpi_wait_all() are not in an increasing order. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2023" title="bug fix: when the request IDs are not in an increasing order in a wait ...">r2023</a>.
+</li><li>Fix C++ compile error for converting NULL to string. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2039" title="bug fix: Nick Andersen reported a run-time error of ...">r2039</a>.
 </li></ul></div>
         
         
