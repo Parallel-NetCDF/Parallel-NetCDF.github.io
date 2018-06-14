@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+      Using DataWarp as Burst Buffers in PnetCDF
+    </title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview');
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+  </head>
+  <body>
+<h2 id="ParallelnetCDF:AParallelIOLibraryforNetCDFFileAccess">Using Burst Buffers 
+with PnetCDF</h2>
+PnetCDF has a built in I/O driver that aggregate variable write I/O requests on 
+  the burst buffers.
+Through this driver, write requests are first stored on the burst buffer and later flushed to the parallel file system 
+  when the file is closed or when user explicitly calls flush.
+This new driver is under beta version been tested on the <a href=http://www.nersc.gov/users/computational-systems/cori>Cori</a> parallel computer at 
+  <a href="http://www.nersc.gov">NERSC</a>.
+  Please report any problem on our
+  <a href="https://github.com/Parallel-NetCDF/PnetCDF">git hub repository</a>.
+  <p>&nbsp;</p>
+&nbsp;<p>
+<div class="image">
+  <img alt="DataWarp Driver Data Flow" height="244" longdesc="The data flow between using and not using the DataWarp driver." src="burst_buffering.png" width="417" align=middle/>
+<div>Figure 1. Design of the Burst Buffer Driver.
+	The green lines show the data flow for write operations when the Burst 
+	Buffer Driver is disabled. The 
+	blue lines indicate the write requests are first stored on the burst buffer. The red line shows the 
+	data flow when flushing the data from the burst buffer to the parallel file system.</div>
+</div>
+
+<h3 id="OverviewofPnetCDF">Enable the Burst Buffer Driver</h3>
+To build PnetCDF with Burst Buffer Driver support, add &quot;<tt>--enable-burst-buffering</tt>&quot; option at the configure command line.
+<pre>
+    ./configure --prefix=/path/to/install --enable-burst-buffering
+</pre>
+The remaining steps are the same as usual, to build PnetCDF library, run:
+<pre>
+    make
+</pre>
+To install PnetCDF, run:
+<pre>
+    make install
+</pre>
+
+<h3 id="ABriefBackgroundAboutNetCDF">Use Burst Buffer Driver</h3>
+The use of Burst Buffer Driver is controlled by PnetCDF I/O hints.
+There are two ways of setting PnetCDF I/O hints.
+<ul>
+<li> One is by setting MPI file info object and passing it through the call to file creating API
+     <tt>
+<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcreate.html">ncmpi_create</a></tt> or file open API <tt>
+<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fopen.html">ncmpi_open</a></tt>.</li>
+<li> The other is by setting the environment variable <tt>PNETCDF_HINTS</tt>.</li>
+</ul>
+For instance, to enable the Burst Buffer Driver, add 
+  to the MPI-IO info object the hint &quot;nc_burst_buf&quot; and set it to &quot;enable&quot;.<pre>
+    MPI_Info_set(info, &quot;nc_burst_buf&quot;, &quot;enable&quot;);
+</pre>
+The hint can also be set using environment variable PNETCDF_HINTS.<pre>
+    export PNETCDF_HINTS=&quot;nc_burst_buf=enable&quot;
+</pre>
+See more information on how to set PnetCDF hints through the environment variable in the <a href=http://cucis.eecs.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/PNETCDF_005fHINTS.html>PnetCDF C Interface Guide</a>.
+
+<h3 id="ABriefHistoryofPnetCDF">PnetCDF Hints for Controlling Burst Buffer 
+Driver</h3>
+Below is a list of hints for controlling the 
+  behavior of the Burst Buffer Driver.
+
+<table style="width:100%", border="1">
+<tr>
+    <th>Hint Key</th>
+    <th>Value</th> 
+    <th>Default Value</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td>nc_burst_buf</td>
+    <td>enable or disable</td> 
+    <td>disable</td>
+    <td>Whether to enable Burst Buffer Driver or not. The rest of the hints will be 
+	ignored if Burst Buffer Driver is disabled.</td>
+</tr>
+<tr>
+    <td>nc_burst_buf_dirname</td>
+    <td>a directory name</td> 
+    <td>(see description)</td>
+    <td>The location on burst buffer system to store I/O data. Take Cori at 
+	NERSC as example. It is usually set to the value of variable DW_JOB_PRIVATE or DW_JOB_STRIPED, depending on the access_mode set in the batch script.
+See the user guide of <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer</a> on Cori for picking the access mode.<br />
+	If nc_burst_buf_dirname is not set by the user, PnetCDF will display a 
+	warning and set it to the same directory of the NetCDF file.</td>
+</tr>
+<tr>
+    <td>nc_burst_buf_del_on_close</td>
+    <td>enable or disable</td> 
+    <td>enable</td>
+    <td>Whether the intermediate files created by the Burst Buffer Driver on the 
+	burst buffer should be deleted after closing the NetCDF file. If the job schedular will recycle the burst buffer space automatically, users can disable this option 
+	to improve performance.
+<!--This is not supported for now. Log files will become empty (entries set to 0) after flush, there's no use to stage it out -->
+<!--When it is disabled, the <a href="https://slurm.schedmd.com">SLURM</a> scheduler may stage out the data automatically after the job is completed or keep the data, depending on the setting in the job script.
+See section of 
+	<a href="http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts/#toc-anchor-4">Persistent Reservations</a> in the Cori user guide for more information. -->
+	</td>
+  </tr>
+<tr>
+    <td>nc_burst_buf_flush_buffer_size</td>
+    <td>an integer in bytes</td> 
+    <td>0</td>
+    <td>Amount of memory in each MPI process that allows PnetCDF to use for flushing the data stored in 
+	the burst buffer to the parallel file system.
+0 means unlimited.
+Note that this value must any single write request that is larger than the buffer size will not be buffered.
+Instead, it will be written to the parallel file system directly, bypassing the 
+	burst buffer.</td>
+  </tr>
+</table>
+
+<h3 id="Example Program">Example Program</h3>
+Below is an example that creates a NetCDF file using Burst Buffer Driver.
+Other than adding a new MPI-IO hint, the PnetCDF program appears the same as before.
+<p>
+More example programs can be found under 
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/datawarp/examples/datawarp">
+example/burst_buffer</a> folder.
+<pre>
+    #include&lt;stdio.h&gt; 
+    #include&lt;stdlib.h&gt;
+    #include&lt;pnetcdf.h&gt;
+
+    int main(int argc, char *argv[]){ 
+        int ncid, err; 
+        MPI_Info info; 
+
+        MPI_Info_create(&amp;info); 
+
+        /* Enable the Burst Buffer Driver. 
+        * The hint is not required if it is set in the environment variable PNETCDF_HINTS 
+        */ 
+        MPI_Info_set(info, &quot;nc_burst_buf&quot;, &quot;enable&quot;); 
+
+        /* Create a NetCDF file with hint to enable Burst Buffer Driver*/ 
+        ncmpi_create(MPI_COMM_WORLD, filename, NC_CLOBBER, info, &amp;ncid); 
+        
+        MPI_Info_free(&amp;info); 
+              
+        /* For doing other IO operations, the code is the same as usual
+         * No actions required after file creation
+         */ 
+        
+        /* Data stored in the burst buffer will be flushed automatically to the PFS when the file is closed */ 
+        mpi_close(ncid); 
+
+        return 0 
+    }
+</pre>
+
+<h3 id="Submitting the Job">Running Jobs Using the Burst Buffer Driver</h3>
+Here we give a brief instruction of submitting jobs that uses the Burst Buffer 
+  Driver on Cori at NERSC.
+<h4 id="envbb">Requesting Burst Buffer Access</h4>
+  To request burst buffer access for a job, users add "#DW jobdw " command to 
+  the batch script. Users can specify the capacity, access mode, and type of the burst buffer. We highly recommand the use of private access mode. The only type supported for now is scratch in which the burst buffer is mounted as a file system to the user application.
+<br/>
+  Users can also choose form 2 granularity levels, wlm_pool and sm_pool.
+  A burst buffer server hosts 20.14 GiB of data. As a result, the 
+  stripe count is determined by the capacity of the burst buffer space. For example, if we want the stripe count to be 
+  at least 64, we have to set the capacity to at least 20.14 * 64 = 1288.96 GiB 
+  even if we don't need such large space.   The stripe size is fixed at 8 MiB. 
+  Users have no&nbsp; control on stripe size.
+  <p>Here is an example command of requesting a burst buffer space in sm_pool with 
+  stripe count at least 64.</p>
+<pre>
+#DW jobdw capacity=1289GiB access_mode=private type=scratch</pre>
+<p>
+For more information, please refer to "<a href="http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts/">How to use the Burst Buffer</a>" and "<a href="http://www.nersc.gov/users/computational-systems/cori/burst-buffer/performance-tuning/">Performance Tuning</a>" page on NERSC website.
+</p>
+  <h4 id="env">Configuring the Parallel File System</h4>
+The Burst Buffer Driver does not require any specific support from the parallel file 
+  system that stores the NetCDF file. However, for best performance, we suggest 
+  using stripe count and stripe size no smaller than that used on the burst 
+  buffer. To set stripe count and stripe size for a directory under Lustre on Cori, 
+  run "lfs setstripe" command.
+<p>
+Here's an example of setting the stripe count to 64 and stripe size to 8 MiB on current working directory 
+that is using Lustre on Cori:
+</p>
+<pre>
+lfs setstripe -c 64 -s 8m .
+</pre>
+<p>
+For more information, please refer to "<a href="http://www.nersc.gov/users/storage-and-file-systems/i-o-resources-for-scientific-applications/optimizing-io-performance-for-lustre/">Optimizing I/O performance on the Lustre file system</a>" page on NERSC website 
+and "<a href="http://wiki.lustre.org/index.php/Configuring_Lustre_File_Striping">Configuring 
+Lustre File Striping</a>" on <a href="http://wiki.lustre.org/Main_Page">Lustre 
+wiki site</a>.
+</p>
+
+<h4 id="Job Script">Example Job Script</h4>
+
+
+Below is an example script for running the 
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/benchmarks/FLASH-IO">FLASH I/O</a> benchmark 
+using burst buffer on Cori at NERSC.
+For detailed information about burst buffer settings, users can refer to <a href=http://www.nersc.gov/users/computational-systems/cori/burst-buffer/example-batch-scripts>How to use the Burst Buffer on Cori</a>.
+This exmple script can also be found in 
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/datawarp/examples/datawarp">
+  example/burst buffer</a> folder.</p>
+<pre>
+    #!/bin/bash
+    #SBATCH -p debug
+    #SBATCH -N 1 
+    #SBATCH -C haswell
+    #SBATCH -t 00:01:00
+    #SBATCH -o burst buffer_FLASH_example.txt
+    #SBATCH -L scratch
+    #DW jobdw capacity=1289GiB access_mode=private
+    NNodes=${SLURM_NNODES}
+    NProc=NNodes*32
+    
+    export PNETCDF_HINTS="nc_burst_buf=enable;nc_burst_buf_del_on_close=disable;nc_burst_buf_dirname=${DW_JOB_PRIVATE}"
+    
+    srun -n ${NProc} ./flash_benchmark_io ${SCRATCH}/flash_
+</pre>
+
+<h3 id="Issue">Known Issues</h3>
+While we design the Burst Buffer Driver to be as transparent as possible,
+there are some behaviors that can change when the Burst Buffer Driver is used.
+<ul>
+<li>Error reporting: The error codes returned from write related APIs are the errors encountered when writing to the 
+burst buffer system.
+When flushing data from burst buffer to the parallel file system, the error code returned will be the first error encountered.
+</li>
+<li>Non-blocking IO: Non-blocking write requests are written to burst buffer as well. However, 
+for perofrmance consideration, non-blocking requests may be flushed to the 
+parallel file system before the wait API,
+<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fwait_002fwait_005fall.html">
+ncmpi_wait or ncmpi_wait_all</a>, is called. In such case, users are not able to 
+cancel those non-blocking requests and calling
+<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcancel.html">
+ncmpi_cancel</a> will receive error code NC_EFLUSHED.</li>
+	<li>Unsupported API type: Currently, the Burst Buffer Driver does not support 
+	buffering on
+	<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fput_005fvard.html">
+	ncmpi_put_vard and ncmpi_put_vard_all</a>. When these APIs are called, the 
+	data will be written to the parallel file system directly, bypassing the 
+	burst buffer.</li>
+
+</ul>
+<h3 id="QA">Questions and Answers</h3>
+<p>
+Q: Can I run the Burst Buffer Driver on a different machine with a different burst buffer configuration?
+<br/>
+A: We currently have only tested the Burst Buffer Driver on Cori at NERSC and the Cray 
+burst buffer system installed there.
+It may also work on other burst buffer implementations where the burst buffer is mounted as a file system.
+<p>
+Q: Can I run the Burst Buffer Driver without the burst buffer?<br/>
+A: Yes, as long as the hint "nc_burst_buf_dirname" is a valid directory, PnetCDF will use it as a burst buffer.
+However, the performance will be affected depending on the performance of the devices.
+
+  <p>
+  Q: Do I need to enable DataWarp module on Cori to build PnetCDF with Burst 
+  Buffer Driver support?<br/>
+  A: No, we currently do not use DataWarp APIs in the implementation.<p>
+  Q: Can I leave the data on burst buffer without flushing it to the parallel 
+  file system?<br/>
+  A: No, in this version, the data will always be flushed when the file is 
+  closed. We do not recommand terminating the program without closing the file. 
+  <p>
+  Q: What is the file name of intermediate files Burst Buffer Driver used to buffer 
+  I/O data? Will it overwrite my existing file if there is a name conflict? <br/>
+  A: 
+  The intermediate files are named as &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.meta and 
+  &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.data. To prevent overwriting other files by 
+  accident, Burst Buffer Driver will not proceed when there is a file name conflict. 
+  In such case, 
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcreate.html">ncmpi_create</a> 
+  and
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fopen.html">ncmpi_open</a> will fail with error code NC_EEXISTS. 
+  <p>
+  Q: Does the directory used by burst buffer to store I/O data need to be an empty folder?<br/>
+  A: No, there's no such restriction. However, we strongly recommend the use of 
+  an empty folder to prevent errors caused by file name conflict. <p>
+  Q: Is there a way to trigger a flush without closing the NetCDF file?<br/>
+  A: Yes, calling
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fsync.html">
+  ncmpi_sync</a> triggers a flsuh. A flush can also be triggered if the user 
+  waits on a non-blocking write request that is still buffered on burst buffer. <h3 id="Src">Source Code Checkout</h3>
+Use the following command to download the source codes.
+<pre>
+    git clone https://github.com/Parallel-NetCDF/PnetCDF.git
+
+</pre>
+Initialize autoconf utility settings using command:
+<pre>
+    autoreconf -i
+</pre>
+Next, run configure command to build the PnetCDF library.
+For more information about running configure commands, readers are referred to the README files under folder 
+  <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/doc">doc</a>.
+
+<hr>
+Please email your questions to &lt;<a href="mailto:parallel-netcdf@lists.mcs.anl.gov">parallel-netcdf@lists.mcs.anl.gov</a>&gt;
+<p>
+</body>
+</html>
