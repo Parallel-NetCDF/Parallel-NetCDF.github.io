@@ -65,7 +65,7 @@
 </li><li>Additional example programs in C, Fortran 77, Fortran 90, and C++ are provided in all PnetCDF source releases under the directory "examples". Refer <a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/README">examples/README</a> for brief descriptions of individual example programs.
 </li></ul><h2 id="PerformanceTuning">Performance Tuning</h2>
 <ul><li>For performance improvement, some general guide lines are available in <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/faq.html"><span class="icon">​</span>Questions and Answers</a>.
-</li><li><a class="wiki" href="HintsForPnetcdf.htm">I/O hints for PnetCDF</a> describes some low-level tuning parameters
+</li><li><a class="wiki" href="HintsForPnetcdf.html">I/O hints for PnetCDF</a> describes some low-level tuning parameters
 <ul><li><a class="wiki" href="./VariableAlignment.html">File offset alignment</a> documents a way to adjust the layout of file header and variables in a dataset, and why/when you might want to do so 
 </li></ul></li><li><a class="wiki" href="CombiningOperations.html">Nonblocking APIs</a> are introduced as an I/O optimization in version 1.1. They can be used to aggregate multiple I/O requests into a larger one for better performance.
 <ul><li>Usage: users first post multiple nonblocking I/O requests and then make a call to the wait API to commit the requests. The wait call combines all the pending requests into one bigger MPI I/O request.
@@ -97,14 +97,6 @@
       </div>
       
 
-    </div>
-    <div id="altlinks">
-      <h3>Download in other formats:</h3>
-      <ul>
-        <li class="last first">
-          <a rel="nofollow" href="./Documentation?format=txt">Plain Text</a>
-        </li>
-      </ul>
     </div>
     </div>
     </body>
