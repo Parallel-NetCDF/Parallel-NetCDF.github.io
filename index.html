@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>
-      Parallel Netcdf
+      Parallel NetCDF
     </title>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -24,6 +24,7 @@ Parallel netCDF (PnetCDF) is jointly developed by <strong>Northwestern Universit
 </p>
 <h2 id="News">News</h2>
 <ul>
+<li><strong>June 23, 2018</strong>: PnetCDF source code repository has moved from its <a href=https://svn.mcs.anl.gov/repos/parallel-netcdf>SVN</a> server to <a href=https://github.com/Parallel-NetCDF/PnetCDF>Github</a>.</li>
 <li><strong>June 13, 2018</strong>: A preview release of PnetCDF 1.10.0 is available. It contains a new 
 <a href="doc/burst_buffering.html">I/O driver</a> developed for using burst buffers.</li>
 <li><strong>December 19, 2017</strong>: PnetCDF <strong>1.9.0</strong> is released (the latest stable version).  See <a href="Release_notes/1.9.0.html">Release notes of 1.9.0</a>.</li>
@@ -45,7 +46,7 @@ In addition to the conventional netCDF read and write APIs, PnetCDF also provide
 Nonblocking APIs allow users to post multiple read and write requests first, and later let PnetCDF to aggregate the requests into a large MPI-IO request, hence to achieve a better performance. See 
 <a class="wiki" href="wiki/CombiningOperations.html">nonblocking I/O</a> for further description and example programs.
 </p>
-<ul><li><a class="wiki" href="wiki/Download.html">Software Downloads</a>: latest and previous software releases, as well as information for accessing the SVN repository of source codes under development.
+<ul><li><a class="wiki" href="wiki/Download.html">Software Downloads</a>: latest and previous software releases, as well as information for accessing the <a href=https://github.com/Parallel-NetCDF/PnetCDF>GitHub repository</a> of source codes under development.
 </li><li><a class="wiki" href="wiki/Documentation.html">Documentation</a>: a 
 	<a class="wiki" href="wiki/QuickTutorial.html">quick tutorial</a>, published papers, presentations, articles, and other resources 
 </li><li><a class="wiki" href="wiki/Benchmarking.html">Benchmarking</a>: tools and suggestions for evaluating PnetCDF performance
@@ -63,7 +64,7 @@ Official support for the CDF-5 format started in the <a class="ext-link" href="h
 </p>
 <p>
 Note NetCDF now can be built with PnetCDF as its sole parallel I/O mechanism by using command-line option <strong>"--disable-netcdf-4 --enable-pnetcdf"</strong>.
-Certainly, NetCDF can also be built with both PnetCDF and PHDF5 enabled.
+Certainly, NetCDF can also be built with both PnetCDF and Parallel HDF5 enabled.
 In this case, a NetCDF program can choose either PnetCDF or Parallel HDF5 to carry out the parallel I/O by adding <strong>NC_MPIIO</strong> or <strong>NC_NETCDF4</strong> respectively to the file open/create flag argument when calling API nc_create_par or nc_open_par.
 When using PnetCDF underneath, the files must be in the classic formats (CDF-1/2/5). Similarly for HDF5, the files must be in the HDF5 format (aka NetCDF-4 format).
 <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/#InteroperabilityWithNetCDF4">NetCDF-4 example programs</a>  are available to demonstrate such parallel I/O operations.
@@ -130,7 +131,7 @@ You can browse even older mailing list messages at the older <a class="ext-link"
 </p>
 <h2 id="ProjectMembers">Project Members</h2>
 <ul><li>Rob Latham, Rob Ross, and Rajeev Thakur (Argonne National Lab)
-</li><li>Wei-keng Liao and Alok Choudhary (Northwestern University)
+</li><li>Wei-keng Liao, Kai-yuan Hou, and Alok Choudhary (Northwestern University)
 </li><li>Seung Woo Son (formerly a postdoc at ANL, and then a postdoc at Northwestern, now an Assistant Professor at UMass Lowell)
 </li><li>Kui Gao (formerly a postdoc at Northwestern, now Dassault Systèmes Simulia Corp.)
 </li><li>Jianwei Li (Northwestern, graduated in 2006)
@@ -139,9 +140,12 @@ You can browse even older mailing list messages at the older <a class="ext-link"
 <p>
 When referring to the Parallel netCDF project, please use the following URLs:
 </p>
-<ul><li><tt>www.mcs.anl.gov/parallel-netcdf</tt> (the 'trac' or 'www-unix' URLs could change)
+<ul>
+<li><tt>https://parallel-netcdf.github.io</tt>
+<!-- <ul><li><tt>www.mcs.anl.gov/parallel-netcdf</tt> (the 'trac' or 'www-unix' URLs could change) -->
 </li><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/">http://cucis.ece.northwestern.edu/projects/PnetCDF/</a> (a page maintained by Northwestern University)
-</li></ul><p>
+</li>
+</ul><p>
 If you are looking for a reference to use in a published paper, please cite our SC2003 paper below.
 </p>
 <ul><li>Jianwei Li, Wei-keng Liao, Alok Choudhary, Robert Ross, Rajeev Thakur, William Gropp, Rob Latham, Andrew Siegel, Brad Gallagher, and Michael Zingale. <a class="ext-link" href="http://www.computer.org/csdl/proceedings/sc/2003/2113/00/21130039-abs.html">Parallel netCDF: A Scientific High-Performance I/O Interface</a>. In the Proceedings of ACM/IEEE conference on Supercomputing, pp. 39, November, 2003.
