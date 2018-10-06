@@ -1,67 +1,175 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>List of PnetCDF Releases</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
-        $("#content").find(".wikianchor").each(function() {
-          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
-        });
-        $(".foldable").enableFolding(true, true);
-      });
-    </script>
+<title>Parallel netCDF Downloads
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="keywords" content="PnetCDF,Parallel netCDF,parallel-netcdf,netCDF,parallel I/O,MPI-IO" />
+<link href="../../CSS/default.css" rel="stylesheet" type="text/css" />
+<!--<style type="text/css">
+	@import url('../src/default.css');
+</style>-->
+<link rel="icon" href="../../images/nuitfavicon.ico" />
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+
+  ga('send', 'pageview');
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+
+</script>
+
 </head>
-<h2>List of PnetCDF Releases</h2>
-<ul>
-<li>The latest stable release is version 1.9.0</li>
-<li>Please visit <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a> to obtain the tar balls for version 1.4.0 and later.
-</li>
-<li>The links to the tar balls of version 1.3.1 and earlier are available in their release notes below.</li>
-</ul><p>
-We encourage you to use the latest released version.  If for some reason you would like to try out older versions, below is a table of (most of) our historical releases and their release notes. 
-</p>
-<table border="1">
-<tr><td> Release </td><td> Notes </td><td> Date 
-</td></tr><tr><td> 1.10.0 </td><td> <a href=../Release_notes/1.10.0>Release note of 1.10.0</a> </td><td> July 2, 2018
-</td></tr><tr><td> 1.10.0.pre </td><td> <a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/ChangeLog">ChangeLog of 1.10.0.pre</a> </td><td> June 13, 2018
-</td></tr><tr><td> 1.9.0 </td><td> <a class="wiki" href="ReleaseNotes-1.9.0.html">ReleaseNotes-1.9.0</a> </td><td> December 19, 2017 
-</td></tr><tr><td> 1.9.0.pre1 </td><td> <a class="source" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/tags/v1-9-0-pre1/sneak_peek">Release Note</a> </td><td> November 1, 2017 
-</td></tr><tr><td> 1.8.1 </td><td> <a class="wiki" href="./ReleaseNotes-1.8.1">ReleaseNotes-1.8.1</a> </td><td> January 28, 2017 
-</td></tr><tr><td> 1.8.0 </td><td> <a class="wiki" href="./ReleaseNotes-1.8.0">ReleaseNotes-1.8.0</a> </td><td> December 19, 2016 
-</td></tr><tr><td> 1.8.0pre1 </td><td> <a class="source" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/tags/v1-8-0pre1/sneak_peek">ReleaseNote-1.8.0pre1</a> </td><td> November 15, 2016 
-</td></tr><tr><td> 1.7.0 </td><td> <a class="wiki" href="./ReleaseNotes-1.7.0">ReleaseNotes-1.7.0</a> </td><td> March 3, 2016 
-</td></tr><tr><td> 1.7.0pre1 </td><td> <a class="source" href="https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/tags/v1-7-0pre1/sneak_peek">ReleaseNotes-1.7.0pre1</a> </td><td> January 12, 2016 
-</td></tr><tr><td> 1.6.1 </td><td> <a class="wiki" href="./ReleaseNotes-1.6.1">ReleaseNotes-1.6.1</a> </td><td> June 1, 2015 
-</td></tr><tr><td> 1.6.0 </td><td> <a class="wiki" href="./ReleaseNotes-1.6.0">ReleaseNotes-1.6.0</a> </td><td> February 2, 2015 
-</td></tr><tr><td> 1.6.0.pre1 </td><td> <a class="wiki" href="./ReleaseNotes-1.6.0.pre1">ReleaseNotes-1.6.0.pre1</a> </td><td> January 3, 2015 
-</td></tr><tr><td> 1.5.0 </td><td> <a class="wiki" href="./ReleaseNotes-1.5.0">ReleaseNotes-1.5.0</a> </td><td> July 8, 2014 
-</td></tr><tr><td> 1.5.0.pre1 </td><td> <a class="wiki" href="./ReleaseNotes-1.5.0.pre1">ReleaseNotes-1.5.0.pre1</a> </td><td> May 15, 2014 
-</td></tr><tr><td> 1.4.1 </td><td> <a class="wiki" href="./ReleaseNotes-1.4.1">ReleaseNotes-1.4.1</a> </td><td> Dec. 23, 2013 
-</td></tr><tr><td> 1.4.0 </td><td> <a class="wiki" href="./ReleaseNotes-1.4.0">ReleaseNotes-1.4.0</a> </td><td> Nov. 17, 2013 
-</td></tr><tr><td> 1.4.0.pre1 </td><td> <a class="wiki" href="./ReleaseNotes-1.4.0.pre1">ReleaseNotes-1.4.0.pre1</a> </td><td> Sep. 19, 2013 
-</td></tr><tr><td> 1.3.1 </td><td> <a class="wiki" href="./ReleaseNotes-1.3.1">ReleaseNotes-1.3.1</a> </td><td> Sep. 24. 2012 
-</td></tr><tr><td> 1.3.0 </td><td> <a class="wiki" href="ReleaseNotes-1.3.html">ReleaseNotes-1.3.0</a> </td><td> Jun. 26, 2012 
-</td></tr><tr><td> 1.2.0 </td><td> <a class="wiki" href="./ReleaseNotes-1.2.0">ReleaseNotes-1.2.0</a> </td><td> Aug. 19, 2010 
-</td></tr><tr><td> 1.2.0pre1 </td><td> <a class="wiki" href="./ReleaseNotes-1.2.0pre1">ReleaseNotes-1.2.0pre1</a> </td><td> Jun. 15, 2010 
-</td></tr><tr><td> 1.1.1 </td><td>  <a class="wiki" href="./ReleaseNotes-1.1.1">ReleaseNotes-1.1.1</a> </td><td> Jan. 27, 2010 
-</td></tr><tr><td style="text-align: left">1.1.0 </td><td>  <a class="wiki" href="./ReleaseNotes-1.1.0">ReleaseNotes-1.1.0</a> </td><td> Nov. 2, 2009 
-</td></tr><tr><td> 1.1.0pre1 </td><td> <a class="wiki" href="./ReleaseNotes-1.1.0pre1">ReleaseNotes-1.1.0pre1</a> </td><td> Apr. 22, 2009 
-</td></tr><tr><td> 1.0.3 </td><td>  <a class="wiki" href="./ReleaseNotes-1.0.3">ReleaseNotes-1.0.3</a> </td><td> Dec. 12, 2008 
-</td></tr></table>
-<h2 id="SubversionAccess">Subversion Access</h2>
+
+<body>
+<center> <h1>PnetCDF Source Code Download</h1> </center>
+<br>
+
+The latest stable release of <a href="index.html">PnetCDF</a> is version 1.10.0.
 <p>
-The PnetCDF project uses <a href="https://github.com">Githib</a> for source-code management.
-</p>
-<p>
-The GIT command to clone (check out) the source codes:
-</p>
-<tt>git clone https://github.com/Parallel-NetCDF/PnetCDF.git</tt>
-<p>
-After you've checked out the source, run command 'autoreconf -i' to generate the configure script.
-Please refer to the README files for building recipes on various machines.
-</p>
-<hr>
+We encourage PnetCDF users to use the latest released version. If for some
+reason you would like to try out older versions, below is a table of (most of)
+our historical releases and their release notes.  <p>
+
+<table border="1" cellpadding="4">
+ <tr>
+   <th>Release Date</th>
+   <th>Release Note</th>
+   <th>Source tar ball</th>
+   <th>Size</th>
+   <th>SHA-1 Checksum</th>
+ </tr>
+ <tr>
+   <td align=center>July 2, 2018</td>
+   <td align=center><a href=../Release_notes/1.10.0.md>1.10.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.10.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.10.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.10.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.10.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.10.0.tar.gz</a></td>
+   <td>2.0 MB</td>
+   <td>9ac144f305e14ae6306f5e51af1b4329bfb86480</td>
+ </tr>
+ <tr>
+   <td align=center>December 19, 2017</td>
+   <td align=center><a href=../Release_notes/1.9.0.html>1.9.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.9.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.9.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.9.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.9.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.9.0.tar.gz</a></td>
+   <td>1.9 MB</td>
+   <td>0978ae5cdaba925e73ced2b550fc02a132b2c5ed</td>
+ </tr>
+ <tr>
+   <td align=center>January 28, 2017</td>
+   <td align=center><a href=../Release_notes/1.8.1.html>1.8.1</a></td>
+   <td><a href="Release/parallel-netcdf-1.8.1.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.8.1.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.8.1.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.8.1.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.8.1.tar.gz</a></td>
+   <td>1.2 MB</td>
+   <td>2a8179158731f3fa24c9b183b4b1442e8853d229</td>
+ </tr>
+ <tr>
+   <td align=center>December 19, 2016</td>
+   <td align=center><a href=../Release_notes/1.8.0.html>1.8.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.8.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.8.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.8.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.8.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.8.0.tar.gz</a></td>
+   <td>1.2 MB</td>
+   <td>825825481aa629eb82f21ca37afff1609b8eeb07</td>
+ </tr>
+ <tr>
+   <td align=center>March 3, 2016</td>
+   <td align=center><a href=../Release_notes/1.7.0.html>1.7.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.7.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.7.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.7.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.7.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.7.0.tar.gz</a></td>
+   <td>1.1 MB</td>
+   <td>267eab7b6f9dc78c4d0e6def2def3aea4bc7c9f0</td>
+ </tr>
+ <tr>
+   <td align=center>June 1, 2015</td>
+   <td align=center><a href=../Release_notes/1.6.1.html>1.6.1</a></td>
+   <td><a href="Release/parallel-netcdf-1.6.1.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.6.1.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.6.1.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.6.1.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.6.1.tar.gz</a></td>
+   <td>2.7 MB</td>
+   <td>62a094eb952f9d1e15f07d56e535052604f1ac34</td>
+ </tr>
+ <tr>
+   <td align=center>February 2, 2015</td>
+   <td align=center><a href=../Release_notes/1.6.0.html>1.6.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.6.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.6.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.6.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.6.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.6.0.tar.gz</a></td>
+   <td>2.7 MB</td>
+   <td>191087f01232252dda62c12425dd8f39aee09aff</td>
+ </tr>
+ <tr>
+   <td align=center>July 8, 2014</td>
+   <td align=center><a href=../Release_notes/1.5.0.html>1.5.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.5.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.5.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.5.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.5.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.5.0.tar.gz</a></td>
+   <td>2.6 MB</td>
+   <td>27586a39fef85a46cf0732a2c0f72dcbb1537189</td>
+ </tr>
+ <tr>
+   <td align=center>December 23, 2013</td>
+   <td align=center><a href=../Release_notes/1.4.1.html>1.4.1</a></td>
+   <td><a href="Release/parallel-netcdf-1.4.1.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.4.1.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.4.1.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.4.1.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.4.1.tar.gz</a></td>
+   <td>2.5 MB</td>
+   <td>f2e57b9af78675f9c2a80a64ffb8522c47ea375a</td>
+ </tr>
+ <tr>
+   <td align=center>November 17, 2013</td>
+   <td align=center><a href=../Release_notes/1.4.0.html>1.4.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.4.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.4.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.4.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.4.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.4.0.tar.gz</a></td>
+   <td>2.5 MB</td>
+   <td>fa734e62af819cb5ee9f85be61818163f8345a77</td>
+ </tr>
+ <tr>
+   <td align=center>September 24, 2012</td>
+   <td align=center><a href=../Release_notes/1.3.1.html>1.3.1</a></td>
+   <td><a href="Release/parallel-netcdf-1.3.1.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.3.1.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.3.1.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.3.1.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.3.1.tar.gz</a></td>
+   <td>2.5 MB</td>
+   <td>f9860d174a4741e7f80a71e29fabbe170402f535</td>
+ </tr>
+ <tr>
+   <td align=center>June 26, 2012</td>
+   <td align=center><a href=../Release_notes/1.3.0.html>1.3.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.3.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.3.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.3.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.3.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.3.0.tar.gz</a></td>
+   <td>2.5 MB</td>
+   <td>b767de94e7b5d69a2a3a429a3a0b06b519392bc1</td>
+ </tr>
+ <tr>
+   <td align=center>August 19, 2010</td>
+   <td align=center><a href=../Release_notes/1.2.0.html>1.2.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.2.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.2.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.2.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.2.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.2.0.tar.gz</a></td>
+   <td>17 MB</td>
+   <td>acdeb28de266926aa99eb566fed4dca3f8f80749</td>
+ </tr>
+ <tr>
+   <td align=center>January 27, 2010</td>
+   <td align=center><a href=../Release_notes/1.1.1.html>1.1.1</a></td>
+   <td><a href="Release/parallel-netcdf-1.1.1.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.1.1.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.1.1.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.1.1.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.1.1.tar.gz</a></td>
+   <td>13 MB</td>
+   <td>6fef942fc2802c3852245cf327ea028f9c8db60a</td>
+ </tr>
+ <tr>
+   <td align=center>November 2, 2009</td>
+   <td align=center><a href=../Release_notes/1.1.0.html>1.1.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.1.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.1.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.1.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.1.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.1.0.tar.gz</a></td>
+   <td>13 MB</td>
+   <td>383da14e33fc98d3e04b5906af862db7b1341851</td>
+ </tr>
+ <tr>
+   <td align=center>December 12, 2008</td>
+   <td align=center><a href=../Release_notes/1.0.3.html>1.0.3</a></td>
+   <td><a href="Release/parallel-netcdf-1.0.3.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.0.3.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.0.3.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.0.3.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.0.3.tar.gz</a></td>
+   <td>13 MB</td>
+   <td>cf96f613c942ac2c17ac1b22717b7044600fec3d</td>
+ </tr>
+ <tr>
+   <td align=center>July 27, 2005</td>
+   <td align=center><a href=../Release_notes/1.0.0.html>1.0.0</a></td>
+   <td><a href="Release/parallel-netcdf-1.0.0.tar.gz" onClick="var that=this; ga('send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.0.0.tar.gz', 1); ga('pnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.0.0.tar.gz', 1); ga('parallelnetcdfTracker.send', 'event', 'PnetCDF', 'Source Download (GZ)', 'parallel-netcdf-1.0.0.tar.gz', 1); setTimeout(function(){location.href=that.href;},500); return false;">parallel-netcdf-1.0.0.tar.gz</a></td>
+   <td>13 MB</td>
+   <td>13448825c2044a0f90d732249cae10dca9d9f566</td>
+ </tr>
+</table>
+<br>
+* command to verify a SHA1 checksum: "/usr/bin/openssl sha1 filename"
+
+
 </body>
 </html>
