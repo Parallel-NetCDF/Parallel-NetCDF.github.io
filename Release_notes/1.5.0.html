@@ -1,52 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  
-  
+<head>
+<title> PnetCDF 1.5.0 Release Notes </title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
 
-  
+<center> <h2>PnetCDF 1.5.0 Release Notes</h2> </center>
+<br>
 
+Release Date: July 8 2014
+</p>
 
-  <head>
-    <title>
-      ReleaseNotes-1.5.0 – parallel-netcdf
-    </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--[if IE]><script type="text/javascript">
-      if (/^#__msie303:/.test(window.location.hash))
-        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
-    </script><![endif]-->
-        <link rel="search" href="/projects/parallel-netcdf/search" />
-        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
-        <link rel="alternate" href="/projects/parallel-netcdf/wiki/ReleaseNotes-1.5.0?format=txt" type="text/x-trac-wiki" title="Plain Text" />
-        <link rel="start" href="/projects/parallel-netcdf/wiki" />
-        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
-        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
-        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
-      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
-    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
-    <!--[if lt IE 7]>
-    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
-        $("#content").find(".wikianchor").each(function() {
-          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
-        });
-        $(".foldable").enableFolding(true, true);
-      });
-    </script>
-  </head>
-  <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
-          
-          <div id="wikipage"><h1 id="ReleaseNoteof1.5.0">Release Note of 1.5.0</h1>
-<ul><li>Release date: July 8 2014
-</li><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a>
-</li></ul><h2 id="Newfeatures">New features</h2>
+<h2 id="Newfeatures">New features</h2>
 <ul><li>A new configure option "--disable-in-place-swap" is added. It disables the byte-swap operations running in-place on the user's write buffers.  The purpose of providing this option is to deal with the problem when a Fortran program uses a immutable buffer for put APIs, e.g. the buffer is declared as a PARAMETER, and in-place byte swap on this buffer causes segmentation fault. See discussion threads of <a class="ext-link" href="http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2013-July/001498.html"><span class="icon">​</span>http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2013-July/001498.html</a>
 </li></ul><blockquote>
 <p>
@@ -133,13 +111,8 @@ For non-cross compile environment, there is no need to set the environment varia
 </li></ul><h2 id="Bugsfixed:">Bugs fixed:</h2>
 <ul><li>fix ncmpigen.y on parsing CDL file to get the number of records. The bug failed the command "make b-test", due to getting a wrong number of records (current value for the unlimited dimension).
 </li></ul><ul><li>fix the update for number of records when writing to a record that is not the last record.
-</li></ul></div>
-        
-        
-      </div>
-      
-
-    </div>
-    </div>
-  </body>
+</li></ul>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
 </html>

@@ -1,16 +1,30 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  
-    <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
-          
-          <div id="wikipage"><h1 id="ReleaseNoteof1.8.0">Release Note of 1.8.0</h1>
-<ul><li>Release date: December 19, 2016.
-</li><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a>
-</li></ul><h2 id="Newfeatures">New features</h2>
+<head>
+<title> PnetCDF 1.8.0 Release Notes </title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
+
+<center> <h2>PnetCDF 1.8.0 Release Notes</h2> </center>
+<br>
+
+Release Date: December 19, 2016
+</p>
+
+<h2 id="Newfeatures">New features</h2>
 <ul><li>Copy fill values to data elements that cause out-of-bound error (i.e.
 NC_ERANGE.) In netCDF v4.4.1 and priors, type conversion for out-of-
 bound elements proceeds even if the out-of-bound error is detected, and
@@ -206,13 +220,8 @@ with netCDF convention. See <a class="changeset" href="/projects/parallel-netcdf
 See <a class="changeset" href="/projects/parallel-netcdf/changeset/2385" title="bug fix: should not modify env string, do that on a copy of it">r2385</a>
 </li><li>Fix utility ncmpidiff to use collective read APIs in collective data mode
 See <a class="changeset" href="/projects/parallel-netcdf/changeset/2382" title="bug fix: should have use collective APIs">r2382</a>
-</li></ul></div>
-        
-        
-      </div>
-      
-
-    </div>
-    </div>
-    </body>
+</li></ul>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
 </html>

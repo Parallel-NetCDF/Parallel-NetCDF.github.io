@@ -1,18 +1,31 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   
-  
+<head>
+<title> PnetCDF 1.6.1 Release Notes </title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
 
-  <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
-          
-          <div id="wikipage"><h1 id="ReleaseNoteof1.6.1">Release Note of 1.6.1</h1>
-<ul><li>Release date: June 1, 2015.
-</li><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon">​</span>Download Page</a>
-</li></ul><h2 id="NewFeatures:">New Features:</h2>
+<center> <h2>PnetCDF 1.6.1 Release Notes</h2> </center>
+<br>
+
+Release Date: June 1, 2015.
+</p>
+
+<h2 id="NewFeatures:">New Features:</h2>
 <ul><li>PnetCDF now supports fill mode. ncmpi_set_fill() can be used to set the fill mode for the entire data set. Note the differences from netCDF:
 <ol><li>The default mode in PnetCDF is NC_NOFILL.
 </li><li>Setting fill mode for the entire file or individual variables must be done in define mode.
@@ -46,13 +59,8 @@
 <ul><li>Add missing F90 function overloading for f90mpi_put_var_all, f90mpi_get_var_all, f90mpi_put_vard_all, and f90mpi_get_vard_all, when the user buffer is a scalar.
 </li><li>Fix when the request IDs passed in argument array_of_requests[] of ncmpi_wait_all() are not in an increasing order. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2023" title="bug fix: when the request IDs are not in an increasing order in a wait ...">r2023</a>.
 </li><li>Fix C++ compile error for converting NULL to string. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2039" title="bug fix: Nick Andersen reported a run-time error of ...">r2039</a>.
-</li></ul></div>
-        
-        
-      </div>
-      
-
-    </div>
-    </div>
-    </body>
+</li></ul>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
 </html>

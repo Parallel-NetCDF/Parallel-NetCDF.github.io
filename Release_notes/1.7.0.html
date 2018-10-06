@@ -1,17 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  
-  
-  <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
-          
-          <div id="wikipage"><h1 id="ReleaseNoteof1.7.0">Release Note of 1.7.0</h1>
-<ul><li>Release date: March 3, 2016.
-</li><li>The source tar balls can be obtained from the <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html"><span class="icon"></span>Download Page</a>
-</li></ul><h2 id="Newfeatures:">New features:</h2>
+<head>
+<title> PnetCDF 1.7.0 Release Notes </title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
+
+<center> <h2>PnetCDF 1.7.0 Release Notes</h2> </center>
+<br>
+
+Release Date: March 3, 2016
+</p>
+
+<h2 id="Newfeatures:">New features:</h2>
 <ul><li>Nonblocking requests now can be posted while the program is in the define mode. This feature enables applications to add new variables and post the nonblocking write requests without separating the codes by ncmpi_enddef(). Note ncmpi_wait_all and ncmpi_wait must still be called in the data mode.
 </li><li>When using immutable write buffer in put APIs on a Little Endian machine, the in-place byte swap operation performed internally in PnetCDF can cause a fatal error (by trying to change the contents of an immutable memory space). The solution of copying user's write request to a temporary buffer and perform byte swap there conflicts with PnetCDF's design principle of avoiding internal memory allocation as much as possible. Since the size of immutable buffer in most cases is small, PnetCDF now compromise the two by making a copy of write requests that is less than 4KB. Users are warned that using immutable write buffer larger than 4KB will still cause the fatal error in the PnetCDF default configuration. The way to completely disable in-place byte swap is to build PnetCDF with --disable-in-place-swap option at the configure time.  In this case, the internal memory allocation in PnetCDF will increase.
 </li></ul><h2 id="Syntaxchanges:">Syntax changes:</h2>
@@ -61,13 +74,8 @@
 </li><li>Fix Fortran 77 constants nf_fill_uint and nf_fill_int64 (thanks Jim Edwards) that pgf77-based MPI compiler does not like "_8" modifier.  See <a class="changeset" href="/projects/parallel-netcdf/changeset/2045" title="Fix Fortran 77 constants nf_fill_uint and nf_fill_int64. Thanks to Jim ...">r2045</a> and <a class="changeset" href="/projects/parallel-netcdf/changeset/2051" title="revise r2045 by testing Fortran modifier">r2051</a>. The same issue for NAG Fortran compiler is also resolved. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2089" title="patch from Jim Edwards for NAG 6.0 Fortran compiler. Thanks Jim!">r2089</a> and <a class="changeset" href="/projects/parallel-netcdf/changeset/2093" title="Jim's 2nd patch to resolve Fortran modifier issue when using NAG compiler">r2093</a>.
 </li><li>In the example program examples/tutorial/pnetcdf-write-nb.c, the write buffers used in two iput API calls should be different. See <a class="changeset" href="/projects/parallel-netcdf/changeset/2095" title="example program bug fix: write buffers should be different. Thanks to ...">r2095</a>.
 </li><li>Fix the error reporting mechanism for NC_ERANGE, for when an arithmetic overflow happens. Overflow checking is now performed before I/O.
-</li></ul></div>
-        
-        
-      </div>
-      
-
-    </div>
-    </div>
-    </body>
+</li></ul>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
 </html>

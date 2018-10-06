@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> PnetCDF 1.2.0 Release Notes </title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
+
+<center> <h2>PnetCDF 1.2.0 Release Notes</h2> </center>
+<br>
+
+Release Date: 19 August 2010.
+</p>
+<h2 id="Newin1.2.0">New in 1.2.0</h2>
+<ul><li>several bugs fixed, memory leaks reduced, 
+</li><li>internal housekeeping
+</li><li>We have reduced the places where pnetcdf will call MPI_FILE_SYNC
+</li><li>A new 'ncmpidiff' utility to compare two datasets in parallel
+</li><li>Addressed a build failure when compiling with some versions of MVAPICH2.  See <a class="ext-link" href="http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2010-July/001045.html"><span class="icon">​</span>http://lists.mcs.anl.gov/pipermail/parallel-netcdf/2010-July/001045.html</a> for an example of the build failure.
+</li><li>If you build this release and still get "undefined reference to 'yyin'", then you have some stale object files.  "make clean" and re-build.
+</li><li>additional error checking for collective routines
+</li></ul><p>
+We have also made API changes to our non-blocking interface. <a class="wiki" href="/projects/parallel-netcdf/wiki/CombiningOperations">CombiningOperations</a> documents the changes.  Our non-blocking semantics have been relaxed somewhat, and should be more usable in more situations.  Please let us know if you have any comments or issues with the new interface changes.
+</p>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
+</html>
