@@ -1,49 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  
-  
+<head>
+<title>PnetCDF Source Code Walk Through</title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
 
-  
+<center> <h2>PnetCDF Source Code Walk Through</h2> </center>
+<hr>
 
-
-  <head>
-    <title>
-      SourceCodeWalkthrough – parallel-netcdf
-    </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--[if IE]><script type="text/javascript">
-      if (/^#__msie303:/.test(window.location.hash))
-        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
-    </script><![endif]-->
-        <link rel="search" href="/projects/parallel-netcdf/search" />
-        <link rel="help" href="/projects/parallel-netcdf/wiki/TracGuide" />
-        <link rel="alternate" href="/projects/parallel-netcdf/wiki/SourceCodeWalkthrough?format=txt" type="text/x-trac-wiki" title="Plain Text" />
-        <link rel="start" href="/projects/parallel-netcdf/wiki" />
-        <link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/projects/parallel-netcdf/chrome/common/css/wiki.css" type="text/css" />
-        <link rel="shortcut icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
-        <link rel="icon" href="/projects/parallel-netcdf/chrome/common/trac.ico" type="image/x-icon" />
-      <link type="application/opensearchdescription+xml" rel="search" href="/projects/parallel-netcdf/search/opensearch" title="Search parallel-netcdf" />
-    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/babel.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/trac.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/search.js"></script><script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/folding.js"></script>
-    <!--[if lt IE 7]>
-    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
-        $("#content").find(".wikianchor").each(function() {
-          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
-        });
-        $(".foldable").enableFolding(true, true);
-      });
-    </script>
-  </head>
-  <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
-          
-          <div id="wikipage"><p>
 (I (robl) am still working on this document, but wanted to save my work...)
 </p>
 <h1 id="BigPicture">Big Picture</h1>
@@ -52,15 +29,13 @@ David A. Wheeler's 'SLOCCount' says we have about 40k lines of code, but a lot o
 </p>
 <h1 id="srclib">src/lib</h1>
 <p>
-The biggest contribution parallel-netcdf makes, as mentioned above, is the fact that it uses MPI-IO for I/O, so we'll start there for this walk-through.  1.2.0 introduced a big re-organizing of the source code, resulting in a lot less duplication.  All the routines essentially perform subarray I/O via MPI-IO calls.  Set the file view with a subarray or hvector and then perform the MPI_File_read_all or MPI_File_write_all call. 
-</p>
-</div>
-        
-        
-      </div>
-      
-
-    </div>
-    </div>
-    </body>
+The biggest contribution parallel-netcdf makes, as mentioned above, is the fact
+that it uses MPI-IO for I/O, so we'll start there for this walk-through.  1.2.0
+introduced a big re-organizing of the source code, resulting in a lot less
+duplication.  All the routines essentially perform subarray I/O via MPI-IO
+calls.  Set the file view with a subarray or hvector MPI datatype constructors
+and then perform the MPI_File_read_all or MPI_File_write_all call.  </p>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
 </html>

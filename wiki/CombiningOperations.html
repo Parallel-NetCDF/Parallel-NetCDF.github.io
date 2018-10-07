@@ -1,54 +1,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  
-  
-
-  
-
-
-  
-<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/CombiningOperations by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
-    <title>
-      CombiningOperations – parallel-netcdf
-    </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--[if IE]><script type="text/javascript">
-      if (/^#__msie303:/.test(window.location.hash))
-        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
-    </script><![endif]-->
-        <link rel="search" href="../search.html" />
-        <link rel="help" href="TracGuide.html" />
-        <link rel="alternate" href="./CombiningOperations?format=txt" type="text/x-trac-wiki" title="Plain Text" />
-        <link rel="start" href="../wiki.html" />
-        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" />
-        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
-        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
-      <link type="application/opensearchdescription+xml" rel="search" href="../search/opensearch" title="Search parallel-netcdf" />
-    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script>
-    <!--[if lt IE 7]>
-    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
-        $("#content").find(".wikianchor").each(function() {
-          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
-        });
-        $(".foldable").enableFolding(true, true);
-      });
-    </script>
-  </head>
-  <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
-          
-          <div id="wikipage"><h1 id="IOaggregation:implicitmethodnonblockingAPIsandexplicitmethodmulti-variableAPIs">I/O aggregation: implicit method (nonblocking APIs) and explicit method (multi-variable APIs)</h1>
-<hr />
-<h2 id="Motivation">Motivation</h2>
+<title>PnetCDF I/O Aggregation</title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
+
+<center> <h2>PnetCDF I/O Aggregation</h2> </center>
+<hr>
+
+<h2>Motivation</h2>
 <p>
 Array variables comprise the bulk of the data in a netCDF dataset, and for
 accesses to large regions of single array variables, PnetCDF attains very high
@@ -86,7 +59,8 @@ The request aggregation and real I/O operation is carried out at the wait subrou
 <p>
 In C:
 </p>
-<pre class="wiki">int
+<pre>
+int
 ncmpi_iget_vara_float(int               ncid,    /* in:  dataset ID */
                       int               varid,   /* in:  variable ID */
                       const MPI_Offset  start[], /* in:  [ndims] start offsets */
@@ -116,7 +90,8 @@ ncmpi_wait_all(int ncid,        /* in:  dataset ID */
 </pre><p>
 In Fortran:
 </p>
-<pre class="wiki">INTEGER FUNCTION nfmpi_iget_vara_real(ncid, varid, start, count, buf, req_id)
+<pre>
+INTEGER FUNCTION nfmpi_iget_vara_real(ncid, varid, start, count, buf, req_id)
                             INTEGER,                       INTENT(IN)  :: ncid
                             INTEGER,                       INTENT(IN)  :: varid
                             INTEGER(KIND=MPI_OFFSET_KIND), INTENT(IN)  :: start(*)
@@ -159,7 +134,8 @@ take a list of variables to access.
 <p>
 The function calls for the explicit method look like this:
 </p>
-<pre class="wiki">int
+<pre>
+int
 ncmpi_mput_vara_all(int               ncid,         /* in:  dataset ID */
                     int               nvars,        /* in:  number of variables */
                     int               varids[],     /* in:  [nvars] list of variable IDs */
@@ -182,27 +158,27 @@ ncmpi_mget_vara_all(int               ncid,         /* in:  dataset ID */
 Do note that we do not have Fortran bindings for these new routines in
 PnetCDF. Fortran codes should use the implicit method.
 </p>
-<h2 id="Exampleprograms">Example programs</h2>
+<h2>Example programs</h2>
 <ul><li>Implicit Method
 <ul><li>C:
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/C/nonblocking_write.c">nonblocking_write.c</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/C/block_cyclic.c">block_cyclic.c</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/C/column_wise.c">column_wise.c</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-nb.c">pnetcdf-write-nb.c</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-read-nb.c">pnetcdf-read-nb.c</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-buffered.c">pnetcdf-write-buffered.c</a>
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/C/nonblocking_write.c">nonblocking_write.c</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/C/block_cyclic.c">block_cyclic.c</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/C/column_wise.c">column_wise.c</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-nb.c">pnetcdf-write-nb.c</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-read-nb.c">pnetcdf-read-nb.c</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-buffered.c">pnetcdf-write-buffered.c</a>
 </li><li>Fortran 77:
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F77/nonblocking_write.f">nonblocking_write.f</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F77/block_cyclic.f">block_cyclic.f</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F77/column_wise.f">column_wise.f</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf77.f">pnetcdf-write-bufferedf77.f</a>
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F77/nonblocking_write.f">nonblocking_write.f</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F77/block_cyclic.f">block_cyclic.f</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F77/column_wise.f">column_wise.f</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf77.f">pnetcdf-write-bufferedf77.f</a>
 </li><li>Fortran 90:
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F90/nonblocking_write.f90">nonblocking_write.f90</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F90/block_cyclic.f90">block_cyclic.f90</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F90/column_wise.f90">column_wise.f90</a>,
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf.f90">pnetcdf-write-bufferedf.f90</a>
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F90/nonblocking_write.f90">nonblocking_write.f90</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F90/block_cyclic.f90">block_cyclic.f90</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/F90/column_wise.f90">column_wise.f90</a>,
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf.f90">pnetcdf-write-bufferedf.f90</a>
 </li></ul></li></ul><ul><li>Explicit Method
-<a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/C/mput.c">mput.c</a>
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/C/mput.c">mput.c</a>
 </li></ul><h2 id="References">References</h2>
 <p>
 We wrote a paper describing the new APIs, their implementation, and some results:
@@ -210,23 +186,16 @@ We wrote a paper describing the new APIs, their implementation, and some results
 <p>
 Kui Gao, Wei-keng Liao, Alok Choudhary, Robert Ross, and Robert Latham. "Combining I/O
 Operations for Multiple Array Variables in Parallel NetCDF". In the <em>Proceedings
-of  the <a class="ext-link" href="http://www.mcs.anl.gov/events/workshops/iasds09"><span class="icon">​</span>Workshop on Interfaces and Architectures for Scientific Data Storage</a></em>,
+of  the <a href="http://www.mcs.anl.gov/events/workshops/iasds09">Workshop on Interfaces and Architectures for Scientific Data Storage</a></em>,
 held in conjunction with the the IEEE Cluster Conference, New Orleans,
-Louisiana, September 2009.  <a class="ext-link" href="http://www.mcs.anl.gov/~robl/pnetcdf/kgao:write-combining-iasds09.pdf"><span class="icon">​</span>PDF</a>
+Louisiana, September 2009.  <a href="http://www.mcs.anl.gov/~robl/pnetcdf/kgao:write-combining-iasds09.pdf">PDF</a>
 </p>
 <p>
 We used this new API to achieve better checkpoint and plotfile I/O in the FLASH astrophysics code:
-Rob Latham, Chris Daley, Wei keng Liao, Kui Gao, Rob Ross, Anshu Dubey, and Alok Choudhary. "A case study for scientific I/O: improving the FLASH astrophysics code". <em>Computational Science &amp; Discovery</em>, 5(1):015001, 2012. <a class="ext-link" href="http://iopscience.iop.org/1749-4699/5/1/015001/"><span class="icon">​</span>online version</a>
+Rob Latham, Chris Daley, Wei keng Liao, Kui Gao, Rob Ross, Anshu Dubey, and Alok Choudhary. "A case study for scientific I/O: improving the FLASH astrophysics code". <em>Computational Science &amp; Discovery</em>, 5(1):015001, 2012. <a href="http://iopscience.iop.org/1749-4699/5/1/015001/">online version</a>
 </p>
-</div>
-        
-        
-      </div>
-      
 
-    </div>
-    </div>
-    </body>
-
-<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/CombiningOperations by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
 </html>

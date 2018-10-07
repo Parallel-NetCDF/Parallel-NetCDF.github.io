@@ -25,30 +25,30 @@
 Release Date: June 26, 2012
 </p>
 
-The Parallel-NetCDF team is pleased to announce a new release of Parallel-NetCDF.  Version 1.3.0 marks our first release since august 2010, but we have not been idle since then. 
-</p>
 <h2 id="Compatibilitynote">Compatibility note</h2>
 <ul><li>In testing with version 11.7 of the Portland Group compiler, some of the Fortran test programs fail to compile if built with pgf77.  The tests work if built with the Fortran90 compiler.   
-</li></ul><h2 id="Newin1.3.0">New in 1.3.0</h2>
+</li></ul>
+
+<h2>New in 1.3.0</h2>
 <ul><li>Bug fixes in new ncmpidiff tool.
 </li><li>Small optimizations to reduce communication in library.
-</li><li>Improved documentation, including more test programs and a <a class="wiki" href="QuickTutorial.html">QuickTutorial</a>.
+</li><li>Improved documentation, including more test programs and a <a href="../wiki/QuickTutorial.html">QuickTutorial</a>.
 </li><li>Bug fixes in our Fortran90 support.
 </li><li>Better compatibility with NetCDF-4: no need for a modified pnetcdf.h from Unidata when building NetCDF-4 with PnetCDF support.
 </li><li>PnetCDF now duplicates the MPI communicator internally, which fixed at least one odd behavior seen in a pnetcdf-using application.
-</li><li>Improvements to PnetCDF header and variable alignment (see wiki page <a class="wiki" href="./VariableAlignment">VariableAlignment</a>).
+</li><li>Improvements to PnetCDF header and variable alignment (see <a href="../wiki/VariableAlignment">VariableAlignment</a>).
 </li><li>Add a checking for file create mode consistency across all processes and an error code for it, NC_ECMODE.
 </li><li>Bug fix for updating the number of record variables in nonblocking APIs.
 </li><li>Bug fix for variable starting file offsets when defining multiple large variables (&gt; 2<sup>32</sup> elements) in one CDF-5 file.
 </li><li>Add a new configure option that takes environment variable $RM to replace the default "rm" command in all Makefiles.
 </li><li>Bug fix for nonblocking varm APIs.
 </li><li>Support for CDF-2's special2 characters in names (variables, attributes, dimensions, etc.)
-</li><li>Release of the official CDF-5 file format specification (see wiki page <a class="wiki" href="./cdf5_format">CD-5</a>).
+</li><li>Release of the official CDF-5 file format specification (see wiki page <a href="./cdf5_format">CD-5</a>).
 </li><li>Support for CDF-5 data types: NC_UBYTE, NC_USHORT, NC_UINT, NC_INT64, NC_UINT64, and NF_INT64.
 </li><li>New C APIs: ncmpi_put_vara_ushort, ncmpi_put_vara_uint, ncmpi_put_vara_longlong, and ncmpi_put_vara_ulonglong. Similarly for var1, var, vars and varm APIs. Also for get and nonblocking APIs.
 </li><li>New Fortran APIs: nfmpi_put_vars_int8 and similarly for var1, var, vars, varm, get, and nonblocking APIs.
 </li><li>Add a new error code, NC_ENOTSUPPORT, for not-yet-supported features.
-</li><li>A new set of buffered put APIs (eg. ncmpi_bput_vara_float) is added (see <a class="wiki" href="./BufferedInterface">BufferedInterface</a>). They make a copy of the user's buffer internally, so the user's buffer can be reused when the call returns. Their usage are similar to the iput APIs.
+</li><li>A new set of buffered put APIs (eg. ncmpi_bput_vara_float) is added (see <a href="../wiki/BufferedInterface">BufferedInterface</a>). They make a copy of the user's buffer internally, so the user's buffer can be reused when the call returns. Their usage are similar to the iput APIs.
 </li><li>Add new error codes for buffered put APIs: NC_ENULLBUF, NC_EPREVATTACHBUF, NC_ENULLABUF, NC_EPENDINGBPUT, and NC_EINSUFFBUF.
 </li><li>Add new test and example programs for the buffered put APIs.
 </li><li>The error string returned by ncmpi_strerror() for an undefined error code is updated from "Unknown Error" to "Unknown Error: Unrecognized PnetCDF error code ID" to be more descriptive.

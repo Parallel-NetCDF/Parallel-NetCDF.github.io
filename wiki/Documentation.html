@@ -1,105 +1,73 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  
-  
-
-  
-
-
-  
-<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/Documentation by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
-    <title>
-      Documentation – parallel-netcdf
-    </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--[if IE]><script type="text/javascript">
-      if (/^#__msie303:/.test(window.location.hash))
-        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
-    </script><![endif]-->
-        <link rel="search" href="../search.html" />
-        <link rel="help" href="TracGuide.html" />
-        <link rel="alternate" href="./Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
-        <link rel="start" href="../wiki.html" />
-        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" />
-        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
-        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
-      <link type="application/opensearchdescription+xml" rel="search" href="../search/opensearch" title="Search parallel-netcdf" />
-    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script>
-    <!--[if lt IE 7]>
-    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
-        $("#content").find(".wikianchor").each(function() {
-          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
-        });
-        $(".foldable").enableFolding(true, true);
-      });
-    </script>
-  </head>
-  <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
+<title>PnetCDF USer Guide</title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
+
+<center> <h2>PnetCDF User Guide</h2> </center>
+<hr>
           
-          <div id="wikipage"><h2 id="BuildPnetCDFLibrary">Build PnetCDF Library</h2>
-<ul><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/INSTALL">INSTALL</a> contains detailed instructions and required software for building PnetCDF library.
+<h2>Build PnetCDF Library</h2>
+<ul><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/INSTALL">INSTALL</a> contains detailed instructions and required software for building PnetCDF library.
 </li><li>Several README files contain build recipes for specific platforms, including
-<ul><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.CRAY">README.CRAY</a>
-</li><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.Fujitsu">README.Fujitsu</a>
-</li><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.IBM">README.IBM</a>
-</li><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.INTEL">README.INTEL</a>
-</li><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.K-Computer">README.K-Computer</a>
-</li><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.LINUX">README.LINUX</a>
-</li><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.SGI">README.SGI</a>
-</li><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.SX">README.SX</a>
-</li><li><a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.Ubuntu">README.Ubuntu</a>
+<ul><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.CRAY">README.CRAY</a>
+</li><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.Fujitsu">README.Fujitsu</a>
+</li><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.IBM">README.IBM</a>
+</li><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.INTEL">README.INTEL</a>
+</li><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.K-Computer">README.K-Computer</a>
+</li><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.LINUX">README.LINUX</a>
+</li><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.SGI">README.SGI</a>
+</li><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.SX">README.SX</a>
+</li><li><a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/doc/README.Ubuntu">README.Ubuntu</a>
 </li></ul></li></ul><h2 id="PnetCDFAPIReference">PnetCDF API Reference</h2>
-<ul><li>PnetCDF C interface guide can be found <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/index.html"><span class="icon">​</span>here</a>.
+<ul><li>PnetCDF C interface guide can be found <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/index.html">here</a>.
 </li></ul><h2 id="Tutorial">Tutorial</h2>
-<ul><li>A <a class="wiki" href="QuickTutorial.html">Quick Tutorial</a> demonstrates some simple aspects of the library, with full code examples. 
-</li><li>Additional example programs in C, Fortran 77, Fortran 90, and C++ are provided in all PnetCDF source releases under the directory "examples". Refer <a class="source" href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/README">examples/README</a> for brief descriptions of individual example programs.
+<ul><li>A <a href="QuickTutorial.html">Quick Tutorial</a> demonstrates some simple aspects of the library, with full code examples. 
+</li><li>Additional example programs in C, Fortran 77, Fortran 90, and C++ are provided in all PnetCDF source releases under the directory "examples". Refer <a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/README">examples/README</a> for brief descriptions of individual example programs.
 </li></ul><h2 id="PerformanceTuning">Performance Tuning</h2>
-<ul><li>For performance improvement, some general guide lines are available in <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/faq.html"><span class="icon">​</span>Questions and Answers</a>.
-</li><li><a class="wiki" href="HintsForPnetcdf.html">I/O hints for PnetCDF</a> describes some low-level tuning parameters
-<ul><li><a class="wiki" href="./VariableAlignment.html">File offset alignment</a> documents a way to adjust the layout of file header and variables in a dataset, and why/when you might want to do so 
-</li></ul></li><li><a class="wiki" href="CombiningOperations.html">Nonblocking APIs</a> are introduced as an I/O optimization in version 1.1. They can be used to aggregate multiple I/O requests into a larger one for better performance.
+<ul><li>For performance improvement, some general guide lines are available in <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/faq.html">Questions and Answers</a>.
+</li><li><a href="HintsForPnetcdf.html">I/O hints for PnetCDF</a> describes some low-level tuning parameters
+<ul><li><a href="./VariableAlignment.html">File offset alignment</a> documents a way to adjust the layout of file header and variables in a dataset, and why/when you might want to do so 
+</li></ul></li><li><a href="CombiningOperations.html">Nonblocking APIs</a> are introduced as an I/O optimization in version 1.1. They can be used to aggregate multiple I/O requests into a larger one for better performance.
 <ul><li>Usage: users first post multiple nonblocking I/O requests and then make a call to the wait API to commit the requests. The wait call combines all the pending requests into one bigger MPI I/O request.
-</li><li><a class="wiki" href="./BufferedInterface.html">Buffered write API</a> describes the non-blocking routines that copy data to a temporary buffer. The advantage is the user buffers can freely be modified once the requests are posted.
-</li></ul></li><li><a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/subfiling.html"><span class="icon">​</span>Subfiling</a> is a mechanism to internally partition a netCDF file into multiple files (subfiles), making the netCDF data appear as a single file to users. Subfiling can reduce file access contention when a large number of processes make concurrent I/O requests to a shared file.
+</li><li><a href="./BufferedInterface.html">Buffered write API</a> describes the non-blocking routines that copy data to a temporary buffer. The advantage is the user buffers can freely be modified once the requests are posted.
+</li></ul></li><li><a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/subfiling.html">Subfiling</a> is a mechanism to internally partition a netCDF file into multiple files (subfiles), making the netCDF data appear as a single file to users. Subfiling can reduce file access contention when a large number of processes make concurrent I/O requests to a shared file.
 </li></ul><h2 id="PnetCDFAPIdesigndocument">PnetCDF API design document</h2>
-<ul><li>In each release, the file <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-api.pdf"><span class="icon">​</span>doc/pnetcdf-api.pdf</a> (built by running command 'make' in directory doc/) describes how the PnetCDF APIs are designed. We have designed the APIs to be more friendly to parallel I/O while maintaining file format compatibility with the serial version of NetCDF.
+<ul><li>In each release, the file <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-api.pdf">doc/pnetcdf-api.pdf</a> (built by running command 'make' in directory doc/) describes how the PnetCDF APIs are designed. We have designed the APIs to be more friendly to parallel I/O while maintaining file format compatibility with the serial version of NetCDF.
 </li></ul><h2 id="Unixmanpages">Unix man pages</h2>
 <ul><li>Unix man pages for C, Fortran 77 and 90 are also available together with the release.
 </li><li>Unix commands: 'man pnetcdf', 'man pnetcdf_f77', and 'man pnetcdf_f90'
 </li></ul><h2 id="Publicationsandpresentations">Publications and presentations</h2>
-<ul><li>Jianwei Li, Wei-keng Liao, Alok Choudhary, Robert Ross, Rajeev Thakur, William Gropp, Rob Latham, Andrew Siegel, Brad Gallagher, and Michael Zingale. Parallel netCDF: A Scientific High-Performance I/O Interface]. In the Proceedings of Supercomputing Conference, November, 2003. (<a class="ext-link" href="http://www.mcs.anl.gov/~robl/pnetcdf/docs/pnetcdf-sc2003.pdf"><span class="icon">​</span>PDF</a>, 97k)
+<ul><li>Jianwei Li, Wei-keng Liao, Alok Choudhary, Robert Ross, Rajeev Thakur, William Gropp, Rob Latham, Andrew Siegel, Brad Gallagher, and Michael Zingale. Parallel netCDF: A Scientific High-Performance I/O Interface]. In the Proceedings of Supercomputing Conference, November, 2003. (<a href="http://www.mcs.anl.gov/~robl/pnetcdf/docs/pnetcdf-sc2003.pdf">PDF</a>, 97k)
 </li><li>The above paper discusses the design of PnetCDF library and presents some performance results.
-</li><li>Jianwei Li's presentation from the SC 2003 conference (<a class="ext-link" href="http://www.mcs.anl.gov/~robl/pnetcdf/docs/sc03_present.pdf"><span class="icon">​</span>PDF</a>, 167k). 
+</li><li>Jianwei Li's presentation from the SC 2003 conference (<a href="http://www.mcs.anl.gov/~robl/pnetcdf/docs/sc03_present.pdf">PDF</a>, 167k). 
 </li></ul><h2 id="Hacking">Hacking</h2>
-<ul><li>start with <a class="wiki" href="./SourceCodeWalkthrough.html">SourceCodeWalkthrough</a> 
-</li><li><a class="missing wiki">ProjectIdeas?</a>
-</li><li><a class="wiki" href="./TestCoverage.html">TestCoverage</a>
-</li><li><a class="wiki" href="./DesignDiscussions.html">DesignDiscussions</a>: we discuss the design of PnetCDF over email mostly.  We try to collect the highlights here.
+<ul><li>start with <a href="./SourceCodeWalkthrough.html">SourceCodeWalkthrough</a> 
+</li><li>ProjectIdeas?
+</li><li><a href="./TestCoverage.html">TestCoverage</a>
+</li><li><a href="./DesignDiscussions.html">DesignDiscussions</a>: we discuss the design of PnetCDF over email mostly.  We try to collect the highlights here.
 </li></ul><h2 id="Others">Others</h2>
-<ul><li>NetCDF-4 can use PnetCDF.  We think this is great.  More information: <a class="wiki" href="./PnetcdfAndNetcdf4.html">PnetcdfAndNetcdf4</a> 
+<ul><li>NetCDF-4 can use PnetCDF.  We think this is great.  More information: <a href="./PnetcdfAndNetcdf4.html">PnetcdfAndNetcdf4</a> 
 </li><li>Forrest Hoffman wrote an article about PnetCDF in the July 2004 issue of Linux Magazine.
-</li><li>The HDF group at NCSA ported a serial NetCDF code to one using PnetCDF. They posted <a class="ext-link" href="https://gamma.hdfgroup.org/HDF5/projects/archive/WRF-ROMS"><span class="icon">​</span>a writeup</a> of their efforts . It's a little old but does provide some additional information to supplement <tt>doc/porting_notes.txt</tt>
+</li><li>The HDF group at NCSA ported a serial NetCDF code to one using PnetCDF. They posted <a href="https://gamma.hdfgroup.org/HDF5/projects/archive/WRF-ROMS">a writeup</a> of their efforts . It's a little old but does provide some additional information to supplement <tt>doc/porting_notes.txt</tt>
 </li><li>PnetCDF user guide and other API references are still under construction.
-</li><li><a class="ext-link" href="http://www.unidata.ucar.edu/software/netcdf/netcdf-4/newdocs/netcdf-c.html"><span class="icon">​</span>Unidata's serial NetCDF documentation</a> sometimes comes in handy for comparison.
-</li></ul></div>
-        
-        
-      </div>
-      
-
-    </div>
-    </div>
-    </body>
-
-<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/Documentation by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+</li><li><a href="http://www.unidata.ucar.edu/software/netcdf/netcdf-4/newdocs/netcdf-c.html">Unidata's serial NetCDF documentation</a> sometimes comes in handy for comparison.
+</li></ul>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
 </html>

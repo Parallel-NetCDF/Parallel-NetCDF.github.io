@@ -1,57 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  
-  
-
-  
-
-
-  
-<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/Benchmarking by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
-    <title>
-      Benchmarking – parallel-netcdf
-    </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--[if IE]><script type="text/javascript">
-      if (/^#__msie303:/.test(window.location.hash))
-        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
-    </script><![endif]-->
-        <link rel="search" href="../search.html" />
-        <link rel="help" href="TracGuide.html" />
-        <link rel="alternate" href="./Benchmarking?format=txt" type="text/x-trac-wiki" title="Plain Text" />
-        <link rel="start" href="../wiki.html" />
-        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" />
-        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
-        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
-      <link type="application/opensearchdescription+xml" rel="search" href="../search/opensearch" title="Search parallel-netcdf" />
-    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script>
-    <!--[if lt IE 7]>
-    <script type="text/javascript" src="/projects/parallel-netcdf/chrome/common/js/ie_pre7_hacks.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
-        $("#content").find(".wikianchor").each(function() {
-          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
-        });
-        $(".foldable").enableFolding(true, true);
-      });
-    </script>
-  </head>
-  <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
-          
-          <div id="wikipage"><h2 id="Benchmarkprograms">Benchmark programs</h2>
-<ul><li>IOR (<a class="ext-link" href="http://sourceforge.net/projects/ior-sio"><span class="icon">​</span>http://sourceforge.net/projects/ior-sio</a>) has a 'driver' for PnetCDF
-</li><li>The <a class="ext-link" href="http://flash.uchicago.edu/~jbgallag/io_bench/flash_io_bench.tar.gz"><span class="icon">​</span>FLASH I/O kernel</a>, developed at the FLASH center of University of Chicago, measure severals write-only workloads. Starting from 1.4.0 release, PnetCDF distribution includes the FLASH-IO kernel that uses PnetCDF APIs.
-</li><li>BTIO, S3D-IO, and GCRM-IO that use PnetCDF method are available <a class="ext-link" href="http://cucis.ece.northwestern.edu/projects/PnetCDF/#Benchmarks"><span class="icon">​</span>here</a>.
-</li></ul><h2 id="Notesandsuggestions">Notes and suggestions</h2>
+<title>Benchmarking PnetCDF</title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
+
+<center> <h2>Benchmarking Programs</h2> </center>
+<hr>
+
+<ul>
+<li><a href=https://github.com/LLNL/ior>IOR</a> has a 'driver' for PnetCDF
+</li>
+<li>The <a href="http://flash.uchicago.edu/~jbgallag/io_bench/flash_io_bench.tar.gz">FLASH I/O kernel</a>, developed at the FLASH center of University of Chicago, measure severals write-only workloads. Starting from 1.4.0 release, PnetCDF distribution includes the FLASH-IO kernel that uses PnetCDF APIs.
+</li>
+<li><a href=https://github.com/Parallel-NetCDF/BTIO>BTIO</a> is a
+block-tridiagonal partitioning pattern on a three-dimensional array across a
+square number of MPI processes, part of NASA's NAS Parallel Benchmarks (NPB)
+suite.</li>
+<li><a href=https://github.com/Parallel-NetCDF/GCRM-IO>GCRM-IO</a> is the I/O
+kernel of Global Cloud Resolving Model (GCRM) simulation codes. GCRM was
+developed at the Colorado State University.</li>
+<li><a href=https://github.com/Parallel-NetCDF/S3D-IO>S3D-IO</a> is the I/O
+kernel of S3D combustion simulation code, a continuum scale first principles
+direct numerical simulation code which solves the compressible governing
+equations of mass continuity, momenta, energy and mass fractions of chemical
+species including chemical reactions, developed at the Sandia National
+Laboratory.</li>
+</ul>
 <p>
+
 Be mindful of benchmarks which write large contiguous chunks of data.  While
 interesting, it might not be what a scientific application using PnetCDF would
 actually do.  
@@ -59,17 +49,10 @@ actually do.
 <p>
 Older versions of IOR triggered a performance bug on some Lustre file systems.
 Sometimes slow write performance on Lustre can be fixed by disabling the "data
-sieving" optimization.  See <a class="wiki" href="HintsForPnetcdf.htm">HintsForPnetcdf</a> for more information.
+sieving" optimization.  See <a href="HintsForPnetcdf.htm">HintsForPnetcdf</a>
+for more information.
 </p>
-</div>
-        
-        
-      </div>
-      
-
-    </div>
-    </div>
-    </body>
-
-<!-- Mirrored from trac.mcs.anl.gov/projects/parallel-netcdf/wiki/Benchmarking by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Jan 2018 05:10:12 GMT -->
+</body>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
 </html>

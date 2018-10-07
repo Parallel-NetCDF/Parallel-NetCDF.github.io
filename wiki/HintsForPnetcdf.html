@@ -1,15 +1,26 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  
-  <body>
-    <div id="main">
-        <div id="content" class="wiki">
-      	  <div class="wikipage searchable">
-        
-          
-          	<div id="wikipage">
-				<h1 id="MPI-IOhintsforPnetCDF">MPI-IO hints for PnetCDF</h1>
-<p>
+<head>
+<title>PnetCDF I/O Hints</title>
+<link rel="icon" href="../images/nuitfavicon.ico" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview'); 
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+<body>
+
+<center> <h2>PnetCDF I/O Hints</h2> </center>
+<hr>
+
 PnetCDF sits on top of MPI-IO, allowing us to use MPI Info objects to tune behavior. This page gives some more information about the way PnetCDF uses MPI Info objects, and also some situations where hints have proven useful. 
 </p>
 <h2 id="MPIInfoandPnetCDFAPI">MPI Info and PnetCDF API</h2>
@@ -51,24 +62,20 @@ or
 </p>
 <ul><li>try setting "ind_wr_buffer_size" to "16777216"
 </li></ul><h2 id="Examples">Examples</h2>
-<pre class="wiki"> INTEGER INFO, IERROR 
+<pre>
+ INTEGER INFO, IERROR 
  CHARACTER*(*) KEY, VALUE
 
  CALL MPI_INFO_CREATE(INFO, IERROR)
  CALL MPI_INFO_SET(INFO, KEY, VALUE, IERROR)
  IERROR = NFMPI_CREATE(MPI_COMM_WORLD, "myfile.nc", flags, INFO, NCID)
  CALL MPI_INFO_FREE(INFO, IERROR) 
-</pre><h2 id="MoreInformation">More Information</h2>
+</pre>
+<h2 id="MoreInformation">More Information</h2>
 <p>
-<a class="ext-link" href="http://www.mpi-forum.org/docs/mpi-2.0/mpi-20-html/node53.htm#Node53"><span class="icon">​</span>The MPI-2 standard's chapter on MPI Info objects</a>
+<a href="http://www.mpi-forum.org/docs/mpi-2.0/mpi-20-html/node53.htm#Node53">The MPI-2 standard's chapter on MPI Info objects</a>
 </p>
-</div>
-        
-        
-      </div>
-      
-
-    </div>
-    </div>
-    </body>
+<hr>
+Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
+</body>
 </html>
