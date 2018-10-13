@@ -33,14 +33,6 @@ at Argonne National Laboratory to
 <li>Starting from version <a href="https://github.com/Unidata/netcdf-c/blob/v4.4.0/RELEASE_NOTES.md">
 4.4.0</a>, the NetCDF library developed at Unidata supports the CDF-5 file
 format for both sequential and parallel file access.</li>
-<li>A few
-<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/#InteroperabilityWithNetCDF4">
-NetCDF-4 example programs</a> are available that show how to access files
-through PnetCDF and HDF5 libraries underneath.</li>
-<li>PnetCDF
-<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/index.html">
-User Guide</a> is available.</li>
-<li>PnetCDF <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/faq.html">Q&amp;A</a> contains some guide lines for I/O performance tuning.</li>
 <li><a href="wiki/NewsArchive.html">NewsArchive</a></li>
 </ul>
 
@@ -59,8 +51,7 @@ In addition to the conventional netCDF read and write APIs, PnetCDF also
 provides a new set of nonblocking APIs.  Nonblocking APIs allow users to post
 multiple read and write requests first, and later let PnetCDF to aggregate the
 requests into a large MPI-IO request, hence to achieve a better performance.
-See
-<a href="wiki/CombiningOperations.html">nonblocking I/O</a> for further
+See <a href="wiki/CombiningOperations.html">nonblocking I/O</a> for further
 description and example programs.
 </p>
 <ul>
@@ -68,9 +59,17 @@ description and example programs.
     previous software releases, as well as information for accessing the
     <a href=https://github.com/Parallel-NetCDF/PnetCDF>GitHub repository</a> of
     source codes under development.</li>
-<li><a href="wiki/Documentation.html">Documentation</a>: a
-    <a href="wiki/QuickTutorial.html">quick tutorial</a>, published papers,
-    presentations, articles, and other resources.</li>
+<li>Documents:
+    <ul>
+    <li><a href="wiki/Documentation.html">User Guide</a>, published papers,
+        presentations, articles, and other resources.</li>
+    <li><a href="wiki/QuickTutorial.html">Quick tutorial</a></li>
+    <li><a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/#InteroperabilityWithNetCDF4">
+NetCDF-4 example programs</a> that show how to access files through PnetCDF and HDF5 libraries underneath.</li>
+    <li>PnetCDF <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/index.html">C Programming Interface Reference</a></li>
+    <li><a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/faq.html">Q&amp;A</a>
+        contains some guide lines for I/O performance tuning.</li>
+    </ul></li>
 <li><a href="wiki/Benchmarking.html">Benchmarking</a>: programs and suggestions
     for evaluating PnetCDF performance.</li>
 </ul>
@@ -174,9 +173,9 @@ PnetCDF makes use of several other technologies.
 MPI-IO, provides optimized collective and noncontiguous operations. It also
 provides an abstract interface for a large number of parallel file systems.
 </li>
-<li>One of those file systems ROMIO supports is <a
-href="http://www.pvfs.org">PVFS</a>, a high performance parallel filesystem
-for linux clusters.
+<li>One of those file systems ROMIO supports is
+    <a href="http://www.pvfs.org">PVFS</a>, a high performance parallel
+    file system for Linux clusters.
 </li>
 </ul>
 <p>
