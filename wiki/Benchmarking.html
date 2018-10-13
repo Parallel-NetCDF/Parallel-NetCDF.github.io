@@ -11,7 +11,7 @@
   ga('create', 'UA-45938012-1', 'auto');
   ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
   ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
-  ga('send', 'pageview'); 
+  ga('send', 'pageview');
   ga('pnetcdfTracker.send', 'pageview');
   ga('parallelnetcdfTracker.send', 'pageview');
 </script>
@@ -24,8 +24,11 @@
 <ul>
 <li><a href=https://github.com/LLNL/ior>IOR</a> has a 'driver' for PnetCDF
 </li>
-<li>The <a href="http://flash.uchicago.edu/~jbgallag/io_bench/flash_io_bench.tar.gz">FLASH I/O kernel</a>, developed at the FLASH center of University of Chicago, measure severals write-only workloads. Starting from 1.4.0 release, PnetCDF distribution includes the FLASH-IO kernel that uses PnetCDF APIs.
-</li>
+<li>The <a
+href="http://flash.uchicago.edu/~jbgallag/io_bench/flash_io_bench.tar.gz">FLASH
+I/O kernel</a>, developed at the FLASH center of University of Chicago, measure
+severals write-only workloads. Starting from 1.4.0 release, PnetCDF
+distribution includes <a href=https://github.com/Parallel-NetCDF/PnetCDF/tree/master/benchmarks/FLASH-IO>the FLASH-IO kernel that uses PnetCDF APIs</a>.  </li>
 <li><a href=https://github.com/Parallel-NetCDF/BTIO>BTIO</a> is a
 block-tridiagonal partitioning pattern on a three-dimensional array across a
 square number of MPI processes, part of NASA's NAS Parallel Benchmarks (NPB)
@@ -44,12 +47,12 @@ Laboratory.</li>
 
 Be mindful of benchmarks which write large contiguous chunks of data.  While
 interesting, it might not be what a scientific application using PnetCDF would
-actually do.  
+actually do.
 </p>
 <p>
 Older versions of IOR triggered a performance bug on some Lustre file systems.
 Sometimes slow write performance on Lustre can be fixed by disabling the "data
-sieving" optimization.  See <a href="HintsForPnetcdf.htm">HintsForPnetcdf</a>
+sieving" optimization.  See <a href="HintsForPnetcdf.html">HintsForPnetcdf</a>
 for more information.
 </p>
 </body>

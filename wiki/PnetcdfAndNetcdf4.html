@@ -11,7 +11,7 @@
   ga('create', 'UA-45938012-1', 'auto');
   ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
   ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
-  ga('send', 'pageview'); 
+  ga('send', 'pageview');
   ga('pnetcdfTracker.send', 'pageview');
   ga('parallelnetcdfTracker.send', 'pageview');
 </script>
@@ -21,27 +21,47 @@
 <center> <h2>PnetCDF and NetCDF-4</h2> </center>
 <hr>
 
-A brief history: In the fall of 2008, UCAR released NetCDF4, which took the HDF5 file format and features, and put the serial netCDF interface on top of that.  UCAR modified the serial netCDF API to expose some of the new features HDF5 introduced, including a means for parallel I/O.
+A brief history: In the fall of 2008, UCAR released NetCDF4, which took the
+HDF5 file format and features, and put the serial netCDF interface on top of
+that.  UCAR modified the serial netCDF API to expose some of the new features
+HDF5 introduced, including a means for parallel I/O.
 </p>
+
 <p>
-Some software engineering gave NetCDF-4 the concept of a separation between interface and file format (netCDF API, legacy netCDF or new HDF5 file format).  Soon, UCAR extended this interface and gave NetCDF-4 the ability to use PnetCDF.   Now, with some caveats, the classic netCDF API can read and write the classic netCDF file format either using the classic netCDF library or our PnetCDF library.
-</p>
+Some software engineering gave NetCDF-4 the concept of a separation between
+interface and file format (netCDF API, legacy netCDF or new HDF5 file format).
+Soon, UCAR extended this interface and gave NetCDF-4 the ability to use
+PnetCDF.   Now, with some caveats, the classic netCDF API can read and write
+the classic netCDF file format either using the classic netCDF library or our
+PnetCDF library.  </p>
 <p>
-We think this is terrific, and in no way has UCAR usurped or challenged PnetCDF with this move. Instead, UCAR has provided a valuable option to applications developers.  In order to transition to parallel I/O, the typical "file per process" or "all I/O from rank 0" approaches need to be re-thought, no matter which underlying library will carry out the I/O.  Applications accustomed to serial netCDF can try out PnetCDF while still using an API familiar to them.  If they want to use some of the more sophisticated PnetCDF features, or try out PnetCDF down the road, only minor edits to the names of the functions will be needed -- the application has already done the hard work of domain decomposition.
-</p>
+We think this is terrific, and in no way has UCAR usurped or challenged PnetCDF
+with this move. Instead, UCAR has provided a valuable option to applications
+developers.  In order to transition to parallel I/O, the typical "file per
+process" or "all I/O from rank 0" approaches need to be re-thought, no matter
+which underlying library will carry out the I/O.  Applications accustomed to
+serial netCDF can try out PnetCDF while still using an API familiar to them.
+If they want to use some of the more sophisticated PnetCDF features, or try out
+PnetCDF down the road, only minor edits to the names of the functions will be
+needed -- the application has already done the hard work of domain
+decomposition.  </p>
+
 <h2 id="InteroperabilityofPnetCDFwithnetCDF-4">Interoperability of PnetCDF with netCDF-4</h2>
 <p>
-Starting from version 4.2.1.1, netCDF-4 program can perform parallel I/O on the classic CDF-1 and CDF-2 files through PnetCDF.
-This is done by passing file create mode NC_PNETCDF to nc_create_par(), for instance, 
-</p>
+Starting from version 4.2.1.1, netCDF-4 program can perform parallel I/O on the
+classic CDF-1 and CDF-2 files through PnetCDF. Starting from version 4.4.0, the
+CDF-5 format is supported. This is done by passing file create mode NC_PNETCDF to
+nc_create_par(), for instance, </p>
 <pre>
-nc_create_par(filename, NC_PNETCDF, MPI_COMM_WORLD, info, &amp;ncid);
-</pre><p>
+nc_create_par(filename, NC_PNETCDF|NC_64BIT_OFFSET, MPI_COMM_WORLD, info, &amp;ncid);
+</pre>
+creates a file in CDF-2 format.<p>
 Check the <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/#InteroperabilityWithNetCDF4">netCDF-4 example programs</a> in C and Fortran.
 </p>
 <p>
-<strong>Note:</strong> Currently, using PnetCDF mode is the only way for a netCDF program to perform parallel I/O on files in classic CDF-1 and 2 formats.
-</p>
+<strong>Note:</strong> Currently, using PnetCDF mode is the only way for a
+netCDF program to perform parallel I/O on files in classic CDF-1, 2, and 5
+formats.  </p>
 
 <hr>
 Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
