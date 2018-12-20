@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+      Using DataWarp as Burst Buffers in PnetCDF
+    </title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+  ga('send', 'pageview');
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+  </head>
+  <body>
+<h2 id="ParallelnetCDF:AParallelIOLibraryforNetCDFFileAccess">Using PnetCDF on 
+NetCDF-4 files</h2>
+PnetCDF has a built in I/O driver to handle NetCDF-4 
+  file. THe driver is a convenience wrapper around the NetCDF API.
+Through this driver, existing PnetCDF application can easily access NetCDF-4 
+  formated files without rewriting the program using NetCDF or HDF5.&nbsp;
+
+<h3 id="BuildNC4">Enable the NetCDF4 Driver</h3>
+To build PnetCDF with NetCDF4&nbsp; support, add &quot;<tt>--enable-</tt>netcdf4&quot; option at the configure command line.<p>
+  NetCDF and HDF5 library built with parallel I/O support is required to build 
+  the NetCDF4 driver. Use "--wht-netcdf4=&lt;path&gt;" and "--with-hdf5=&lt;path&gt;" to 
+  provide location of NetCDF and HDF5 library.</p>
+<pre>
+    ./configure --prefix=/path/to/install --enable-netcdf4 --with-netcdf=/path/to/netcdf/install --with-hdf5=/path/to/hdf5/install
+</pre>
+The remaining steps are the same as usual, to build PnetCDF library, run:
+<pre>
+    make
+</pre>
+To install PnetCDF, run:
+<pre>
+    make install
+</pre>
+
+<h3 id="BuildNC">To build NetCDF for NetCDF4 driver </h3>
+Source tar ball of NetCDF-4 can be downloaded from URL: 
+  <a href="https://github.com/Unidata/netcdf-c/releases">https://github.com/Unidata/netcdf-c/releases</a>
+<p>version 4.6.2 or later is recommended
+</p>
+<p>Download and run:
+</p>
+
+<pre>
+    gzip -dc v4.6.2.tar.gz | tar -xf -
+   cd netcdf-c-4.6.2
+   ./configure --prefix=/NetCDF4/install/path \
+            --enable-netcdf-4 \
+            CC=mpicc \
+            CPPFLAGS="-I/HDF5/install/path/include" \
+            LDFLAGS="-L/HDF5/install/path/lib"
+   make install</pre>
+
+<h3 id="BuildHDF">To build HDF5 for NetCDF4 driver </h3>
+Source tar ball of HDF5 can be downloaded from URL: 
+  <a href="https://www.hdfgroup.org/downloads/hdf5/source-code/">https://www.hdfgroup.org/downloads/hdf5/source-code/</a>
+<p>Download and run:
+</p>
+
+<pre>
+    gzip -dc hdf5-1.10.4.tar.gz | tar -xf -
+   cd hdf5-1.10.4
+   ./configure --prefix=/HDF5/install/path \
+            --enable-parallel=yes \
+            CC=mpicc FC=mpifort CXX=mpicxx
+   make install
+</pre>
+
+
+<h3 id="AcccessNC4">Accessing NetCDF-4 file</h3>
+To create a NetCDF-4 file, add the flag NC_NETCDF4 into argument cmode when calling ncmpi_create(). For example,
+<pre>
+    int cmode;
+   cmode = NC_CLOBBER | NC_NETCDF4;
+   ncmpi_create(MPI_COMM_WORLD, "testfile.nc", cmode, MPI_INFO_NULL, &ncid);
+</pre>
+or
+<pre>
+    cmode = NC_CLOBBER | NC_NETCDF4 | NC_CLASSIC_MODEL;
+   ncmpi_create(MPI_COMM_WORLD, "testfile.nc", cmode, MPI_INFO_NULL, &ncid);
+</pre>
+NC_NETCDF4 flag is not required when opening an existing file in NetCDF-4 format, as PnetCDF checks the file format and selects the proper I/O driver.
+Users can also set the default file format to NetCDF-4 by calling API ncmpi_set_default_format() with argument NC_FORMAT_NETCDF4C or NC_FORMAT_NETCDF4_CLASSIC. For example,
+<pre>
+    ncmpi_set_default_format(NC_FORMAT_NETCDF4, &old_formatp);
+</pre>
+or
+<pre>
+    ncmpi_set_default_format(NC_FORMAT_NETCDF4_CLASSIC, &old_formatp);
+</pre>
+When no file format specific flag is set in argument cmode, PnetCDF will use the default setting.
+
+
+<h3 id="Issue">Known Issues</h3>
+  Some features are not supported due to the availability of APIs different between PnetCDF and NetCDF libraries. I/O semantics are also slightly different.
+<ul>
+<li>API families of vard, varn, and nonblocking I/O are not supported. This is because NetCDF does not have corresponding APIs. Error code NC_ENOTSUPPORT will be returned. For vard APIs, NetCDF does not have APIs that allow accessing the file directly by an MPI derived file type. For varn APIs, a potential solution is to split the request into into multiple vara calls. However, such solution must deal with the situation when the numbers of requests are different among processes in the collective data mode. Supporting varn is thus a future work.</li>
+<li>Although a new file of format NC_FORMAT_NETCDF4 or NC_FORMAT_NETCDF4_CLASSIC can be created, the I/O operations are limited to the NetCDF classic model I/O, This is because PnetCDF APIs do not include those for operating enhanced data objects, such as groups, compound data types, compression etc. As for reading a NetCDF-4 file created by NetCDF-4, PnetCDF supports the classic way of reading variables, attributes, and dimensions. Inquiry APIs for enhanced metadata is currently not supported.</li>
+<li>Due to a bug in HDF5 version 1.10.2 and prior, collective I/O on record variables with a subset of participating processes making zero-length requests may cause an HDF5 error and the program to hang. Readers refer to the HDF bug issue HDFFV-10501. The bug fix will appear in HDF5 1.10.4 release.</li>
+<li>PnetCDF allows different kinds of APIs called by different processes in a collective I/O. For example, ncmpi_put_vara_int_all() is called at process 0 and ncmpi_put_vars_float_int() is called at process 1. However, this is not allowed in NetCDF-4. Thus, the same kind of API must be used in a collective call when accessing a NetCDF-4 file.</li>
+
+<!--
+</ul>
+<h3 id="QA">Questions and Answers</h3>
+<p>
+Q: Can I run the Burst Buffer Driver on a different machine with a different burst buffer configuration?
+<br/>
+A: We currently have only tested the Burst Buffer Driver on Cori at NERSC and the Cray 
+burst buffer system installed there.
+It may also work on other burst buffer implementations where the burst buffer is mounted as a file system.
+<p>
+Q: Can I run the Burst Buffer Driver without the burst buffer?<br/>
+A: Yes, as long as the hint "nc_burst_buf_dirname" is a valid directory, PnetCDF will use it as a burst buffer.
+However, the performance will be affected depending on the performance of the devices.
+
+  <p>
+  Q: Do I need to enable DataWarp module on Cori to build PnetCDF with Burst 
+  Buffer Driver support?<br/>
+  A: No, we currently do not use DataWarp APIs in the implementation.<p>
+  Q: Can I leave the data on burst buffer without flushing it to the parallel 
+  file system?<br/>
+  A: No, in this version, the data will always be flushed when the file is 
+  closed. We do not recommand terminating the program without closing the file. 
+  <p>
+  Q: What is the file name of intermediate files Burst Buffer Driver used to buffer 
+  I/O data? Will it overwrite my existing file if there is a name conflict? <br/>
+  A: 
+  The intermediate files are named as &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.meta and 
+  &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.data. To prevent overwriting other files by 
+  accident, Burst Buffer Driver will not proceed when there is a file name conflict. 
+  In such case, 
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcreate.html">ncmpi_create</a> 
+  and
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fopen.html">ncmpi_open</a> will fail with error code NC_EEXISTS. 
+  <p>
+  Q: Does the directory used by burst buffer to store I/O data need to be an empty folder?<br/>
+  A: No, there's no such restriction. However, we strongly recommend the use of 
+  an empty folder to prevent errors caused by file name conflict. <p>
+  Q: Is there a way to trigger a flush without closing the NetCDF file?<br/>
+  A: Yes, calling
+  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fsync.html">
+  ncmpi_sync</a> triggers a flsuh. A flush can also be triggered if the user 
+  waits on a non-blocking write request that is still buffered on burst buffer. <h3 id="Src">Source Code Checkout</h3>
+Use the following command to download the source codes.
+<pre>
+    git clone https://github.com/Parallel-NetCDF/PnetCDF.git
+
+</pre>
+Initialize autoconf utility settings using command:
+<pre>
+    autoreconf -i
+</pre>
+Next, run configure command to build the PnetCDF library.
+For more information about running configure commands, readers are referred to the README files under folder 
+  <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/doc">doc</a>.
+
+<hr>
+Please email your questions to &lt;<a href="mailto:parallel-netcdf@lists.mcs.anl.gov">parallel-netcdf@lists.mcs.anl.gov</a>&gt;
+<p>
+-->
+</body>
+</html>
