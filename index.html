@@ -28,7 +28,8 @@ href=https://trac.mcs.anl.gov/projects/parallel-netcdf>
 https://trac.mcs.anl.gov/projects/parallel-netcdf</a>.</li>
 <li><strong>July 2, 2018</strong>: Release of PnetCDF version 1.10.0 is
 available. One of the noticeable new feature is a new
-<a href="doc/burst_buffering.html">I/O driver</a> using burst buffers.</li>
+<a href="doc/burst_buffering.html">I/O driver</a> for using locally or globally
+accessible burst buffers.</li>
 <li><strong>June 23, 2018</strong>: PnetCDF source code repository has moved
 from its <a href=https://svn.mcs.anl.gov/repos/parallel-netcdf>SVN</a> server
 at Argonne National Laboratory to
@@ -41,19 +42,18 @@ format for both sequential and parallel file access.</li>
 
 <h2>Overview of PnetCDF</h2>
 <p>
-PnetCDF is a high-performance parallel I/O library for accessing files in
-format compatibility with
+PnetCDF is a high-performance parallel I/O library for accessing
 <a href="http://www.unidata.ucar.edu/software/netcdf/">Unidata's NetCDF</a>,
-specifically the formats of CDF-1, 2, and 5.
+files in classic formats, specifically the formats of CDF-1, 2, and 5.
 The CDF-5 file format, an extension of CDF-2, supports unsigned data types and
 uses 64-bit integers to allow users to define large dimensions, attributes, and
 variables (&gt; 2B array elements).
 </p>
 <p>
-In addition to the conventional netCDF read and write APIs, PnetCDF also
+In addition to the conventional netCDF read and write APIs, PnetCDF
 provides a new set of nonblocking APIs.  Nonblocking APIs allow users to post
-multiple read and write requests first, and later let PnetCDF to aggregate the
-requests into a large MPI-IO request, hence to achieve a better performance.
+multiple read and write requests first, and let PnetCDF to aggregate them
+into a large request, hence to achieve a better performance.
 See <a href="wiki/CombiningOperations.html">nonblocking I/O</a> for further
 description and example programs.
 </p>
