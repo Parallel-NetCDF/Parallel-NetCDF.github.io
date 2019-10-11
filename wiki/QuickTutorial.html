@@ -28,7 +28,7 @@ Parallel netCDF (officially abbreviated PnetCDF) is a library for parallel I/O p
 The most distinguishing feature of both netCDF and PnetCDF is the <em>bi-modal</em> programming interface.  An application creating a file will first enter <em>define mode</em>, in which it can describe all attributes, dimensions, types and structures of variables.  The program will then exit "define mode" and enter <em>data mode</em>, in which it actually performs I/O.  We'll see that often in the following examples.  This "declaration-before-use" model can be a little restrictive, but does allow for some aggressive optimization when carrying out I/O.  
 </p>
 <p>
-This brief tutorial was written with the assumption the reader has some familiarity with serial netcdf.  If serial netcdf concepts like attributes, dimensions, and variables are not familiar, start with the <a href="http://www.unidata.ucar.edu/software/netcdf/docs/netcdf/">NetCDF Users Guide</a>. 
+This brief tutorial was written with the assumption the reader has some familiarity with serial netcdf.  If serial netcdf concepts like attributes, dimensions, and variables are not familiar, start with the <a href="http://www.unidata.ucar.edu/software/netcdf/docs/">NetCDF Users Guide</a>.
 </p>
 <h2 id="IOfromMaster">I/O from Master</h2>
 <p>
@@ -113,7 +113,7 @@ PnetCDF includes a set of "buffered write" APIs that makes a copy of write reque
 Examples:
 <a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-buffered.c">Non-blocking buffered write in C</a>
 and
-<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf.F">Non-blocking buffered write in Fortran</a>
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf.f90">Non-blocking buffered write in Fortran 90</a> and <a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf77.f">FORTRAN 77</a>
 </p>
 <hr>
 Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
