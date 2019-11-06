@@ -11,7 +11,7 @@
   ga('create', 'UA-45938012-1', 'auto');
   ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
   ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
-  ga('send', 'pageview'); 
+  ga('send', 'pageview');
   ga('pnetcdfTracker.send', 'pageview');
   ga('parallelnetcdfTracker.send', 'pageview');
 </script>
@@ -25,10 +25,10 @@
 Parallel netCDF (officially abbreviated PnetCDF) is a library for parallel I/O providing higher-level data structures (e.g. multi-dimensional arrays of typed data).  PnetCDF creates, writes, and reads the same file format as the serial netCDF library, meaning PnetCDF can operate on existing datasets, and existing serial analysis tools can process PnetCDF-generated files.
 </p>
 <p>
-The most distinguishing feature of both netCDF and PnetCDF is the <em>bi-modal</em> programming interface.  An application creating a file will first enter <em>define mode</em>, in which it can describe all attributes, dimensions, types and structures of variables.  The program will then exit "define mode" and enter <em>data mode</em>, in which it actually performs I/O.  We'll see that often in the following examples.  This "declaration-before-use" model can be a little restrictive, but does allow for some aggressive optimization when carrying out I/O.  
+The most distinguishing feature of both netCDF and PnetCDF is the <em>bi-modal</em> programming interface.  An application creating a file will first enter <em>define mode</em>, in which it can describe all attributes, dimensions, types and structures of variables.  The program will then exit "define mode" and enter <em>data mode</em>, in which it actually performs I/O.  We'll see that often in the following examples.  This "declaration-before-use" model can be a little restrictive, but does allow for some aggressive optimization when carrying out I/O.
 </p>
 <p>
-This brief tutorial was written with the assumption the reader has some familiarity with serial netcdf.  If serial netcdf concepts like attributes, dimensions, and variables are not familiar, start with the <a href="http://www.unidata.ucar.edu/software/netcdf/docs/netcdf/">NetCDF Users Guide</a>. 
+This brief tutorial was written with the assumption the reader has some familiarity with serial netcdf.  If serial netcdf concepts like attributes, dimensions, and variables are not familiar, start with the <a href="http://www.unidata.ucar.edu/software/netcdf/docs/">NetCDF Users Guide</a>.
 </p>
 <h2 id="IOfromMaster">I/O from Master</h2>
 <p>
@@ -42,11 +42,11 @@ In the old days, there were no parallel I/O facilities for netCDF.   Application
 <a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-from-master.c">Example writer</a>
 and
 <a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-read-from-master.c">Example reader</a>
-demonstrate this less than ideal approach. 
+demonstrate this less than ideal approach.
 </p>
 <h2 id="Separatefiles">Separate files</h2>
 <p>
-We present the "one-file-per-process" approach not to recommend it, but rather because it is commonly seen. 
+We present the "one-file-per-process" approach not to recommend it, but rather because it is commonly seen.
 </p>
 <p>
 This approach has some significant drawbacks.   What if the number of writers differs from the number of readers?  What if there are a million processes?  What contextual information about the application data is lost in such an approach?
@@ -62,7 +62,7 @@ and
 The previous approaches either bypass parallel I/O entirely or hide a great deal of application context from PnetCDF.   We now present a more natural way of carrying out I/O in a parallel program: operating on a shared file.
 </p>
 <p>
-Shared-file I/O provides several benefits.  First of all, because all processes can participate in collective I/O, the underlying MPI-IO library can make use of several powerful optimizations, such as file access alignment and collective buffering.   Opening or creating a dataset (file) is a collective operation as well, meaning processes store and query metadata (the number, size, and location in file of attributes and variables) in an efficient manner.   Data decomposition may be more sophisticated, but it is also more likely to match how the scientific application has already split up the data among processes. 
+Shared-file I/O provides several benefits.  First of all, because all processes can participate in collective I/O, the underlying MPI-IO library can make use of several powerful optimizations, such as file access alignment and collective buffering.   Opening or creating a dataset (file) is a collective operation as well, meaning processes store and query metadata (the number, size, and location in file of attributes and variables) in an efficient manner.   Data decomposition may be more sophisticated, but it is also more likely to match how the scientific application has already split up the data among processes.
 </p>
 <p>
 Examples:
@@ -72,7 +72,7 @@ and
 </p>
 <h2 id="Flexibleinterface">Flexible interface</h2>
 <p>
-The standard netCDF and PnetCDF APIs explicitly specify the type of the application data (an array of integers, double precision, or floating point values, e.g. <tt>ncmpi_put_vara_float_all</tt>).  We have further extended the PnetCDF API to accept arbitrary MPI datatypes.  Say an application's data structures are more complex than a multidimensional array of a basic type, or if the application needs to write a non-contiguous selection of a given memory region to the dataset.  In these situations, an MPI datatype can describe the desired data.  
+The standard netCDF and PnetCDF APIs explicitly specify the type of the application data (an array of integers, double precision, or floating point values, e.g. <tt>ncmpi_put_vara_float_all</tt>).  We have further extended the PnetCDF API to accept arbitrary MPI datatypes.  Say an application's data structures are more complex than a multidimensional array of a basic type, or if the application needs to write a non-contiguous selection of a given memory region to the dataset.  In these situations, an MPI datatype can describe the desired data.
 </p>
 <p>
 In these examples, we use <tt>ncmpi_put_vara_all</tt>, even though the datatype is a basic MPI_INT type:
@@ -85,10 +85,10 @@ and
 </p>
 <h2 id="Non-blockinginterface">Non-blocking interface</h2>
 <p>
-A set of "non-blocking" APIs is available in PnetCDF. They can aggregate multiple smaller requests into larger ones for better I/O performance.  These routines follow the MPI model of posting operations, then waiting for completion of those operations. 
+A set of "non-blocking" APIs is available in PnetCDF. They can aggregate multiple smaller requests into larger ones for better I/O performance.  These routines follow the MPI model of posting operations, then waiting for completion of those operations.
 </p>
 <p>
-The PnetCDF and netCDF APIs are variable oriented: if an application writes 50 variables to a dataset (file), it must make 50 calls where each call is carried out by a separate MPI-IO write call.  With the PnetCDF non-blocking API, however, the library can take this collection of pending operations and then stitch them together into one larger, more efficient MPI-IO request.  
+The PnetCDF and netCDF APIs are variable oriented: if an application writes 50 variables to a dataset (file), it must make 50 calls where each call is carried out by a separate MPI-IO write call.  With the PnetCDF non-blocking API, however, the library can take this collection of pending operations and then stitch them together into one larger, more efficient MPI-IO request.
 </p>
 <p>
 Examples:
@@ -113,7 +113,7 @@ PnetCDF includes a set of "buffered write" APIs that makes a copy of write reque
 Examples:
 <a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-buffered.c">Non-blocking buffered write in C</a>
 and
-<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf.F">Non-blocking buffered write in Fortran</a>
+<a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf.f90">Non-blocking buffered write in Fortran 90</a> and <a href="https://github.com/Parallel-NetCDF/PnetCDF/blob/master/examples/tutorial/pnetcdf-write-bufferedf77.f">FORTRAN 77</a>
 </p>
 <hr>
 Return to <a href=https://parallel-netcdf.github.io>PnetCDF Home</a>
