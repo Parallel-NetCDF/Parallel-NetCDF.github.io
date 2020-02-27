@@ -24,24 +24,35 @@
 <ul>
 <li><a href=https://github.com/LLNL/ior>IOR</a> has a 'driver' for PnetCDF
 </li>
-<li>The <a
-href="http://flash.uchicago.edu/~jbgallag/io_bench/flash_io_bench.tar.gz">FLASH
-I/O kernel</a>, developed at the FLASH center of University of Chicago, measure
-severals write-only workloads. Starting from 1.4.0 release, PnetCDF
-distribution includes <a href=https://github.com/Parallel-NetCDF/PnetCDF/tree/master/benchmarks/FLASH-IO>the FLASH-IO kernel that uses PnetCDF APIs</a>.  </li>
+<li>The <a href="https://github.com/Parallel-NetCDF/E3SM-IO">E3SM I/O kernel</a>
+   is a case study of parallel I/O kernel of the
+   <a href=https://github.com/E3SM-Project/E3SM>E3SM</a> climate simulation model.
+   The I/O pattern exhibits a large volume of non-contiguous requests.
+</li>
+<li>The
+   <a href="http://flash.uchicago.edu/~jbgallag/io_bench/flash_io_bench.tar.gz">FLASH
+   I/O kernel</a>, developed at the FLASH center of University of Chicago, measure
+   severals write-only workloads. Starting from 1.4.0 release, PnetCDF
+   distribution includes
+   <a href=https://github.com/Parallel-NetCDF/PnetCDF/tree/master/benchmarks/FLASH-IO>the
+   FLASH-IO kernel that uses PnetCDF APIs</a>.
+</li>
 <li><a href=https://github.com/Parallel-NetCDF/BTIO>BTIO</a> is a
-block-tridiagonal partitioning pattern on a three-dimensional array across a
-square number of MPI processes, part of NASA's NAS Parallel Benchmarks (NPB)
-suite.</li>
+   block-tridiagonal partitioning pattern on a three-dimensional array across a
+   square number of MPI processes, part of NASA's NAS Parallel Benchmarks (NPB)
+   suite.
+</li>
 <li><a href=https://github.com/Parallel-NetCDF/GCRM-IO>GCRM-IO</a> is the I/O
-kernel of Global Cloud Resolving Model (GCRM) simulation codes. GCRM was
-developed at the Colorado State University.</li>
+   kernel of Global Cloud Resolving Model (GCRM) simulation codes. GCRM was
+   developed at the Colorado State University.
+</li>
 <li><a href=https://github.com/Parallel-NetCDF/S3D-IO>S3D-IO</a> is the I/O
-kernel of S3D combustion simulation code, a continuum scale first principles
-direct numerical simulation code which solves the compressible governing
-equations of mass continuity, momenta, energy and mass fractions of chemical
-species including chemical reactions, developed at the Sandia National
-Laboratory.</li>
+   kernel of S3D combustion simulation code, a continuum scale first principles
+   direct numerical simulation code which solves the compressible governing
+   equations of mass continuity, momenta, energy and mass fractions of chemical
+   species including chemical reactions, developed at the Sandia National
+   Laboratory.
+</li>
 </ul>
 <p>
 
