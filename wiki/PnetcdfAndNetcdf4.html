@@ -59,6 +59,14 @@ creates a file in CDF-2 format.<p>
 Check the <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/#InteroperabilityWithNetCDF4">netCDF-4 example programs</a> in C and Fortran.
 </p>
 <p>
+Starting from 4.6.2, NetCDF simply checks the create mode flag, i.e.
+NC_64BIT_OFFSET, NC_64BIT_DATA, or 0, when creating a new file in classic
+formats (CDF-1, 2, or 5) and can automatically dispatch the PnetCDF library to
+perform the parallel I/O. For opening an existing file (a call to nc_open_par),
+NetCDF first checks the file format and if the file is in classic format,
+PnetCDF library is dispatched. Otherwise HDF5 library is used.
+</p>
+<p>
 <strong>Note:</strong> Currently, using PnetCDF mode is the only way for a
 netCDF program to perform parallel I/O on files in classic CDF-1, 2, and 5
 formats.  </p>
