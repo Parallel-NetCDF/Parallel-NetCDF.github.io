@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_open (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_open (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_open (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Files.html#Files" rel="up" title="Files">
+<link href="ncmpi_005f_005fopen.html#ncmpi_005f_005fopen" rel="next" title="ncmpi__open">
+<link href="ncmpi_005f_005fcreate.html#ncmpi_005f_005fcreate" rel="prev" title="ncmpi__create">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fopen"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005f_005fopen.html#ncmpi_005f_005fopen" accesskey="n" rel="next">ncmpi__open</a>, Previous: <a href="ncmpi_005f_005fcreate.html#ncmpi_005f_005fcreate" accesskey="p" rel="prev">ncmpi__create</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Open-a-NetCDF-File-for-Access_003a-ncmpi_005fopen"></a>
+<h3 class="section">2.7 Open a NetCDF File for Access: ncmpi_open</h3>
+<a name="index-ncmpi_005fopen"></a>
+<a name="index-ncmpi_005fopen_002c-example"></a>
+<a name="index-NC_005fNOWRITE"></a>
+<a name="index-NC_005fWRITE"></a>
+<a name="index-nc_005fheader_005fread_005fchunk_005fsize-1"></a>
+
+<p>The function ncmpi_open opens an existing netCDF file for access.
+</p>
+<a name="Operational-Mode-4"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>This API is a collective routine: all processes must provide the same value for cmode, and all processes must provide filenames that reference the same file. (Values for info may vary.)
+</p>
+<a name="Usage-4"></a>
+<h3 class="heading">Usage</h3>
+
+<div class="example">
+<pre class="example">int ncmpi_open (MPI_Comm    comm,
+                const char *path,
+                int         omode,
+                MPI_Info    info,
+                int        *ncidp);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>comm</code></dt>
+<dd><p>An MPI communicator and must be an MPI intracommunicator.
+</p>
+</dd>
+<dt><code>path</code></dt>
+<dd><p>File name for netCDF file to be opened.
+</p>
+</dd>
+<dt><code>omode</code></dt>
+<dd><p>Either NC_NOWRITE or NC_WRITE.
+</p><ul>
+<li> NC_NOWRITE specifies the default behavior: open the file with read-only access.
+</li><li> NC_WRITE is to open the file with read-write access. (&quot;Writing&quot; means any kind of change to the dataset, including appending or changing data, adding or renaming dimensions, variables, and attributes, or deleting attributes.)
+</li></ul>
+
+<p>The following modes available in netCDF are not yet supported: NC_DISKLESS, NC_MMAP, NC_CLASSIC_MODEL, NC_NETCDF4, NC_MPIPOSIX, and NC_INMEMORY.
+</p>
+<p>The following modes available in netCDF are ignored: NC_SHARE and NC_MPIIO.
+</p>
+</dd>
+<dt><code>info</code></dt>
+<dd><p>An MPI info object that provides information regarding file access patterns and file system specifics (see MPI user guide for further information).Starting from version 1.3.1, the following PnetCDF hints are available:
+</p><dl compact="compact">
+<dt><code>nc_header_read_chunk_size</code></dt>
+<dd><p>PnetCDF reads the file headers in chunks. This hint indicates the chunk size (in bytes). The default is 256 KB.
+</p></dd>
+</dl>
+<p>The constant MPI_INFO_NULL can be used when no info needs to be specified.
+</p>
+</dd>
+<dt><code>ncidp</code></dt>
+<dd><p>Pointer to location where returned netCDF ID is to be stored.
+</p></dd>
+</dl>
+
+<a name="Return-Error-Codes-1"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_open returns the value NC_NOERR if no errors occurred. Otherwise,
+the returned status indicates an error. Possible causes of errors include:
+</p><ul>
+<li> NC_ENOENT: The specified netCDF file does not exist.
+</li><li> NC_EBAD_FILE: Invalid file name, file name too long, or the directory does not exist.
+</li><li> NC_EINVAL_OMODE: invalid value used in open mode.
+</li><li> NC_EPERM: Attempting to create a netCDF file in a directory where you do not have permission to open files.
+</li><li> NC_ESMALL: size of MPI_Offset on the running system is too small for the file format (CDF-2 or CDF-5) in request
+</li><li> NC_ENOMEM: unable to allocate memory
+</li><li> NC_ENFILE: Too many files open
+</li><li> NC_EFILE: other unknown I/O error, including unable to clobber the file
+</li><li> NC_EMULTIDEFINE_OMODE: inconsistent file open modes among processes.
+</li><li> NC_EMULTIDEFINE_FNC_ARGS: one or more arguments are inconsistent among processes
+</li></ul>
+
+<a name="Example-3"></a>
+<h3 class="heading">Example</h3>
+<p>Below is an example using ncmpi_open to open an existing netCDF file
+named foo.nc for read-only.
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int err, ncid;
+MPI_Info info;
+    ...
+MPI_Info_create (&amp;info);
+MPI_Info_set (info, &quot;romio_no_indep_rw&quot;, &quot;true&quot;);
+MPI_Info_set (info, &quot;nc_header_read_chunk_size&quot;, &quot;1024&quot;);
+    ...
+err = <a href="#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_NOWRITE, info,  &amp;ncid);
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+MPI_Info_free(&amp;info);
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005f_005fopen.html#ncmpi_005f_005fopen" accesskey="n" rel="next">ncmpi__open</a>, Previous: <a href="ncmpi_005f_005fcreate.html#ncmpi_005f_005fcreate" accesskey="p" rel="prev">ncmpi__create</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

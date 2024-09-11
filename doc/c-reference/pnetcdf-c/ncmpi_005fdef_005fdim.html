@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_def_dim (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_def_dim (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_def_dim (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Dimensions.html#Dimensions" rel="up" title="Dimensions">
+<link href="ncmpi_005finq_005fdimid.html#ncmpi_005finq_005fdimid" rel="next" title="ncmpi_inq_dimid">
+<link href="Dimensions-Introduction.html#Dimensions-Introduction" rel="prev" title="Dimensions Introduction">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fdef_005fdim"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005finq_005fdimid.html#ncmpi_005finq_005fdimid" accesskey="n" rel="next">ncmpi_inq_dimid</a>, Previous: <a href="Dimensions-Introduction.html#Dimensions-Introduction" accesskey="p" rel="prev">Dimensions Introduction</a>, Up: <a href="Dimensions.html#Dimensions" accesskey="u" rel="up">Dimensions</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Create-a-Dimension_003a-ncmpi_005fdef_005fdim"></a>
+<h3 class="section">3.2 Create a Dimension: ncmpi_def_dim</h3>
+<a name="index-ncmpi_005fdef_005fdim"></a>
+<a name="index-ncmpi_005fdef_005fdim_002c-example"></a>
+
+<p>The function ncmpi_def_dim adds a new dimension to an opened netCDF file
+in define mode. It returns (as an argument) a dimension ID, given the
+netCDF ID, the dimension name, and the dimension length. At most one
+unlimited length dimension, called the record dimension, may be
+defined for each netCDF file.
+</p>
+<a name="Operational-Mode-24"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>This API is a collective routine.
+All processes must participate the call with the same values for arguments
+name and len.
+</p>
+<p>This API must be called while the file is in define mode.
+</p>
+<a name="Usage-24"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_def_dim (int         ncid,
+                   const char *name,
+                   MPI_Offset  len,
+                   int        *dimidp);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>name</code></dt>
+<dd><p>Dimension name. Must be a legal netCDF identifier.
+For CDF-1, a legal identifier is any sequence of one or more alphabetic
+characters, digits, and the following special characters:
+&rsquo;_&rsquo;, &rsquo;.&rsquo;, &rsquo;-&rsquo;, &rsquo;@&rsquo;, and &rsquo;+&rsquo;. The identifier must, however, start with an
+alphabetic character or underscore. Case is significant
+and names commencing with underscore are reserved for system use.
+Starting from CDF-2, more characters are allowed.
+Please refer to <a href="CDF_002d2-file-format-specification.html#CDF_002d2-file-format-specification">CDF-2 file format specification</a> and <a href="CDF_002d5-file-format-specification.html#CDF_002d5-file-format-specification">CDF-5 file format specification</a>.
+</p>
+</dd>
+<dt><code>len</code></dt>
+<dd><p>Length of dimension; that is, number of values for this dimension as
+an index to variables that use it. This should be either a positive
+integer (of type MPI_Offset) or the predefined constant NC_UNLIMITED.
+</p><ul>
+<li> For CDF-1 format, the maximum length of a dimension is (2^31 - 4) = 2147483644.
+</li><li> For CDF-2 format, the maximum length of a dimension is (2^32 - 4) = 4294967292.
+</li><li> For CDF-5 format, the maximum length of a dimension is
+(2^63 - 1) = 9223372036854775807 = NC_MAX_INT64 = INT64_MAX.
+Note this maximum is different from the NetCDF library&rsquo;s (2^64-4).
+</li></ul>
+
+</dd>
+<dt><code>dimidp</code></dt>
+<dd><p>Pointer to location for returned dimension ID.
+</p></dd>
+</dl>
+
+<a name="Return-Error-Codes-21"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_def_dim returns the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_ENAMEINUSE: The new name is the name of another dimension.
+</li><li> NC_EBADDIM: The dimension ID is invalid for the specified netCDF file.
+</li><li> NC_ENOTINDEFINE: Operation not allowed in data mode.
+</li><li> NC_EDIMSIZE: The specified length is negative or larger than the limits allowable by the file format.
+</li><li> NC_EMAXDIMS: The number of dimensions exceeds the limit, NC_MAX_DIMS=1024.
+</li><li> NC_EUNLIMIT: The specified length is unlimited, but there is already an unlimited length dimension defined for this netCDF file.
+</li><li> NC_EMULTIDEFINE_DIM_NAME: Dimension name is inconsistent among processes.
+</li><li> NC_EMULTIDEFINE_DIM_SIZE: Dimension size is inconsistent among processes.
+</li></ul>
+
+<a name="Example-23"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_def_dim to create a dimension named lat of
+length 18 and a unlimited dimension named rec in a new netCDF file
+named foo.nc:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int status, ncid, latid, recid;
+MPI_Offset len = 18;
+   ...
+status = <a href="ncmpi_005fcreate.html#ncmpi_005fcreate">ncmpi_create</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_NOCLOBBER, MPI_INFO_NULL, &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="#ncmpi_005fdef_005fdim">ncmpi_def_dim</a>(ncid, &quot;lat&quot;, len, &amp;latid);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="#ncmpi_005fdef_005fdim">ncmpi_def_dim</a>(ncid, &quot;rec&quot;, NC_UNLIMITED, &amp;recid);
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005finq_005fdimid.html#ncmpi_005finq_005fdimid" accesskey="n" rel="next">ncmpi_inq_dimid</a>, Previous: <a href="Dimensions-Introduction.html#Dimensions-Introduction" accesskey="p" rel="prev">Dimensions Introduction</a>, Up: <a href="Dimensions.html#Dimensions" accesskey="u" rel="up">Dimensions</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

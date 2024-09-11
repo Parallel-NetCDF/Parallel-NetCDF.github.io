@@ -27,17 +27,17 @@
 </script>
   </head>
   <body>
-<h2 id="ParallelnetCDF:AParallelIOLibraryforNetCDFFileAccess">Using PnetCDF on 
+<h2 id="ParallelnetCDF:AParallelIOLibraryforNetCDFFileAccess">Using PnetCDF on
 NetCDF-4 files</h2>
-PnetCDF has a built in I/O driver to handle NetCDF-4 
+PnetCDF has a built in I/O driver to handle NetCDF-4
   file. THe driver is a convenience wrapper around the NetCDF API.
-Through this driver, existing PnetCDF application can easily access NetCDF-4 
+Through this driver, existing PnetCDF application can easily access NetCDF-4
   formated files without rewriting the program using NetCDF or HDF5.&nbsp;
 
 <h3 id="BuildNC4">Enable the NetCDF4 Driver</h3>
 To build PnetCDF with NetCDF4&nbsp; support, add &quot;<tt>--enable-</tt>netcdf4&quot; option at the configure command line.<p>
-  NetCDF and HDF5 library built with parallel I/O support is required to build 
-  the NetCDF4 driver. Use "--wht-netcdf4=&lt;path&gt;" and "--with-hdf5=&lt;path&gt;" to 
+  NetCDF and HDF5 library built with parallel I/O support is required to build
+  the NetCDF4 driver. Use "--wht-netcdf4=&lt;path&gt;" and "--with-hdf5=&lt;path&gt;" to
   provide location of NetCDF and HDF5 library.</p>
 <pre>
     ./configure --prefix=/path/to/install --enable-netcdf4 --with-netcdf=/path/to/netcdf/install --with-hdf5=/path/to/hdf5/install
@@ -52,7 +52,7 @@ To install PnetCDF, run:
 </pre>
 
 <h3 id="BuildNC">To build NetCDF for NetCDF4 driver </h3>
-Source tar ball of NetCDF-4 can be downloaded from URL: 
+Source tar ball of NetCDF-4 can be downloaded from URL:
   <a href="https://github.com/Unidata/netcdf-c/releases">https://github.com/Unidata/netcdf-c/releases</a>
 <p>version 4.6.2 or later is recommended
 </p>
@@ -70,7 +70,7 @@ Source tar ball of NetCDF-4 can be downloaded from URL:
    make install</pre>
 
 <h3 id="BuildHDF">To build HDF5 for NetCDF4 driver </h3>
-Source tar ball of HDF5 can be downloaded from URL: 
+Source tar ball of HDF5 can be downloaded from URL:
   <a href="https://www.hdfgroup.org/downloads/hdf5/source-code/">https://www.hdfgroup.org/downloads/hdf5/source-code/</a>
 <p>Download and run:
 </p>
@@ -123,7 +123,7 @@ When no file format specific flag is set in argument cmode, PnetCDF will use the
 <p>
 Q: Can I run the Burst Buffer Driver on a different machine with a different burst buffer configuration?
 <br/>
-A: We currently have only tested the Burst Buffer Driver on Cori at NERSC and the Cray 
+A: We currently have only tested the Burst Buffer Driver on Cori at NERSC and the Cray
 burst buffer system installed there.
 It may also work on other burst buffer implementations where the burst buffer is mounted as a file system.
 <p>
@@ -132,32 +132,32 @@ A: Yes, as long as the hint "nc_burst_buf_dirname" is a valid directory, PnetCDF
 However, the performance will be affected depending on the performance of the devices.
 
   <p>
-  Q: Do I need to enable DataWarp module on Cori to build PnetCDF with Burst 
+  Q: Do I need to enable DataWarp module on Cori to build PnetCDF with Burst
   Buffer Driver support?<br/>
   A: No, we currently do not use DataWarp APIs in the implementation.<p>
-  Q: Can I leave the data on burst buffer without flushing it to the parallel 
+  Q: Can I leave the data on burst buffer without flushing it to the parallel
   file system?<br/>
-  A: No, in this version, the data will always be flushed when the file is 
-  closed. We do not recommand terminating the program without closing the file. 
+  A: No, in this version, the data will always be flushed when the file is
+  closed. We do not recommand terminating the program without closing the file.
   <p>
-  Q: What is the file name of intermediate files Burst Buffer Driver used to buffer 
+  Q: What is the file name of intermediate files Burst Buffer Driver used to buffer
   I/O data? Will it overwrite my existing file if there is a name conflict? <br/>
-  A: 
-  The intermediate files are named as &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.meta and 
-  &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.data. To prevent overwriting other files by 
-  accident, Burst Buffer Driver will not proceed when there is a file name conflict. 
-  In such case, 
-  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fcreate.html">ncmpi_create</a> 
+  A:
+  The intermediate files are named as &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.meta and
+  &lt;NetCDF file name&gt;_&lt;ncid&gt;_&lt;rank&gt;.data. To prevent overwriting other files by
+  accident, Burst Buffer Driver will not proceed when there is a file name conflict.
+  In such case,
+  <a href="c-reference/pnetcdf-c/ncmpi_005fcreate.html">ncmpi_create</a>
   and
-  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fopen.html">ncmpi_open</a> will fail with error code NC_EEXISTS. 
+  <a href="c-reference/pnetcdf-c/ncmpi_005fopen.html">ncmpi_open</a> will fail with error code NC_EEXISTS.
   <p>
   Q: Does the directory used by burst buffer to store I/O data need to be an empty folder?<br/>
-  A: No, there's no such restriction. However, we strongly recommend the use of 
+  A: No, there's no such restriction. However, we strongly recommend the use of
   an empty folder to prevent errors caused by file name conflict. <p>
   Q: Is there a way to trigger a flush without closing the NetCDF file?<br/>
   A: Yes, calling
-  <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/doc/pnetcdf-c/ncmpi_005fsync.html">
-  ncmpi_sync</a> triggers a flsuh. A flush can also be triggered if the user 
+  <a href="c-reference/pnetcdf-c/ncmpi_005fsync.html">
+  ncmpi_sync</a> triggers a flsuh. A flush can also be triggered if the user
   waits on a non-blocking write request that is still buffered on burst buffer. <h3 id="Src">Source Code Checkout</h3>
 Use the following command to download the source codes.
 <pre>
@@ -169,7 +169,7 @@ Initialize autoconf utility settings using command:
     autoreconf -i
 </pre>
 Next, run configure command to build the PnetCDF library.
-For more information about running configure commands, readers are referred to the README files under folder 
+For more information about running configure commands, readers are referred to the README files under folder
   <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/doc">doc</a>.
 
 <hr>

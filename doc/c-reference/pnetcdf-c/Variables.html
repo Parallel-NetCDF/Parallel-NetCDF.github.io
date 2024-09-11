@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Variables (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Variables (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Variables (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Variable-Introduction.html#Variable-Introduction" rel="next" title="Variable Introduction">
+<link href="ncmpi_005frename_005fdim.html#ncmpi_005frename_005fdim" rel="prev" title="ncmpi_rename_dim">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Variables"></a>
+<div class="header">
+<p>
+Next: <a href="Attributes.html#Attributes" accesskey="n" rel="next">Attributes</a>, Previous: <a href="Dimensions.html#Dimensions" accesskey="p" rel="prev">Dimensions</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Variables-1"></a>
+<h2 class="chapter">4 Variables</h2>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Variable-Introduction.html#Variable-Introduction" accesskey="1">Variable Introduction</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">What are Variables?
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Variable-Types.html#Variable-Types" accesskey="2">Variable Types</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Floating point, integer, and all that
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fdef_005fvar.html#ncmpi_005fdef_005fvar" accesskey="3">ncmpi_def_var</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Create a Variable
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fdef_005fvar_005ffill.html#ncmpi_005fdef_005fvar_005ffill" accesskey="4">ncmpi_def_var_fill</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Set fill mode for a Variable (1.6.1 and later)
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005finq_005fvar_005ffill.html#ncmpi_005finq_005fvar_005ffill" accesskey="5">ncmpi_inq_var_fill</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Inquire fill mode of a Variable (1.6.1 and later)
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005ffill_005fvar_005frec.html#ncmpi_005ffill_005fvar_005frec" accesskey="6">ncmpi_fill_var_rec</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Fill a record of a record variable (1.6.1 and later)
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid" accesskey="7">ncmpi_inq_varid</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Get a Variable ID from Its Name
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005finq_005fvar-Family.html#ncmpi_005finq_005fvar-Family" accesskey="8">ncmpi_inq_var Family</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Get Information about a Variable from Its ID
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fput_005fvar1_005f_003ctype_003e.html#ncmpi_005fput_005fvar1_005f_003ctype_003e" accesskey="9">ncmpi_put_var1_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Write a Single Data Value
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fput_005fvar_005f_003ctype_003e.html#ncmpi_005fput_005fvar_005f_003ctype_003e">ncmpi_put_var_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Write an Entire Variable
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fput_005fvara_005f_003ctype_003e.html#ncmpi_005fput_005fvara_005f_003ctype_003e">ncmpi_put_vara_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Write an Array of Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fput_005fvars_005f_003ctype_003e.html#ncmpi_005fput_005fvars_005f_003ctype_003e">ncmpi_put_vars_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Write a Subsampled Array of Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fput_005fvarm_005f_003ctype_003e.html#ncmpi_005fput_005fvarm_005f_003ctype_003e">ncmpi_put_varm_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Write a Mapped Array of Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fput_005fvarn_005f_003ctype_003e.html#ncmpi_005fput_005fvarn_005f_003ctype_003e">ncmpi_put_varn_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Write a List of Subarrays of Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fput_005fvard.html#ncmpi_005fput_005fvard">ncmpi_put_vard</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Write an Array of Values using filetype
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fget_005fvar1_005f_003ctype_003e.html#ncmpi_005fget_005fvar1_005f_003ctype_003e">ncmpi_get_var1_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Read a Single Data Value
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fget_005fvar_005f_003ctype_003e.html#ncmpi_005fget_005fvar_005f_003ctype_003e">ncmpi_get_var_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Read an Entire Variable
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fget_005fvara_005f_003ctype_003e.html#ncmpi_005fget_005fvara_005f_003ctype_003e">ncmpi_get_vara_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Read an Array of Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fget_005fvars_005f_003ctype_003e.html#ncmpi_005fget_005fvars_005f_003ctype_003e">ncmpi_get_vars_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Read a Subsampled Array of Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fget_005fvarm_005f_003ctype_003e.html#ncmpi_005fget_005fvarm_005f_003ctype_003e">ncmpi_get_varm_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Read a Mapped Array of Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fget_005fvarn_005f_003ctype_003e.html#ncmpi_005fget_005fvarn_005f_003ctype_003e">ncmpi_get_varn_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Read a List of Subarrays of Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fget_005fvard.html#ncmpi_005fget_005fvard">ncmpi_get_vard</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Read an Array of Values using filetype
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Strings.html#Strings">Strings</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Reading and Writing Character String Values
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Fill-Values.html#Fill-Values">Fill Values</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">What&rsquo;s Written Where there&rsquo;s No Data?
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005frename_005fvar.html#ncmpi_005frename_005fvar">ncmpi_rename_var</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Rename a Variable
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fiput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fiput_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_iput_var<var>&lt;kind&gt;</var>_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Non-blocking APIs for Writing a Subarray
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005figet_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005figet_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_iget_var<var>&lt;kind&gt;</var>_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Non-blocking APIs for Reading a Subarray
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fiput_005fvarn_005f_003ctype_003e.html#ncmpi_005fiput_005fvarn_005f_003ctype_003e">ncmpi_iput_varn_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Non-blocking APIs for Writing a List of Subarrays (1.6.0 and later)
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005figet_005fvarn_005f_003ctype_003e.html#ncmpi_005figet_005fvarn_005f_003ctype_003e">ncmpi_iget_varn_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Non-blocking APIs for Reading a List of Subarrays (1.6.0 and later)
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_bput_var<var>&lt;kind&gt;</var>_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Non-blocking Buffered-version APIs for Writing a Subarray (1.3.0 and later)
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fbput_005fvarn_005f_003ctype_003e.html#ncmpi_005fbput_005fvarn_005f_003ctype_003e">ncmpi_bput_varn_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Non-blocking Buffered-version APIs for Writing a List of subarrays (1.6.0 and later)
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fwait_002fwait_005fall.html#ncmpi_005fwait_002fwait_005fall">ncmpi_wait/wait_all</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Wait function for Non-blocking APIs
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005finq_005fnreqs.html#ncmpi_005finq_005fnreqs">ncmpi_inq_nreqs</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">inquire number of pending nonblocking requests
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005finq_005fbuffer-Family.html#ncmpi_005finq_005fbuffer-Family">ncmpi_inq_buffer Family</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">inquire information about the attached buffer used by buffered put APIs
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fcancel.html#ncmpi_005fcancel">ncmpi_cancel</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">cancel one or more pending nonblocking requests
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Attributes.html#Attributes" accesskey="n" rel="next">Attributes</a>, Previous: <a href="Dimensions.html#Dimensions" accesskey="p" rel="prev">Dimensions</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

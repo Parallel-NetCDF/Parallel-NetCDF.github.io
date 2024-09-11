@@ -1,0 +1,151 @@
+@c This is part of the PnetCDF documentation. See COPYRIGHT file
+@c for terms of use.
+
+@c This file is included by the manual texi files, and contains
+@c common definitions.
+
+@c $Id$
+
+@c The canonical name for each manual.
+@set n-man The PnetCDF Users Guide
+@set c-man The PnetCDF C Interface Guide
+@set cxx-man The PnetCDF C++ Interface Guide
+@set f77-man The PnetCDF Fortran 77 Interface Guide
+@set f90-man The PnetCDF Fortran 90 Interface Guide
+@set i-man The PnetCDF Installation and Porting Guide
+@set tut-man The PnetCDF Tutorial
+@set j-man The PnetCDF Java User Manual
+
+@c PnetCDF support email.
+@set pnetcdf-support-email parallel-netcdf@mcs.anl.gov
+
+@c Home pages for internal stuff like netcdf, netcdf-4, netcdf java,
+@c Unidata, etc.
+@set unidata-url http://www.unidata.ucar.edu
+@set netcdf-url @value{unidata-url}/software/netcdf
+@set netcdf-4-url @value{netcdf-url}/netcdf-4
+@set netcdf-java-url @value{unidata-url}/software/netcdf-java
+@set ucar-url http://www.ucar.edu
+@set uop-url http://www.uop.ucar.edu
+
+@c External web pages.
+@set hdf5-url http://hdf.ncsa.uiuc.edu/HDF5
+@set hdf5-tutorial-url @value{hdf5-url}/doc/Tutor
+@set cygwin-url http://www.cygwin.com
+@set mingw-url http://www.mingw.org
+@set mingw-faq @value{mingw-url}/mingwfaq.shtml
+@set woe32-url http://www.haible.de/bruno/woe32dll.html
+@set red-hat-w32-url http://www.redhat.com/docs/manuals/enterprise/RHEL-4-Manual/gnu-linker/win32.html
+@set cf-url http://cf-pcmdi.llnl.gov
+
+@c urls for netcdf documents
+@set docs-url @value{netcdf-url}/docs
+@set old-docs-url @value{netcdf-url}/old_docs
+@set v2-docs-url @value{netcdf-url}/guide_toc.html
+@set pre360-install-url @value{old-docs-url}/INSTALL_pre_360.html
+@set 360-install-url @value{old-docs-url}/docs_3_6_0/netcdf-install
+@set 361-install-url @value{old-docs-url}/docs_3_6_1/netcdf-install
+@set install-url @value{docs-url}/netcdf-install
+@set netcdf-install-url @value{docs-url}/netcdf-install
+@set netcdf-faq-url @value{netcdf-url}/faq.html
+@set netcdf-shared-faq-url @value{netcdf-faq-url}#using_shared_p
+@set netcdf-builds @value{netcdf-url}/builds
+@set netcdf-other-builds @value{netcdf-url}/other-builds.html
+@set netcdf-software-url @value{netcdf-url}/software.html
+@set known-problems-url @value{docs-url}/known_problems.html
+@set netcdf-java-man-url @value{netcdf-java-url}/v2.1/NetcdfJavaUserManual.htm
+
+@c urls to search on-line stuff
+@set netcdf-support-search-url /search.jsp?support&netcdf
+@set netcdf-list-search-url /search.jsp?netcdfgroup
+
+@c places to get downloads
+@set ftp-site ftp://ftp.unidata.ucar.edu/pub/netcdf
+@set netcdf-binaries-url @value{netcdf-url}/binaries.html
+@set windows-ftp-site @value{ftp-site}/contrib/win32
+
+@c Tools mentioned in the netCDF tutorial.
+@set idv-url http://www.unidata.ucar.edu/software/idv
+@set udunits-url http://www.unidata.ucar.edu/software/udunits
+@set ncl-url http://www.ncl.ucar.edu
+@set nco-url http://nco.sourceforge.net
+@set grads-url http://grads.iges.org/grads/grads.html
+
+@macro legalid
+For CDF-1, a legal identifier is any sequence of one or more alphabetic
+characters, digits, and the following special characters:
+'_', '.', '-', '@@', and '+'. The identifier must, however, start with an
+alphabetic character or underscore. Case is significant
+and names commencing with underscore are reserved for system use.
+Starting from CDF-2, more characters are allowed.
+Please refer to @ref{CDF-2 file format specification} and @ref{CDF-5 file format specification}.
+@end macro
+
+@macro legalidentifier
+@legalid
+
+Note specifically that the extended ISO8859 character set
+(characters in the range 0x80-0xFF)
+are specifically excluded because they conflict with
+the UTF8 format (if that is enabled).
+@end macro
+
+@macro legaliddeprecate
+The set of legal identifier characters (after the first character)
+has been unofficially extended to include the following characters:
+':', '(', and ')'.
+The use of these characters is deprecated and conforming files should
+not use them.
+They may declared illegal in the future and are currently not
+supported in ncgen.
+@end macro
+
+@macro allowutf
+If UTF8 support is enabled, then CDL names may contain any legal
+UTF8 multibyte character.
+@end macro
+
+@macro legalidshort
+@legalid
+@end macro
+
+@setchapternewpage odd
+@finalout
+@copying 
+@sp 1
+Copyright @copyright{} 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+@sp 1
+@end copying

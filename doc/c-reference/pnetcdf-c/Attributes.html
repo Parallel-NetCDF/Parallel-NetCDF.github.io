@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Attributes (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Attributes (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Attributes (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Attributes-Introduction.html#Attributes-Introduction" rel="next" title="Attributes Introduction">
+<link href="ncmpi_005fcancel.html#ncmpi_005fcancel" rel="prev" title="ncmpi_cancel">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Attributes"></a>
+<div class="header">
+<p>
+Next: <a href="Run_002dtime-Environment-Variables.html#Run_002dtime-Environment-Variables" accesskey="n" rel="next">Run-time Environment Variables</a>, Previous: <a href="Variables.html#Variables" accesskey="p" rel="prev">Variables</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Attributes-1"></a>
+<h2 class="chapter">5 Attributes</h2>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Attributes-Introduction.html#Attributes-Introduction" accesskey="1">Attributes Introduction</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">What are Attributes?
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fput_005fatt_005f_003ctype_003e.html#ncmpi_005fput_005fatt_005f_003ctype_003e" accesskey="2">ncmpi_put_att_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Write an Attribute
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family" accesskey="3">ncmpi_inq_att Family</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Get Information about an Attribute
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fget_005fatt_005f_003ctype_003e.html#ncmpi_005fget_005fatt_005f_003ctype_003e" accesskey="4">ncmpi_get_att_<var>&lt;type&gt;</var></a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Read an Attribute
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fcopy_005fatt.html#ncmpi_005fcopy_005fatt" accesskey="5">ncmpi_copy_att</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Copy an Attribute
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005frename_005fatt.html#ncmpi_005frename_005fatt" accesskey="6">ncmpi_rename_att</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Rename an Attribute
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ncmpi_005fdel_005fatt.html#ncmpi_005fdel_005fatt" accesskey="7">ncmpi_del_att</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Delete an Attribute
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Run_002dtime-Environment-Variables.html#Run_002dtime-Environment-Variables" accesskey="n" rel="next">Run-time Environment Variables</a>, Previous: <a href="Variables.html#Variables" accesskey="p" rel="prev">Variables</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

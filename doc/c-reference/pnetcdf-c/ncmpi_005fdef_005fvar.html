@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_def_var (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_def_var (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_def_var (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="ncmpi_005fdef_005fvar_005ffill.html#ncmpi_005fdef_005fvar_005ffill" rel="next" title="ncmpi_def_var_fill">
+<link href="Variable-Types.html#Variable-Types" rel="prev" title="Variable Types">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fdef_005fvar"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fdef_005fvar_005ffill.html#ncmpi_005fdef_005fvar_005ffill" accesskey="n" rel="next">ncmpi_def_var_fill</a>, Previous: <a href="Variable-Types.html#Variable-Types" accesskey="p" rel="prev">Variable Types</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Create-a-Variable_003a-ncmpi_005fdef_005fvar"></a>
+<h3 class="section">4.3 Create a Variable: <code>ncmpi_def_var</code></h3>
+<a name="index-ncmpi_005fdef_005fvar"></a>
+<a name="index-ncmpi_005fdef_005fvar_002c-example"></a>
+<a name="index-creating-variables"></a>
+<a name="index-variables_002c-creating"></a>
+
+<p>The function ncmpi_def_var adds a new variable to an opened netCDF file
+in define mode. It returns (as an argument) a variable ID, given the
+netCDF ID, the variable name, the variable type, the number of
+dimensions, and a list of the dimension IDs.
+</p>
+<a name="Operational-Mode-28"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>This API is a collective subroutine.
+</p>
+<p>This API must be called while the file is in define mode.
+</p>
+<a name="Usage-28"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_def_var(int         ncid,
+                  const char *name,
+                  nc_type     xtype,
+                  int         ndims,
+                  const int   dimids[],
+                  int        *varidp);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>name</code></dt>
+<dd><p>Variable name. Must be a legal netCDF identifier.
+For CDF-1, a legal identifier is any sequence of one or more alphabetic
+characters, digits, and the following special characters:
+&rsquo;_&rsquo;, &rsquo;.&rsquo;, &rsquo;-&rsquo;, &rsquo;@&rsquo;, and &rsquo;+&rsquo;. The identifier must, however, start with an
+alphabetic character or underscore. Case is significant
+and names commencing with underscore are reserved for system use.
+Starting from CDF-2, more characters are allowed.
+Please refer to <a href="CDF_002d2-file-format-specification.html#CDF_002d2-file-format-specification">CDF-2 file format specification</a> and <a href="CDF_002d5-file-format-specification.html#CDF_002d5-file-format-specification">CDF-5 file format specification</a>.
+</p>
+</dd>
+<dt><code>xtype</code></dt>
+<dd><p>One of the predefined netCDF external data types. The type of this parameter,
+nc_type, is defined in the PnetCDF header file, pnetcdf.h. The valid netCDF
+external data types are NC_BYTE, NC_CHAR, NC_SHORT, NC_INT, NC_FLOAT, and
+NC_DOUBLE. For CDF-5 file format, the following additional data types are
+supported: NC_UBYTE, NC_USHORT, NC_UINT, NC_INT64, and NC_UINT64.
+</p>
+</dd>
+<dt><code>ndims</code></dt>
+<dd><p>Number of dimensions for the variable. For example, 2 specifies a
+matrix, 1 specifies a vector, and 0 means the variable is a scalar
+with no dimensions. Must not be negative or greater than the
+predefined constant NC_MAX_VAR_DIMS.
+</p>
+</dd>
+<dt><code>dimids</code></dt>
+<dd><p>Vector of ndims dimension IDs corresponding to the variable
+dimensions. If the ID of the unlimited dimension is included, it must
+be first. This argument is ignored if ndims is 0.
+</p>
+</dd>
+<dt><code>varidp</code></dt>
+<dd><p>Pointer to location for the returned variable ID.
+</p></dd>
+</dl>
+
+<a name="Return-Error-Codes-25"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_def_var returns the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: Bad ncid. The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_ENOTINDEFINE: Operation not allowed in data mode.
+</li><li> NC_EBADNAME: Name contains illegal characters.
+</li><li> NC_EMAXNAME: NC_MAX_NAME exceeded.
+</li><li> NC_EBADTYPE: Not a valid NC data type used in argument xtype.
+</li><li> NC_ESTRICTCDF2: Attempting CDF-5 operation on strict CDF or CDF-2 file (the NC data type specified in xtype is only valid in CDF-5 files).
+</li><li> NC_EBADDIM: One or more of the dimension IDs in the list of dimensions is not a valid dimension ID for the netCDF file.
+</li><li> NC_EINVAL: Number of dimensions too large, or negative.
+</li><li> NC_EMAXVARS: The number of variables would exceed the constant NC_MAX_VARS, the maximum number of variables permitted in a netCDF file.
+</li><li> NC_ENAMEINUSE: Name already in use.
+</li><li> NC_EUNLIMPOS: only the highest dimension can be unlimited.
+</li><li> NC_ENOMEM: run out of memory.
+</li><li> NC_EVARSIZE: The size of variable exceeds the size constraints for whichever variant of the file format is in use.
+</li></ul>
+
+<a name="Example-27"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_def_var to create a variable named rh of
+type double with three dimensions, time, lat, and lon in a new netCDF
+file named foo.nc:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int  status;                       /* error status */
+int  ncid;                         /* netCDF ID */
+int  lat_dim, lon_dim, time_dim;   /* dimension IDs */
+int  rh_id;                        /* variable ID */
+int  rh_dimids[3];                 /* variable shape */
+   ...
+status = <a href="ncmpi_005fcreate.html#ncmpi_005fcreate">ncmpi_create</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_NOCLOBBER, MPI_INFO_NULL, &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+                                   /* define dimensions */
+status = <a href="ncmpi_005fdef_005fdim.html#ncmpi_005fdef_005fdim">ncmpi_def_dim</a>(ncid, &quot;lat&quot;, 5L, &amp;lat_dim);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005fdef_005fdim.html#ncmpi_005fdef_005fdim">ncmpi_def_dim</a>(ncid, &quot;lon&quot;, 10L, &amp;lon_dim);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005fdef_005fdim.html#ncmpi_005fdef_005fdim">ncmpi_def_dim</a>(ncid, &quot;time&quot;, NC_UNLIMITED, &amp;time_dim);
+if (status != NC_NOERR) handle_error(status);
+   ...
+                                   /* define variable */
+rh_dimids[0] = time_dim;
+rh_dimids[1] = lat_dim;
+rh_dimids[2] = lon_dim;
+status = <a href="#ncmpi_005fdef_005fvar">ncmpi_def_var</a>(ncid, &quot;rh&quot;, NC_DOUBLE, 3, rh_dimids, &amp;rh_id);
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fdef_005fvar_005ffill.html#ncmpi_005fdef_005fvar_005ffill" accesskey="n" rel="next">ncmpi_def_var_fill</a>, Previous: <a href="Variable-Types.html#Variable-Types" accesskey="p" rel="prev">Variable Types</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_get_var_&lt;type&gt; (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_get_var_&lt;type&gt; (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_get_var_&lt;type&gt; (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="ncmpi_005fget_005fvara_005f_003ctype_003e.html#ncmpi_005fget_005fvara_005f_003ctype_003e" rel="next" title="ncmpi_get_vara_&lt;type&gt;">
+<link href="ncmpi_005fget_005fvar1_005f_003ctype_003e.html#ncmpi_005fget_005fvar1_005f_003ctype_003e" rel="prev" title="ncmpi_get_var1_&lt;type&gt;">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fget_005fvar_005f_003ctype_003e"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fget_005fvara_005f_003ctype_003e.html#ncmpi_005fget_005fvara_005f_003ctype_003e" accesskey="n" rel="next">ncmpi_get_vara_<var>&lt;type&gt;</var></a>, Previous: <a href="ncmpi_005fget_005fvar1_005f_003ctype_003e.html#ncmpi_005fget_005fvar1_005f_003ctype_003e" accesskey="p" rel="prev">ncmpi_get_var1_<var>&lt;type&gt;</var></a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Read-an-Entire-Variable-ncmpi_005fget_005fvar_005f_003ctype_003e"></a>
+<h3 class="section">4.17 Read an Entire Variable ncmpi_get_var_<var>&lt;type&gt;</var></h3>
+<a name="index-ncmpi_005fget_005fvar_005ftext"></a>
+<a name="index-ncmpi_005fget_005fvar_005fuchar"></a>
+<a name="index-ncmpi_005fget_005fvar_005fschar"></a>
+<a name="index-ncmpi_005fget_005fvar_005fshort"></a>
+<a name="index-ncmpi_005fget_005fvar_005fint"></a>
+<a name="index-ncmpi_005fget_005fvar_005ffloat"></a>
+<a name="index-ncmpi_005fget_005fvar_005fdouble"></a>
+<a name="index-ncmpi_005fget_005fvar_005fushort"></a>
+<a name="index-ncmpi_005fget_005fvar_005funit"></a>
+<a name="index-ncmpi_005fget_005fvar_005flonglong"></a>
+<a name="index-ncmpi_005fget_005fvar_005fulonglong"></a>
+<a name="index-ncmpi_005fget_005fvar_005ftext_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005fuchar_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005fschar_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005fshort_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005fint_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005ffloat_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005fdouble_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005fushort_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005funit_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005flonglong_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005fulonglong_005fall"></a>
+<a name="index-ncmpi_005fget_005fvar_005ftext_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fuchar_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fschar_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fshort_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fint_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005ffloat_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fdouble_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fushort_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005funit_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005flonglong_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fulonglong_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005ftext_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fuchar_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fschar_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fshort_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fint_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005ffloat_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fdouble_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fushort_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005funit_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005flonglong_005fall_002c-example"></a>
+<a name="index-ncmpi_005fget_005fvar_005fulonglong_005fall_002c-example"></a>
+<a name="index-reading-entire-variable"></a>
+<a name="index-entire-variable_002c-reading"></a>
+
+<p>The members of the ncmpi_get_var_<var>&lt;type&gt;</var> family of functions read all the
+values from a netCDF variable of an opened netCDF file. This is the
+simplest interface to use for reading the value of a scalar variable
+or when all the values of a multidimensional variable can be read at
+once. The values are read into consecutive locations with the last
+dimension varying fastest.
+</p>
+<p>Take care when using the simplest forms of this interface with record
+variables when you don&rsquo;t specify how many records are to be read. If
+you try to read all the values of a record variable into an array but
+there are more records in the file than you assume, more data will be
+read than you expect, which may cause a segmentation violation.
+</p>
+<a name="Data-types-7"></a>
+<h3 class="heading">Data types</h3>
+<table cellpadding="4" border="1">
+<tr class="spacer" align=center>
+    <td> &lt;<b>type  </b>&gt; for API names </td>
+    <td> &lt;<b>C type</b>&gt; for API arguments </td>
+</tr>
+<tr align=center> <td>text     </td> <td>char             </td> </tr>
+<tr align=center> <td>schar    </td> <td>signed char      </td> </tr>
+<tr align=center> <td>short    </td> <td>short            </td> </tr>
+<tr align=center> <td>int      </td> <td>int              </td> </tr>
+<tr align=center> <td>float    </td> <td>float            </td> </tr>
+<tr align=center> <td>double   </td> <td>double           </td> </tr>
+<tr align=center> <td>uchar    </td> <td>unsigned char    </td> </tr>
+<tr align=center> <td>ushort   </td> <td>unsigned short   </td> </tr>
+<tr align=center> <td>uint     </td> <td>unsigned int     </td> </tr>
+<tr align=center> <td>longlong </td> <td>long long        </td> </tr>
+<tr align=center> <td>ulonglong</td> <td>unsigned longlong</td> </tr>
+</table>
+
+<a name="Operational-Mode-42"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>These API must be called while the file is in data mode.
+</p>
+<a name="Collective-I_002fO-8"></a>
+<h3 class="heading">Collective I/O</h3>
+<p>The corresponding collective APIs have the suffix name &quot;_all&quot; and must be called in collective data mode.
+</p>
+<a name="Usage-42"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_get_var_<strong>&lt;type&gt;</strong>     (int                  ncid,
+                               int                 varid,
+                               <strong>&lt;C type&gt;</strong>           *buf);
+
+int ncmpi_get_var             (int                 ncid,
+                               int                 varid,
+                               void               *buf,
+                               MPI_Offset          bufcount,
+                               MPI_Datatype        buftype);
+
+int ncmpi_get_var_<strong>&lt;type&gt;</strong>_all (int                  ncid,
+                               int                 varid,
+                               <strong>&lt;C type&gt;</strong>           *buf);
+
+int ncmpi_get_var_all         (int                 ncid,
+                               int                 varid,
+                               void               *buf,
+                               MPI_Offset          bufcount,
+                               MPI_Datatype        buftype);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>varid</code></dt>
+<dd><p>Variable ID. Different MPI processes may use different variable IDs.
+</p>
+</dd>
+<dt><code>buf</code></dt>
+<dd><p>Pointer to a block of contiguous locations in memory into which the data values are read. If the type of data value differs from the netCDF variable type, type conversion will occur.
+</p>
+</dd>
+<dt><code>bufcount</code></dt>
+<dd><p>An integer indicates the number of MPI derived data type elements in the buf to be read from the file.
+</p>
+</dd>
+<dt><code>buftype</code></dt>
+<dd><p>An MPI derived data type that describes the memory layout of buf.
+Starting from PnetCDF version 1.6.0, buftype can be MPI_DATATYPE_NULL.
+In this case, bufcount is ignored and the buf&rsquo;s data type must match the type
+of the variable defined in the file - no data conversion will be done.
+</p>
+</dd>
+</dl>
+
+<a name="Return-Error-Codes-39"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_get_var_<var>&lt;type&gt;</var> returns the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_ENOTVAR: The variable ID is invalid for the specified netCDF file.
+</li><li> NC_EGLOBAL: NC_GLOBAL is considered invalid for these APIs.
+</li><li> NC_ERANGE: One or more elements of the external variable are out of the range of values representable by the internal data type of read buffer, buf. (Does not apply to the ncmpi_get_var() and ncmpi_get_var_all()).
+</li><li> NC_EINDEFINE: Operation not allowed in define mode.
+</li><li> NC_ECHAR: Attempt to convert numerical values to or from text data.
+</li><li> NC_ENOMEM: Out of memory.
+</li><li> NC_EINDEP: Attempt collective I/O operations in independent data mode.
+</li><li> NC_ENOTINDEP: Attempt independent I/O operations in collective data mode.
+</li><li> NC_ENOTSUPPORT: Flexible APIs for NetCDF-4 files is not yet supported.
+</li></ul>
+
+<a name="Example-41"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_get_var_double_all to read all the values of
+the variable named rh in parallel from an existing netCDF file named
+foo.nc. For simplicity in this example, we assume that we know that rh
+is dimensioned with time, lat, and lon, and that there are three time
+values, five lat values, and ten lon values.
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+#define TIMES 3
+#define LATS 5
+#define LONS 10
+int  status;                       /* error status */
+int ncid;                          /* netCDF ID */
+int rh_id;                         /* variable ID */
+double rh_vals[TIMES*LATS*LONS];   /* array to hold values */
+   ...
+/* open the file in read-only mode */
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_NOWRITE, MPI_INFO_NULL,  &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+/* obtain variable ID */
+status = <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid">ncmpi_inq_varid</a>(ncid, &quot;rh&quot;, &amp;rh_id);
+if (status != NC_NOERR) handle_error(status);
+   ...
+/* all processes read the whole variable in parallel (collectively) */
+status = <a href="#ncmpi_005fget_005fvar_005f_003ctype_003e">cmpi_get_var_double_all</a>(ncid, rh_id, rh_vals);
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fget_005fvara_005f_003ctype_003e.html#ncmpi_005fget_005fvara_005f_003ctype_003e" accesskey="n" rel="next">ncmpi_get_vara_<var>&lt;type&gt;</var></a>, Previous: <a href="ncmpi_005fget_005fvar1_005f_003ctype_003e.html#ncmpi_005fget_005fvar1_005f_003ctype_003e" accesskey="p" rel="prev">ncmpi_get_var1_<var>&lt;type&gt;</var></a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

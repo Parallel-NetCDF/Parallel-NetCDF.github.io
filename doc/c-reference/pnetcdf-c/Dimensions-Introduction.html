@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Dimensions Introduction (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Dimensions Introduction (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Dimensions Introduction (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Dimensions.html#Dimensions" rel="up" title="Dimensions">
+<link href="ncmpi_005fdef_005fdim.html#ncmpi_005fdef_005fdim" rel="next" title="ncmpi_def_dim">
+<link href="Dimensions.html#Dimensions" rel="prev" title="Dimensions">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Dimensions-Introduction"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fdef_005fdim.html#ncmpi_005fdef_005fdim" accesskey="n" rel="next">ncmpi_def_dim</a>, Previous: <a href="Dimensions.html#Dimensions" accesskey="p" rel="prev">Dimensions</a>, Up: <a href="Dimensions.html#Dimensions" accesskey="u" rel="up">Dimensions</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Dimensions-Introduction-1"></a>
+<h3 class="section">3.1 Dimensions Introduction</h3>
+
+<p>Dimensions for a netCDF file are defined when it is created, while
+the netCDF file is in define mode. Additional dimensions may be
+added later by reentering define mode. A netCDF dimension has a name
+and a length. At most one dimension in a netCDF file can have the
+unlimited length, which means variables using this dimension can grow
+along this dimension.
+</p>
+<p>There is a suggested limit (1024) to the number of dimensions that can
+be defined in a single netCDF file. The limit is the value of the
+predefined macro NC_MAX_DIMS. The purpose of the limit is to make
+writing generic applications simpler. They need only provide an array
+of NC_MAX_DIMS dimensions to handle any netCDF file. The
+implementation of the PnetCDF library does not enforce this advisory
+maximum, so it is possible to use more dimensions, if necessary, but
+netCDF utilities that assume the advisory maximums may not be able to
+handle the resulting netCDF files.
+</p>
+<p>Ordinarily, the name and length of a dimension are fixed when the
+dimension is first defined. The name may be changed later, but the
+length of a dimension (other than the unlimited dimension) cannot be
+changed without copying all the data to a new netCDF file with a
+redefined dimension length.
+</p>
+<p>Dimension lengths in the C interface are type MPI_Offset rather than type
+size_t as defined in netCDF-3. The original note from netCDF-3 is &quot;Dimension
+lengths in the C interface are type size_t rather than type int to make it
+possible to access all the data in a netCDF file on a platform that only
+supports a 16-bit int data type. If dimension lengths were type int instead, it
+would not be possible to access data from variables with a dimension length
+greater than a 16-bit int can accommodate.&quot;
+</p>
+<p>A netCDF dimension in an opened netCDF file is referred to by a small
+integer called a dimension ID. In the C interface, dimension IDs are
+0, 1, 2, ..., in the order in which the dimensions were defined.
+</p>
+<p>Operations supported on dimensions are:
+</p><ul>
+<li> Create a dimension, given its name and length.
+
+</li><li> Get a dimension ID from its name.
+
+</li><li> Get a dimension&rsquo;s name and length from its ID.
+
+</li><li> Rename a dimension.
+</li></ul>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fdef_005fdim.html#ncmpi_005fdef_005fdim" accesskey="n" rel="next">ncmpi_def_dim</a>, Previous: <a href="Dimensions.html#Dimensions" accesskey="p" rel="prev">Dimensions</a>, Up: <a href="Dimensions.html#Dimensions" accesskey="u" rel="up">Dimensions</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_inq_dim Family (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_inq_dim Family (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_inq_dim Family (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Dimensions.html#Dimensions" rel="up" title="Dimensions">
+<link href="ncmpi_005frename_005fdim.html#ncmpi_005frename_005fdim" rel="next" title="ncmpi_rename_dim">
+<link href="ncmpi_005finq_005fdimid.html#ncmpi_005finq_005fdimid" rel="prev" title="ncmpi_inq_dimid">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005finq_005fdim-Family"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005frename_005fdim.html#ncmpi_005frename_005fdim" accesskey="n" rel="next">ncmpi_rename_dim</a>, Previous: <a href="ncmpi_005finq_005fdimid.html#ncmpi_005finq_005fdimid" accesskey="p" rel="prev">ncmpi_inq_dimid</a>, Up: <a href="Dimensions.html#Dimensions" accesskey="u" rel="up">Dimensions</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Inquire-about-a-Dimension_003a-ncmpi_005finq_005fdim-Family"></a>
+<h3 class="section">3.4 Inquire about a Dimension: ncmpi_inq_dim Family</h3>
+<a name="index-ncmpi_005finq_005fdim-Family"></a>
+<a name="index-ncmpi_005finq_005fdim-Family_002c-example"></a>
+
+<p>This family of functions returns information about a netCDF
+dimension. Information about a dimension includes its name and its
+length. The length for the unlimited dimension, if any, is the number
+of records written so far.
+</p>
+<p>The functions in this family include ncmpi_inq_dim, ncmpi_inq_dimname, and
+ncmpi_inq_dimlen. The function ncmpi_inq_dim returns all the information
+about a dimension; the other functions each return just one item of
+information.
+</p>
+<a name="Operational-Mode-26"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>These APIs are independent subroutines and can be called while the file is in either define or data mode (collective or independent).
+</p>
+<a name="Usage-26"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_inq_dim     (int ncid, int dimid, char* name, MPI_Offset* lengthp);
+int ncmpi_inq_dimname (int ncid, int dimid, char *name);
+int ncmpi_inq_dimlen  (int ncid, int dimid, MPI_Offset *lengthp);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>dimid</code></dt>
+<dd><p>Dimension ID, from a previous call to ncmpi_inq_dimid or ncmpi_def_dim.
+</p>
+</dd>
+<dt><code>name</code></dt>
+<dd><p>Returned dimension name. The caller must allocate space for the
+returned name. The maximum possible length, in characters, of a
+dimension name is given by the predefined constant NC_MAX_NAME. (This
+doesn&rsquo;t include the null terminator, so declare your array to be size
+NC_MAX_NAME+1). The returned character array will be null-terminated.
+</p>
+</dd>
+<dt><code>lengthp</code></dt>
+<dd><p>Pointer to location for returned length of dimension. For the
+unlimited dimension, this is the number of records written so far.
+</p>
+</dd>
+</dl>
+
+<a name="Return-Error-Codes-23"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>APIs in this group return the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_EBADDIM: The dimension ID is invalid for the specified netCDF file.
+</li></ul>
+
+<a name="Example-25"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_inq_dim to determine the length of a
+dimension named lat, and the name and current maximum length of the
+unlimited dimension for an existing netCDF file named foo.nc:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int status, ncid, latid, recid;
+MPI_Offset latlength, recs;
+char recname[NC_MAX_NAME+1];
+   ...
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_NOWRITE, MPI_INFO_NULL, &amp;ncid);  /* open for reading */
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005finq-Family.html#ncmpi_005finq-Family">ncmpi_inq_unlimdim</a>(ncid, &amp;recid); /* get ID of unlimited dimension */
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="#ncmpi_005finq_005fdim-Family">ncmpi_inq_dimid</a>(ncid, &quot;lat&quot;, &amp;latid);  /* get ID for lat dimension */
+if (status != NC_NOERR) handle_error(status);
+status = <a href="#ncmpi_005finq_005fdim-Family">ncmpi_inq_dimlen</a>(ncid, latid, &amp;latlength); /* get lat length */
+if (status != NC_NOERR) handle_error(status);
+/* get unlimited dimension name and current length */
+status = <a href="#ncmpi_005finq_005fdim-Family">ncmpi_inq_dim</a>(ncid, recid, recname, &amp;recs);
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005frename_005fdim.html#ncmpi_005frename_005fdim" accesskey="n" rel="next">ncmpi_rename_dim</a>, Previous: <a href="ncmpi_005finq_005fdimid.html#ncmpi_005finq_005fdimid" accesskey="p" rel="prev">ncmpi_inq_dimid</a>, Up: <a href="Dimensions.html#Dimensions" accesskey="u" rel="up">Dimensions</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

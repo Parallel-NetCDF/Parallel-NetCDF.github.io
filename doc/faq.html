@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Parallel netCDF Q&amp;A
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="keywords" content="PnetCDF,Parallel netCDF,parallel-netcdf,netCDF,parallel I/O,MPI-IO" />
+<link href="../../CSS/default.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../../images/nuitfavicon.ico" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CJ8LEHVTXW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CJ8LEHVTXW');
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+
+  ga('send', 'pageview');
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+
+<body>
+<div id="topContainer"> <img src="../../images/CUCIS banner.jpg" width="765" height="180" align="left" name="Map" usemap="#Map" border="none"/>
+  <map name="Map" id="Map">
+    <area shape="rect" coords="186,9,351,40" href="http://www.mccormick.northwestern.edu/" target="_blank" alt="Robert R. McCormick School of Engineering and Applied Science"/>
+    <area shape="rect" coords="238,50,665,78" href="http://www.eecs.northwestern.edu/" target="_blank" alt="Electrical Engineering and Computer Science Department" />
+    <area shape="rect" coords="184,130,751,159" href="http://cucis.ece.northwestern.edu/" alt="Center for Ultra-scale Computing and Information Security at Northwestern University" />
+  </map>
+</div>
+<div id="navcontainer">
+  <ul id="navlist">
+    <li> <a href="../../index.html">CUCIS Home</a> </li>
+    <li> <a href="index.html">PnetCDF Home</a> </li>
+    <li> <a href="../../projects/index.html">Projects</a> </li>
+    <li> <a href="../../publications/index.html">Publications</a> </li>
+    <li> <a href="../../members/index.html">Members</a> </li>
+  </ul>
+</div>
+
+<div id="main">
+  <div id="mainLeft">
+    <!-- SIDE CONTENT AREA -->
+    <h3>Sponsor:</h3>
+    PnetCDF development was sponsored by the Scientific Data Management Center (<a href="http://sdm.lbl.gov/sdmcenter/" target="_new">SDM</a>) under the DOE program of Scientific Discovery through Advanced Computing (<a href="http://www.scidac.org/" target="_new">SciDAC</a>). It was also supported in part by National Science Foundation under the SDCI HPC program award numbers OCI-0724599 and HECURA program award numbers CCF-0938000.
+    <br>
+    <h3>Project Team Members:</h3>
+    <h4>Northwestern University</h4>
+    <ul>
+      <li><a href="../../members/wkliao">Wei-keng Liao</a></li>
+      <li><a href="http://users.eecs.northwestern.edu/~choudhar/">Alok Choudhary</a></li>
+      <li><a href="../../members/khl7265" target="_new">Kai-Yuan Hou</a> (graduate student)</li>
+      <li><a href="../../members/sson">Seung Woo Son</a>(formerly a postdoc, now an Assistant Professor at UMass Lowell)</li>
+      <li><a href="../../members/kuigao">Kui Gao</a> (formerly postdoc, now Dassault Systèmes Simulia Corp.</li>
+      <li><a href="../../members/jianwei">Jianwei Li</a> (since graduated, now Bloomberg L.P.)</li>
+    </ul>
+    <h4>Argonne National Laboratory</h4>
+    <ul>
+      <li><a href="http://www.mcs.anl.gov/%7Erobl" target="_new">Rob Latham</a></li>
+      <li><a href="http://www.mcs.anl.gov/%7Erross/" target="_new">Rob Ross</a></li>
+      <li><a href="http://www.mcs.anl.gov/%7Ethakur/" target="_new">Rajeev Thakur</a></li>
+      <li><a href="http://www.mcs.anl.gov/%7Egropp/" target="_new">William Gropp</a>(now UIUC)</li>
+    </ul>
+    </p>
+    <hr>
+    <p align="center"> <a href="http://www.facebook.com/pages/Cucis/279330455410343?sk=wall" target="_new"><img src="../../images/facebook_image.jpg" /></a><br /><br/>
+    <a href="http://twitter.com/#!/CucisNU" target="_new"><img src="../../images/twitter image.jpg" width="125" /></a><br><br/>
+    <a href="http://www.eecs.northwestern.edu" target="new"><img src="../../images/eecs.jpg" alt="Northwestern University - EECS Dept." width="72" border="0" ></a><br/>
+    </p>
+  </div>
+
+  <div id="mainRight">
+    <br/>
+    <!-- MAIN CONTENT AREA -->
+    <center>
+    <hr>
+    <h1>Parallel netCDF Q&amp;A</h1>
+    <hr>
+    </center>
+
+This page provides frequently asked questions and tips for obtaining better I/O performance.
+Readers are also referred to <a href=http://www.unidata.ucar.edu/software/netcdf/docs/faq.html>NetCDF FAQ</a> for netCDF specific questions.
+
+<ol>
+<li><a href="#format">Q: Is PnetCDF a file format?</a></li>
+<li><a href="#lustre">Q: How do I improve I/O performance on Lustre?</a></li>
+<li><a href="#shared">Q: Should I compile my program (or PnetCDF library) to use shared or static libraries?</a></li>
+<li><a href="#striping">Q: What is file striping?</a></li>
+<li><a href="#pfs">Q: Must I use a parallel file system to run PnetCDF?</a></li>
+<li><a href="#netcdf4">Q: Can a netCDF-4 program make use of PnetCDF internally (instead of HDF5) to perform parallel I/O?</a></li>
+<li><a href="#shifting">Q: How do I avoid the "data shift penalty" due to growth of the file header?</a></li>
+<li><a href="#align">Q: How do I enable file access layout alignment for fixed-size variables?</a></li>
+<li><a href="#env">Q: What run-time environment variables are available in PnetCDF?</a></li>
+<li><a href="#hint">Q: How do I find out the PnetCDF and MPI-IO hint values used in my program?</a></li>
+<li><a href="#header">Q: How do I inquire the file header size and the amount of space allocated for it?</a></li>
+<li><a href="#nonblocking">Q: Should I consider using nonblocking APIs?</a></li>
+<li><a href="#bufferred">Q: How do I use the buffered nonblocking write APIs?</a></li>
+<li><a href="#coll_indep">Q: What is the difference between collective and independent APIs?</a></li>
+<li><a href="#collective">Q: Should I use collective APIs or independent APIs?</a></li>
+<li><a href="#varn">Q: Is there an API to read/write multiple subarrays of a single variable?</a></li>
+<li><a href="#format">Q: What file formats does PnetCDF support and what are their differences?</a></li>
+<li><a href="#error">Q: How do I obtain the error message corresponding to a returned error code?</a></li>
+<li><a href="#sync">Q: What should I call API ncmpi_sync?</a></li>
+<li><a href="#fill">Q: Does PnetCDF support fill mode?</a></li>
+<li><a href="#amount">Q: Is there an API that reports the amount of data read/written that was carried out by PnetCDF?</a></li>
+<li><a href="#numerical">Q: What are the numerical/non-numerical data types referred in NetCDF/PnetCDF?</a></li>
+<li><a href="#MPI_BYTE">Q: Why do I get NC_EBADTYPE error when I used MPI_BYTE in flexible APIs?</a></li>
+<li><a href="#compound">Q: Does PnetCDF support compound data types?</a></li>
+<li><a href="#sequential">Q: Can I run my PnetCDF program sequentially?</a></li>
+<li><a href="#consistency">Q: What level of parallel I/O data consistency is supported by PnetCDF?</a></li>
+<li><a href="#examples">Q: Where can I find PnetCDF example programs?</a></li>
+<li><a href="#version">Q: How to find out the PnetCDF version I am using?</a></li>
+<li><a href="#discuss">Q: Is there a mailing list for PnetCDF discussions and questions?</a></li>
+</ol>
+<hr>
+
+<ol>
+<li id="format"><b>Q: Is PnetCDF a file format?</b></br>
+    <b>A:</b> No. <a href=https://www.unidata.ucar.edu/software/netcdf/docs/netcdf_introduction.html#netcdf_format>NetCDF</a>
+    is a file format. PnetCDF is an I/O library that lets MPI programs to
+    read and write NetCDF files in parallel. Note NetCDF is also referred as
+    an I/O library that defines a set of application programming interfaces
+    (APIs) for reading and writing files in the netCDF format.
+</li> <hr>
+<li id="lustre"><b>Q: How do I improve I/O performance on Lustre?</b></br>
+    <b>A:</b> Lustre is a parallel file system that allows users to customize a file's
+    <a href="#striping">striping</a> setting. If the amount of your I/O requests
+    is sufficiently large, then the best strategy is to set the striping count
+    to the maximal allowable by the file system.  For Lustre, the user
+    configurable parameters are striping count, striping size, and striping
+    offset.
+    <ul>
+    <li><b>Striping count</b> is the number of object storage targets (OST), i.e. the
+         number of file servers storing the files in round robin.</li>
+    <li><b>Striping size</b> is the size of the block. 1 MB is a good size.</li>
+    <li><b>Striping offset</b> is the starting OST index (default -1). In most of the case, OSTs are selected by the system, not configurable by users.</li>
+    </ul>
+    To find the (default) striping setting of your files (or folders), use the following command:</br>
+    <blockquote><code>
+    % lfs getstripe filename</br>
+    stripe_count:   12 stripe_size:    1048576 stripe_offset:  -1
+    </code></blockquote>
+    The command to change a directory's/file's striping setting is "lfs".
+    Its syntax is:</br>
+    <blockquote><code>
+    % lfs setstripe -s stripe_size -c stripe_count -o start_ost_index directory|filename
+    </code></blockquote>
+    Note that users can change a directory's striping settings. New files created in a Lustre directory inherit the same settings.
+    All in all, we recommend the followings.
+    <ol>
+    <li>Use command "lfs" to set the striping count and size for the output directory and create your output files there.</li>
+    <li>Use collective APIs. Collective I/O coordinates application processes and reorganizes their requests into an access pattern that fits better for the underlying file system.</li>
+    <li>Use <a href=#nonblocking>nonblocking APIs</a> for multiple small requests. Nonblocking APIs aggregate small requests into large ones and hence have a better chance to achieve higher performance.</li>
+    </ol>
+</li> <hr>
+<li id="shared"><b>Q: Should I compile my program (or PnetCDF library) to use shared or static libraries?</b></br>
+    <b>A:</b> If performance is your top priority, then we recommend static libraries. Although using shared (aka dynamic) libraries can produce the executable files in smaller size, it may introduce delays. See <a href=http://www.nersc.gov/users/computational-systems/edison/running-jobs/shared-and-dynamic-libraries/>further notes</a> from NERSC.
+</li> <hr>
+<li id="striping"><b>Q: What is file striping?</b></br>
+    <b>A:</b> On parallel file systems, a file can be divided into blocks of same size,
+    called striping size, which are stored in a set of file servers in a
+    round-robin fashion. File striping allows multiple file servers to service
+    I/O requests simultaneously, achieving a higher I/O bandwidth result.
+</li> <hr>
+<li id="pfs"><b>Q: Must I use a parallel file system to run PnetCDF?</b></br>
+    <b>A:</b> No. However, using a parallel file system with a proper file
+    striping setting can significantly improve your parallel I/O performance.
+</li><hr>
+<li id="netcdf4"><b>Q: Can a netCDF-4 program make use of PnetCDF internally (instead of HDF5) to perform parallel I/O?</b></br>
+    <b>A:</b> Yes. Starting from  the release of 4.1, NetCDF has incorporated PnetCDF library to enable parallel I/O operations on files in classic formats (i.e. CDF-1 and 2).
+    Note that when using HDF5 to carry out parallel I/O, the files will be created in the HDF5 format, instead of the classic netCDF format.
+    To create a HDF5 format file, user must set the file create mode to add either
+    NC_CLASSIC_MODEL or NC_NETCDF4 flag (together with NC_MPIIO), when calling API nc_create_par.
+<p>
+    To use PnetCDF for parallel I/O, users must add the NC_MPIIO (or NC_PNETCDF) flag to the create mode argument when calling nc_create_par.
+    Without this flag, netCDF-4 programs can only perform sequential I/O on the classic CDF-1 and CDF-2 files.
+    Starting from version <a ref=https://github.com/Unidata/netcdf-c/blob/v4.4.0/RELEASE_NOTES>4.4.0</a>, netCDF 4 supports the CDF-5 format which allows larger sized variables and 8-byte integers.
+<p>
+    Example netCDF-4 programs that use PnetCDF for parallel I/O are available <a href=http://cucis.ece.northwestern.edu/projects/PnetCDF/#InteroperabilityWithNetCDF4>here</a>.
+</li><hr>
+<li id="shifting"><b>Q: How do I avoid the "data shift penalty" due to growth of the file header?</b></br>
+    <b>A:</b>
+    "Data shift" occurs when the size of file header grows.
+    Files in CDF formats comprise two sections: metadata section and data section.
+    The metadata section, also referred as the file header, is stored at the beginning of the file.
+    The data section is stored after the metadata section and its starting file offset is
+    determined at the first call to the end-define API (eg. ncmpi_enddef or nc_enddef), when
+    the file is created.
+    Afterward, the starting offset is recalculated every time the program calls end-define
+    (from entering the re-define mode, finishing changes to metadata, and exiting).
+<p>
+
+    The "data shift penalty" happens when the new file header grows bigger than
+    the space reserved for the original header and forces PnetCDF to "shift"
+    the entire data section to a location with higher file offset. The header
+    of a netCDF file can grow if a program opens an existing file and enters
+    the redefine mode to add more metadata (e.g. new attributes, dimensions, or
+    variables). PnetCDF provides an I/O hint, nc_header_align_size, to allow
+    user to preserve a larger space for file header if it is expected to grow.
+    We refer to the space allocated for the file header as "file header
+    extent".
+<p>
+    The default file header extent is of size 512 bytes, if the file system's
+    striping size cannot be obtained from the underneath MPI-IO library. If the
+    file striping size can be obtained (such as on Lustre) and the total size of
+    all defined fix-sized variables is larger than 4 times the file striping
+    size, then PnetCDF aligns the file header extent to the file striping size.
+    Note PnetCDF always sets a header space of size equal to a multiple of
+    nc_header_align_size.
+    <p>
+    Below is an example code fragment that sets the file header hint to 1MB and
+    pass it to PnetCDF when creating a file.
+    <blockquote><code>
+    MPI_Info_create(&amp;info);</br>
+    MPI_Info_set(info, "nc_header_align_size", "1048576");</br>
+    ncmpi_create(MPI_COMM_WORLD, "filename.nc", NC_CLOBBER|NC_64BIT_DATA, info, &amp;ncid);
+    </code></blockquote>
+    You can also use the run-time <a href="#env">environment variable</a> PNETCDF_HINTS to set a desired value.
+    More information regarding to the netCDF file layout, readers are referred to <a href=http://www.unidata.ucar.edu/software/netcdf/docs/classic_file_parts.html>Parts of a NetCDF Classic File</a>.
+    <p>
+    Note all I/O hints in PnetCDF and MPI-IO are advisory. The actual values
+    used by PnetCDF and MPI-IO may be different from the ones set by the user
+    programs.  Users are encouraged to print the actual values used by both
+    libraries.
+    See <a href="#hint">I/O hints</a> for how to print the hint values.
+</li><hr>
+<li id="align"><b>Q: How do I enable file access layout alignment for fixed-size variables?</b></br>
+    <b>A:</b> On most of the file systems, file locking is performed in the
+    units of file blocks.  If a write straddles two blocks, then locks must be
+    acquired for both blocks.  Aligning the start of a variable to a block
+    boundary can often eliminate all unaligned file system accesses.  For IBM's
+    GPFS and Lustre, the locking unit size is also the file striping size.
+    The PnetCDF hint for setting the file alignment size is nc_var_align_size.
+    Below is an example of setting the alignment size to 1 MB.
+    <blockquote><code>
+    MPI_Info_create(&amp;info);</br>
+    MPI_Info_set(info, "nc_var_align_size", "1048576");</br>
+    ncmpi_create(MPI_COMM_WORLD, "filename.nc", NC_CLOBBER|NC_64BIT_DATA, info, &amp;ncid);
+    </code></blockquote>
+    If you are using independent APIs, then setting this hint is more important
+    than if using collective.  This is because most of the latest MPI-IO
+    implementations have incorporated the file access alignment in their
+    collective I/O functions, if MPI-IO can successfully retrieve the file
+    striping information from the underlying parallel file system.  This is one
+    of the reasons we encourage PnetCDF users to use collective APIs whenever
+    possible.
+<p>
+    To disable the alignment, set the hint value of nc_var_align_size to 1.
+    If you are using <a href=#nonblocking>nonblocking APIs</a> to write data,
+    we recommend to disable the alignment.
+<p>
+    Note all I/O hints in PnetCDF and MPI-IO are advisory. The actual values
+    used by PnetCDF and MPI-IO may be different from the ones set by the user
+    programs.  Users are encouraged to print the actual values used by both
+    libraries.
+    See <a href="#hint">I/O hints</a> for how to print the hint values.
+</li><hr>
+<li id="env"><b>Q: What run-time environment variables are available in PnetCDF?</b></br>
+    <b>A:</b> The list of PnetCDF run-time environment variables can be found
+    <a href=c-reference/pnetcdf-c/Run_002dtime-Environment-Variables.html>here</a>.
+    <ul>
+    <li>PNETCDF_HINTS allows users to pass I/O hints to PnetCDF library.  Hints
+    include both PnetCDF and MPI-IO hints.  The value is a string of hints
+    separated by ";" and each hint is in the form of "keyword=value".  E.g.
+    under csh/tcsh environment, use command:
+    </li>
+    </ul>
+    <blockquote><code>
+    setenv PNETCDF_HINTS "romio_ds_write=disable;nc_header_align_size=1048576"
+    </code></blockquote>
+    <ul>
+    <li>PNETCDF_VERBOSE_DEBUG_MODE is used to print the location in the source
+    code where the error code is originated, no matter the error is intended or
+    not. This run-time environment variable only takes effect when PnetCDF is
+    configure with debug mode, i.e. --enable-debug is used at the configure
+    command line. Users are warned that enabling this mode may result in a lot
+    of debugging messages printed in stderr.  Set this variable to 1 to enable.
+    Set it to 0 or keep it unset disables this mode. Default is 0, i.e.
+    disabled.
+    </li>
+    <li>PNETCDF_SAFE_MODE is used to enable/disable the internal checking for
+    attribute/argument consistency across all processes.  Set it to 1 to enable
+    the checking. Default is 0, i.e. disabled.
+    </li>
+    </ul>
+<p>
+    Note the environment variables precede the (hint) values set in the
+    application program.
+    </li><hr>
+<li id="hint"><b>Q: How do I find out the PnetCDF and MPI-IO hint values used in my program?</b></br>
+    <b>A:</b> Hint values can be retrieved from calls to ncmpi_get_file_info
+    and MPI_Info_get.  Users are encouraged to check the hint values for the
+    ones used in their programs.  Since all hints are advisory, the actual
+    values used by PnetCDF and MPI-IO may be different from the values set by
+    the user programs.  The real hint values are automatically adjusted based
+    on many factors, including file size, variable sizes, and file system
+    settings.
+<p>
+    Example programs that print PnetCDF hints only can be found in the
+    <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples>"examples"</a> directory of the PnetCDF release: 
+    <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples/C/hints.c>hints.c</a>,
+    <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples/F77/hints.f>hints.f</a>, and
+    <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples/F90/hints.f90>hints.f90</a>.
+    Below is a code fragment in C that prints all I/O hints, including PnetCDF and MPI-IO.
+    <pre>
+    err = ncmpi_get_file_info(ncid, &amp;info_used);
+    MPI_Info_get_nkeys(info_used, &amp;nkeys);
+    for (i=0; i&lt;nkeys; i++) {
+        char key[MPI_MAX_INFO_KEY], value[MPI_MAX_INFO_VAL];
+        int  valuelen, flag;
+        MPI_Info_get_nthkey(info_used, i, key);
+        MPI_Info_get_valuelen(info_used, key, &amp;valuelen, &amp;flag);
+        MPI_Info_get(info_used, key, valuelen+1, value, &amp;flag);
+        printf("I/O hint: key = %21s, value = %s\n", key,value);
+    }
+    MPI_Info_free(&amp;info_used);
+    </pre>
+
+</li><hr>
+<li id="header"><b>Q: How do I inquire the file header size and the amount of space allocated for it?</b></br>
+    <b>A:</b> Starting from version 1.4.0, the following two APIs were added for such inquiries.</br>
+    <blockquote><code>
+    int ncmpi_inq_header_size(int ncid,   MPI_Offset *hdr_size);</br>
+    int ncmpi_inq_header_extent(int ncid, MPI_Offset *hdr_extent);</br>
+    </code></blockquote>
+    API ncmpi_inq_header_size returns in argument hdr_size the amount in bytes
+    already used by the header (true size).  API ncmpi_inq_header_extent
+    returns in argument hdr_extent the amount in bytes allocated for the
+    header.  Note that hdr_extent &gt;= hdr_size.
+</li><hr>
+<li id="nonblocking"><b>Q: Should I consider using nonblocking APIs?</b></br>
+    <b>A:</b> Using nonblocking APIs can aggregate a sequence of small requests
+    into a large one and hence achieve better I/O performance.  We encourage
+    all PnetCDF users to use nonblocking APIs, if your program exhibits the
+    following I/O patterns:
+    <ul>
+    <li>There are many variables defined in the netCDF file. MPI processes
+    read/write a list of one variables in a sequence. (PnetCDF aggregation can
+    handle requests across variables.)</li>
+    <li>MPI processes read/write a sequence of subarrays of the same variable.
+    (PnetCDF aggregation can also handle multiple requests to a single variable.)</li>
+    <li>The numbers of read/write requests are different among processes.</li>
+    </ul>
+    Note the user buffers should not be touched after posting the nonblocking
+    API calls until the return of wait APIs, except when using the <a
+    href="#bufferred">buffered nonblocking write APIs</a>.  If the contents of
+    the buffers are changed before the wait call, then the outcome (contents in
+    user read buffer or in file) may not be expected.
+    If the user buffers are freed before the wait call, then the program may
+    crash.
+</li><hr>
+<li id="bufferred"><b>Q: How do I use the buffered nonblocking write APIs?</b></br>
+    <b>A:</b> Buffered nonblocking write APIs copy the contents of user buffers into an internally allocated buffer, so the user buffers can be reused immediately after the calls return.
+    A typical way to use these APIs is described below.
+    <ul>
+    <li>First, tell PnetCDF how much space can be allocated to be used by the APIs.</li>
+    <li>Make calls to the buffered put APIs.</li>
+    <li>Make calls to the (collective) wait APIs.</li>
+    <li>Free the space allocated by the internal buffer.</li>
+    </ul>
+    For further information about the buffered nonblocking APIs, readers are referred to <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/wiki/BufferedInterface>this page</a>.
+</li><hr>
+<li id="coll_indep"><b>Q: What is the difference between collective and independent APIs?</b></br>
+    <b>A:</b> Collective APIs requires all MPI processes to participate the
+    call.  This requirement allows MPI-IO and PnetCDF to coordinate the I/O
+    requesting processes to rearrange all requests into a form that can achieve
+    the best performance from the underlying file system.
+<p>
+    On the contrary, independent APIs (also referred as non-collective) impose
+    no such requirement.
+<p>
+    All PnetCDF collective APIs (except create, open, and
+    close) have a suffix of "_all", corresponding to their independent
+    counterparts.  To switch from collective data mode to independent mode,
+    users must call ncmpi_begin_indep_data. API ncmpi_begin_indep_data is to
+    exit the independent mode.
+</li><hr>
+<li id="collective"><b>Q: Should I use collective APIs or independent APIs?</b></br>
+    <b>A:</b> Users are encouraged to use collective APIs whenever possible.
+    Collective API calls require the participation of all MPI processes that
+    open the shared file. This requirement allows MPI-IO and PnetCDF to
+    coordinate the I/O requesting processes to rearrange requests into a form
+    that can achieve the best performance from the underlying file system. If
+    the nature of user's I/O does not permit to call collective APIs (such as
+    the number of requests are not equal among processes, or is determined at
+    the run time), then we recommend the followings.
+    <ul>
+    <li>Use <a href="#nonblocking">nonblocking APIs</a>. Individual processes
+	can make any number of calls to nonblocking APIs independently from
+	other processes. At the end, a collective wait API, ncmpi_wait_all, is
+	recommended to used to allow all nonblocking requests to commit to the
+	file system.</li>
+    <li>Force all the processes participate the collective calls. When a process
+        has nothing to request, users can still call a collective API with
+	zero-length request. This is achieved by setting the contents of
+	argument count to zero.</li>
+    </ul>
+</li><hr>
+<li id="varn"><b>Q: Is there an API to read/write multiple subarrays of a single variable?</b></br>
+    <b>A:</b> The family of varn APIs can read/write a list of subarrays of a variable in a single call.
+    These APIs have similar functionality to <a href=http://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements>H5Sselect_elements</a> API in HDF5.
+    See their <a href=doc/pnetcdf-c/index.html>C Interface Guide</a> for detail information.
+    Example programs of using these APIs can be found under the directory <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples>examples</a> of PnetCDF release (C/put_varn_int.c, C/put_varn_float.c, F77/put_varn_int.f, F77/put_varn_real.f, F90/put_varn_int.f90, and F90/put_varn_real.f90).
+    <pre>
+    ncmpi_get_varn_&lt;type&gt;_all
+    ncmpi_get_varn_&lt;type&gt;
+    ncmpi_put_varn_&lt;type&gt;_all
+    ncmpi_put_varn_&lt;type&gt;
+    </pre>
+</li><hr>
+<li id="format"><b>Q: What file formats does PnetCDF support and what are their differences?</b></br>
+    <b>A:</b> PnetCDF supports <a href=http://www.unidata.ucar.edu/software/netcdf/old_docs/really_old/guide_15.html>CDF-1</a>, <a href=http://www.unidata.ucar.edu/software/netcdf/docs/netcdf/Classic-Format-Spec.html>CDF-2</a>, and <a href=c-reference/pnetcdf-c/CDF_002d5-file-format-specification.html>CDF-5</a> formats.
+    CDF-1 has been used by netCDF through version 3.5.1.
+    In CDF-1, both file size and individual variable size is limited by what a 4-byte integer can represented (2<sup>(32-1)</sup> = 2147483648 bytes).
+    Starting from 3.6.0, netCDF added support for CDF-2 format.
+    CDF-2 allows the file size larger than 2 GB.
+    In addition, CDF-2 also allows more special characters in the name strings of defined dimension, variables, and attributes.
+    CDF-2 backward supports CDF-1 format.
+    CDF-5 further relaxes the variable size limitation to allow the size of individual variables larger than 2 GB.
+    CD-5 also adds new data types to include all unsigned and 64-bit integers.
+    Check <a href=c-reference/pnetcdf-c/CDF_002d5-file-format-specification.html>CDF-5 format specification</a> for detailed differences (highlighted in colors).
+</li> <hr>
+<li id="error"><b>Q: How do I obtain the error message corresponding to a returned error code?</b></br>
+    <b>A:</b> All PnetCDF APIs return an integer value, an error code indicating the error status.
+    NC_NOERR, NF_NOERR, and NF90_NOERR mean the API ran successfully.
+    All error codes are non-positive integral values, constants defined in header file pnetcdf.h.
+    APIs ncmpi_strerror/nfmpi_strerror/nf90mpi_strerror turn an error code into a human readable string.
+    For example, NC_EBADID becomes "NetCDF: Not a valid ID".
+    The code fragment below shows a way to check for error and prints the error message.
+    <pre>
+    err = ncmpi_create(comm, path, cmode, info, &amp;ncid);
+    if (err != NC_NOERR) {
+        int rank;
+        MPI_Comm_rank(comm, &amp;rank);
+        printf("Error at rank %d: %s\n", rank, ncmpi_strerror(err));
+    }
+    </pre>
+    Starting from release 1.8.0, a new API ncmpi_strerrno has been added to
+    print the name of the error code, such as "NC_EBADID".
+</li> <hr>
+<li id="sync"><b>Q: When should I call API ncmpi_sync?</b></br>
+    <b>A:</b> In most of the cases, applications need not call ncmpi_sync
+    before closing a file.
+    <p>
+    API ncmpi_sync does nothing but simply calls MPI_File_sync. It is expected
+    to have a very high cost when files are stored on a parallel file system,
+    as MPI_File_sync (internally most likely calls the POSIX sync function) is
+    designed to ensure the data is safely stored on the persistent storage
+    hardware, before the function returns. POSIX sync usually incurs a huge
+    performance penalty. This API is to be used for extremely cautious
+    behavior.
+    <p>
+    The term "sync" should not be confused with "flush". The PnetCDF API
+    ncmpi_flush is also available, which is used to flush data cached in
+    memory to the file system. This API does not call MPI_File_sync internally.
+    POSIX sync guarantees the write data is safely stored on the persistent
+    storage devices, such as hard disks, before the function call returns to
+    users. Safe means even if file servers crashed right after the function
+    returns, data is safely stored on the disks. On parallel file systems,
+    calling MPI_File_sync will result in all MPI processes calling sync, which
+    causes all file servers to carry out the sync operations at the same time.
+    <p>
+    When using a POSIX compliant file system, such as Lustre and GPFS,
+    applications usually need not call ncmpi_sync before closing the file.
+</li> <hr>
+<li id="fill"><b>Q: Does PnetCDF support fill mode?</b></br>
+    <b>A:</b> Prior to version 1.6.1, PnetCDF does not support fill mode.  This
+    is because I/O under fill mode can be very expensive (i.e. variables are
+    prefilled first and later overwritten with user's data.) See netCDF
+    interface guide on
+    <a href=http://www.unidata.ucar.edu/software/netcdf/docs/netcdf-c/nc_005fset_005ffill.html>nc_set_fill</a>
+    for more explanation.
+    <p>
+    Starting from version 1.6.1, PnetCDF supports fill mode in a slightly
+    different way from netCDF.  The API <a
+    href=c-reference/pnetcdf-c/ncmpi_005fset_005ffill.html>ncmpi_set_fill()</a>
+    sets the fill mode for all the non-record variables defined in the file and
+    can only be called in the define mode. For record variables, users are
+    required to call ncmpi_fill_var() explicitly to fill one record of a
+    variable at a time.
+    <p>Similar to nc_def_var_fill() in netCDF4, API <a
+    href=c-reference/pnetcdf-c/ncmpi_005fdef_005fvar_005ffill.html>ncmpi_def_var_fill()</a>
+    can be used to set the fill mode for individual variables.
+</li> <hr>
+<li id="amount"><b>Q: Is there an API that reports the amount of data read/written that was carried out by PnetCDF?</b></br>
+    <b>A:</b> The following two APIs reports the amount of data that has been
+    read/written since the file is opened/created. The amount includes the I/O
+    to the file header as well as the variables. The reported amount is per
+    process rank basis. The APIs can be called in between file open/create and
+    close.
+    <pre>
+     int ncmpi_inq_get_size(int ncid, MPI_Offset *size);
+     int ncmpi_inq_put_size(int ncid, MPI_Offset *size);
+    </pre>
+</li> <hr>
+<li id="numerical"><b>Q: What are the numerical/non-numerical data types referred in NetCDF/PnetCDF?</b></br>
+    <b>A:</b>The NetCDF CDF format specifications define a set of external NC data types and describe their intents of use.
+<pre>
+      External type  No. Bits  Intent of use
+      -------------  --------  ---------------------------------
+      NC_CHAR         8        text data (the only non-numerical type in NetCDF)
+      NC_BYTE         8        1-byte integer
+      NC_SHORT       16        2-byte signed integer
+      NC_INT         32        4-byte signed integer
+      NC_FLOAT       32        4-byte floating point number
+      NC_DOUBLE      64        8-byte real number in double precision
+      NC_UBYTE        8        unsigned 1-byte integer
+      NC_USHORT      16        unsigned 2-byte integer
+      NC_UINT        32        unsigned 4-byte integer
+      NC_INT64       64        signed 8-byte integer
+      NC_UINT64      64        unsigned 8-byte integer
+</pre>
+      Note NC_CHAR is the only non-numerical data type available in NetCDF
+      realm.  All other external types are considered numerical, which are
+      illegal to be converted (type-casted) to and from a NetCDF variable
+      defined in NC_CHAR type (error code NC_ECHAR will be thrown). The only
+      legal APIs to read/write a variable of type NC_CHAR are the "_text" APIs.
+</li> <hr>
+<li id="MPI_BYTE"><b>Q: Why do I get NC_EBADTYPE error when I used MPI_BYTE in flexible APIs?</b></br>
+    <b>A:</b>
+      Starting from 1.7.0, PnetCDF translates internal data types (i.e. data
+      types of the I/O buffer and also used in the API name such as text,
+      schar, uchar, short, int, etc.) to MPI data types based on the table
+      below. Note MPI_BYTE does no correspond to any internal data type used
+      in NetCDF/PnetCDF APIs. Thus, when MPI_BYTE is used to construct an MPI
+      derived data type which is later used as argument buftype in a flexible
+      API, the error code NC_EBADTYPE will be thrown (Not a valid data type).
+<pre>
+      Data type of                                  Corresponding
+      internal I/O buffer   Example API             MPI datatype
+      -------------         ----------------------  -----------------
+      text                  ncmpi_put_var_text      MPI_CHAR
+      schar                 ncmpi_put_var_schar     MPI_SIGNED_CHAR
+      uchar                 ncmpi_put_var_uchar     MPI_UNSIGNED_CHAR
+      short                 ncmpi_put_var_short     MPI_SHORT
+      ushort                ncmpi_put_var_ushort    MPI_UNSIGNED_SHORT
+      int                   ncmpi_put_var_int       MPI_INT
+      uint                  ncmpi_put_var_uint      MPI_UNSIGNED
+      long                  ncmpi_put_var_long      MPI_LONG
+      float                 ncmpi_put_var_float     MPI_FLOAT
+      double                ncmpi_put_var_double    MPI_DOUBLE
+      longlong              ncmpi_put_var_longlong  MPI_LONG_LONG_INT
+      ulonglong             ncmpi_put_var_ulonglong MPI_UNSIGNED_LONG_LONG
+</pre>
+</li> <hr>
+<li id="compound"><b>Q: Does PnetCDF support compound data types?</b></br>
+    <b>A:</b> No. This is due to the limitation of CDF file format specifications.
+</li><hr>
+<li id="sequential"><b>Q: Can I run my PnetCDF program sequentially?</b></br>
+    <b>A:</b> Yes. Because a PnetCDF program is also an MPI program, it can run on one process under the MPI running environment.
+</li><hr>
+<li id="consistency"><b>Q: What level of parallel I/O data consistency is supported by PnetCDF?</b></br>
+    <b>A:</b> PnetCDF follows the same parallel I/O data consistency as
+    <a href=http://www.mpi-forum.org/docs/mpi-2.2/mpi22-report/node296.htm#Node296>MPI-IO standard</a>.
+    Readers are also referred to the following paper.</br>
+    Rajeev Thakur, William Gropp, and Ewing Lusk, On Implementing MPI-IO Portably and with High Performance,
+    in the Proceedings of the 6th Workshop on I/O in Parallel and Distributed Systems, pp. 23-32, May 1999.
+</li><hr>
+<li id="examples"><b>Q: Where can I find PnetCDF example programs?</b></br>
+    <b>A:</b> PnetCDF releases come with a set of example programs in C, Fortran, and Fortran 90.
+    They are available under the directory named <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples>"examples"</a>.
+    Refer to file <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples/README>README</a> for descriptions of each example programs.
+</li><hr>
+<li id="version"><b>Q: How to find out the PnetCDF version I am using?</b></br>
+    <b>A:</b> A utility program named pnetcdf_version comes with all PnetCDF releases reports the version information. Check its man page for command-line options. Below is an example run of this command:
+    <pre>
+% pnetcdf_version
+PnetCDF Version:    	1.7.0
+PnetCDF Release date:	03 Mar 2016
+PnetCDF configure: 	--prefix=/usr/local/PnetCDF --with-mpi=/usr/local
+MPICC:  /usr/local/bin/mpicc -g -O2
+MPICXX: /usr/local/bin/mpicxx -g -O2
+MPIF77: /usr/local/bin/mpif77 -g -O2 
+MPIF90: /usr/local/bin/mpif90 -g -O2 
+    </pre>
+    Alternatively, two commands below also show the version information.
+    <pre>
+% ident libpnetcdf.a 
+src/lib/libpnetcdf.a:
+     $Id: @(#) PnetCDF library version 1.7.0 of 03 Mar 2016 $
+
+% strings libpnetcdf.a |grep "PnetCDF library version"
+PnetCDF library version 1.7.0 of 03 Mar 2016
+$Id: @(#) PnetCDF library version 1.7.0 of 03 Mar 2016 $
+    </pre>
+</li><hr>
+<li id="discuss"><b>Q: Is there a mailing list for PnetCDF discussions and questions?</b></br>
+    <b>A:</b> We discuss the design and use of the PnetCDF library on the parallel-netcdf@mcs.anl.gov mailing list.
+    Anyone interested in developing or using PnetCDF is encouraged to join.
+    Visit <a href=https://lists.mcs.anl.gov/mailman/listinfo/parallel-netcdf>the list information page</a> for details.
+</li><hr>
+</ol>
+
+  </div>
+</div>
+
+<div id="bottomStrip">
+<!-- BOTTOM LEFT (BLUE background) CONTENT AREA -->
+  <table>
+    <tr>
+    <td width="200">
+      <a href="http://www.northwestern.edu" target="new"><img src="../../images/nu-logo.png" alt="Northwestern University" width="170" /></a>
+    </td>
+    <td valign="top">
+      <a href="http://www.eecs.northwestern.edu/">EECS Home</a> |
+      <a href="http://www.mccormick.northwestern.edu/">McCormick Home</a> |
+      <a href="http://www.northwestern.edu/">Northwestern Home</a> | 
+      <a href="http://planitpurple.northwestern.edu">Calendar: Plan-It Purple </a> <br/>
+      &copy; 2011 Robert R. McCormick School of Engineering and Applied Science, Northwestern University<br/>
+      &quot;<strong>Tech</strong>&quot;: 2145 Sheridan Rd, Tech  L359, Evanston IL 60208-3118&nbsp; |&nbsp; Phone: (847) 491-5410 &nbsp;| &nbsp;Fax: (847) 491-4455<br />
+      &quot;<strong>Ford</strong>&quot;: 2133 Sheridan Rd, Ford Building, Rm 3-320, Evanston, IL 60208&nbsp; |&nbsp; Fax: (847) 491-5258<br />
+      <a href="mailto:choudhar@eecs.northwestern.edu">Email Director</a><br/>
+      <p align=right>Last Updated: $LastChangedDate: 2019-10-12 20:36:42 -0500 (Sat, 12 Oct 2019) $</p>
+    </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

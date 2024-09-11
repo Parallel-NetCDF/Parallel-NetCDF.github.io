@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Variable Introduction (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Variable Introduction (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Variable Introduction (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="Variable-Types.html#Variable-Types" rel="next" title="Variable Types">
+<link href="Variables.html#Variables" rel="prev" title="Variables">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Variable-Introduction"></a>
+<div class="header">
+<p>
+Next: <a href="Variable-Types.html#Variable-Types" accesskey="n" rel="next">Variable Types</a>, Previous: <a href="Variables.html#Variables" accesskey="p" rel="prev">Variables</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Introduction"></a>
+<h3 class="section">4.1 Introduction</h3>
+<a name="index-appending-data-to-variable"></a>
+<a name="index-variables_002c-rules"></a>
+
+<p>Variables for a netCDF file are defined when the dataset is
+created, while the netCDF file is in define mode. Other variables
+may be added later by reentering define mode. A netCDF variable has a
+name, a type, and a shape, which are specified when it is defined. A
+variable may also have values, which are established later in data
+mode.
+</p>
+<p>Ordinarily, the name, type, and shape are fixed when the variable is
+first defined. The name may be changed, but the type and shape of a
+variable cannot be changed. However, a variable defined in terms of
+the unlimited dimension can grow without bound in that dimension.
+</p>
+<p>A netCDF variable in an opened netCDF file is referred to by a small
+integer called a variable ID.
+</p>
+<p>Variable IDs reflect the order in which variables were defined within
+a netCDF file. Variable IDs are 0, 1, 2,..., in the order in which
+the variables were defined. A function is available for getting the
+variable ID from the variable name and vice-versa.
+</p>
+<p>Attributes (see <a href="Attributes.html#Attributes">Attributes</a>) may be associated with a variable to
+specify such properties as units.
+</p>
+<p>Operations supported on variables are:
+</p><ul>
+<li> Create a variable, given its name, data type, and shape.
+
+</li><li> Get a variable ID from its name.
+
+</li><li> Get a variable&rsquo;s name, data type, shape, and number of attributes from
+its ID.
+
+</li><li> Put a data value into a variable, given variable ID, indices, and
+value.
+
+</li><li> Put an array of values into a variable, given variable ID, corner
+indices, edge lengths, and a block of values.
+
+</li><li> Put a subsampled or mapped array-section of values into a variable,
+given variable ID, corner indices, edge lengths, stride vector, index
+mapping vector, and a block of values.
+
+</li><li> Get a data value from a variable, given variable ID and indices.
+
+</li><li> Get an array of values from a variable, given variable ID, corner
+indices, and edge lengths.
+
+</li><li> Get a subsampled or mapped array-section of values from a variable,
+given variable ID, corner indices, edge lengths, stride vector, and
+index mapping vector.
+
+</li><li> Rename a variable.
+</li></ul>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Variable-Types.html#Variable-Types" accesskey="n" rel="next">Variable Types</a>, Previous: <a href="Variables.html#Variables" accesskey="p" rel="prev">Variables</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

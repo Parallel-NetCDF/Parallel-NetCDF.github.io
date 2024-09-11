@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_copy_att (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_copy_att (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_copy_att (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Attributes.html#Attributes" rel="up" title="Attributes">
+<link href="ncmpi_005frename_005fatt.html#ncmpi_005frename_005fatt" rel="next" title="ncmpi_rename_att">
+<link href="ncmpi_005fget_005fatt_005f_003ctype_003e.html#ncmpi_005fget_005fatt_005f_003ctype_003e" rel="prev" title="ncmpi_get_att_&lt;type&gt;">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fcopy_005fatt"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005frename_005fatt.html#ncmpi_005frename_005fatt" accesskey="n" rel="next">ncmpi_rename_att</a>, Previous: <a href="ncmpi_005fget_005fatt_005f_003ctype_003e.html#ncmpi_005fget_005fatt_005f_003ctype_003e" accesskey="p" rel="prev">ncmpi_get_att_<var>&lt;type&gt;</var></a>, Up: <a href="Attributes.html#Attributes" accesskey="u" rel="up">Attributes</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Copy-Attribute-from-One-NetCDF-to-Another_003a-ncmpi_005fcopy_005fatt"></a>
+<h3 class="section">5.5 Copy Attribute from One NetCDF to Another: ncmpi_copy_att</h3>
+<a name="index-ncmpi_005fcopy_005fatt"></a>
+<a name="index-ncmpi_005fcopy_005fatt_002c-example"></a>
+<a name="index-attributes_002c-copying"></a>
+<a name="index-copying-attributes"></a>
+
+<p>The function ncmpi_copy_att copies an attribute from one opened netCDF
+file to another. It can also be used to copy an attribute from one
+variable to another within the same netCDF.
+</p>
+<a name="Operational-Mode-62"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>This API is a collective subroutine for processes that opened ncid_out.
+</p>
+<p>This API can be called under the following condition.
+</p><ul>
+<li> If the attribute does not exist in ncid_out, then this API must be called when ncid_out is in define mode.
+</li><li> If the attribute does exist in ncid_out and the attribute in ncid_in is smaller than the one in ncid_out, then this API can be called when ncid_out is in either define or data mode.
+</li><li> If the attribute does exist in ncid_out and the attribute in ncid_in is larger than the one in ncid_out, then this API must be called when ncid_out is in define mode.
+</li></ul>
+
+<a name="Usage-62"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_copy_att (int         ncid_in,
+                    int         varid_in,
+                    const char *name,
+                    int         ncid_out,
+                    int         varid_out);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid_in</code></dt>
+<dd><p>The netCDF ID of an input netCDF file from which the attribute
+will be copied, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>varid_in</code></dt>
+<dd><p>ID of the variable in the input netCDF file from which the
+attribute will be copied, or NC_GLOBAL for a global attribute.
+</p>
+</dd>
+<dt><code>name</code></dt>
+<dd><p>Name of the attribute in the input netCDF file to be copied.
+</p>
+</dd>
+<dt><code>ncid_out</code></dt>
+<dd><p>The netCDF ID of the output netCDF file to which the attribute
+will be copied, from a previous call to ncmpi_open or ncmpi_create. It is
+permissible for the input and output netCDF IDs to be the same. The
+output netCDF file should be in define mode if the attribute to be
+copied does not already exist for the target variable, or if it would
+cause an existing target attribute to grow.
+</p>
+</dd>
+<dt><code>varid_out</code></dt>
+<dd><p>ID of the variable in the output netCDF file to which the
+attribute will be copied, or NC_GLOBAL to copy to a global attribute.
+</p></dd>
+</dl>
+
+<a name="Return-Error-Codes-59"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_copy_att returns the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: The input or output netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_EPERM: Write permission to ncid_out is denied.
+</li><li> NC_EMAXATTS: Maximum number of attributes exceeds the limit, NC_MAX_ATTRS.
+</li><li> NC_ENOTVAR: The input or output variable ID is invalid for the specified netCDF file.
+</li><li> NC_ENOTATT: The specified attribute does not exist in ncid_in.
+</li><li> NC_ENOTINDEFINE: The output netCDF is not in define mode and the attribute is new for the output file is larger than the existing attribute.
+</li></ul>
+
+<a name="Example-61"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_copy_att to copy the variable attribute
+units from the variable rh in an existing netCDF file named foo.nc
+to the variable avgrh in another existing netCDF file named bar.nc,
+assuming that the variable avgrh already exists, but does not yet have
+a units attribute:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int  status;               /* error status */
+int  ncid1, ncid2;         /* netCDF IDs */
+int  rh_id, avgrh_id;      /* variable IDs */
+   ...
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_NOWRITE, MPI_INFO_NULL, &amp;ncid1);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;bar.nc&quot;, NC_WRITE, MPI_INFO_NULL, &amp;ncid2);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid">ncmpi_inq_varid</a>(ncid1, &quot;rh&quot;, &amp;rh_id);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid">ncmpi_inq_varid</a>(ncid2, &quot;avgrh&quot;, &amp;avgrh_id);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005fredef.html#ncmpi_005fredef">ncmpi_redef</a>(ncid2);  /* enter define mode */
+if (status != NC_NOERR) handle_error(status);
+/* copy variable attribute from &quot;rh&quot; to &quot;avgrh&quot; */
+status = <a href="#ncmpi_005fcopy_005fatt">ncmpi_copy_att</a>(ncid1, rh_id, &quot;units&quot;, ncid2, avgrh_id);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005fenddef.html#ncmpi_005fenddef">ncmpi_enddef</a>(ncid2); /* leave define mode */
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005frename_005fatt.html#ncmpi_005frename_005fatt" accesskey="n" rel="next">ncmpi_rename_att</a>, Previous: <a href="ncmpi_005fget_005fatt_005f_003ctype_003e.html#ncmpi_005fget_005fatt_005f_003ctype_003e" accesskey="p" rel="prev">ncmpi_get_att_<var>&lt;type&gt;</var></a>, Up: <a href="Attributes.html#Attributes" accesskey="u" rel="up">Attributes</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

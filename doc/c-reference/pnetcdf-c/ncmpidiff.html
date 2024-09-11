@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpidiff (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpidiff (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpidiff (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Utility-programs.html#Utility-programs" rel="up" title="Utility programs">
+<link href="pnetcdf_005fversion.html#pnetcdf_005fversion" rel="next" title="pnetcdf_version">
+<link href="Utility-programs.html#Utility-programs" rel="prev" title="Utility programs">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpidiff"></a>
+<div class="header">
+<p>
+Next: <a href="pnetcdf_005fversion.html#pnetcdf_005fversion" accesskey="n" rel="next">pnetcdf_version</a>, Up: <a href="Utility-programs.html#Utility-programs" accesskey="u" rel="up">Utility programs</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="node-heading">ncmpidiff</h4>
+<a name="index-ncmpidiff"></a>
+<a name="index-cdfdiff"></a>
+<p><b>ncmpidiff</b> is a parallel utility program that compares the contents of the
+two files and reports the difference to the standard output. When comparing
+file headers, the differences of all metadata are reported, including dimensions,
+attributes, variable types and dimensionality. When comparing variables, only
+the indices of first array element found differently is reported when option
+<b>-t</b> is not used.  When option <b>-t</b> is used, it reports the element with
+the largest difference that fails to meet the tolerance requirements.
+</p>
+<p>When comparing two files entirely, <b>ncmpidiff</b> skips the gaps between header
+and variables and gaps between any two consecutive variables. Note this
+behavior differs from the Unix command <b>diff</b> which compares two files byte
+by byte.
+</p>
+<p>The gaps occur when the alignment feature is enabled when creating a new file,
+which allows to allocate a larger space for the file header and aligns the
+starting file offsets of fixed-size variables to a user specified file offset
+boundary(see <a href="ncmpi_005f_005fenddef.html#ncmpi_005f_005fenddef">ncmpi__enddef</a> and <a href="PNETCDF_005fHINTS.html#PNETCDF_005fHINTS">PNETCDF_HINTS</a>). Oftentimes, the
+contents of gaps are arbitrary. Thus, it is possible that two netCDF files of
+same or different sizes are reported identical by <b>ncmpidiff</b> but not by
+<b>diff</b>.
+</p>
+<a name="cdfdiff"></a><p><b>cdfdiff</b> is a serial version of <b>ncmpidiff</b>. It can be
+compiled by gcc without MPI compiler. Thus, it can be useful to run on login
+nodes in a cross-compile environment.
+</p>
+<a name="Synopsis"></a>
+<h3 class="heading">Synopsis</h3>
+<div class="example">
+<pre class="example">mpiexec -n NP ncmpidiff [-b] [-q] [-h] [-v var1,...] [-t diff,ratio] file1 file2
+
+cdfdiff [-b] [-q] [-h] [-v var1,...]  file1 file2
+</pre></div>
+
+<a name="Command_002dline-Options"></a>
+<h3 class="heading">Command-line Options</h3>
+<dl compact="compact">
+<dt><code>-b</code></dt>
+<dd><p>Verbose mode - print results (same or different) for all  components (file,
+header, or variables) in comparison
+</p></dd>
+<dt><code>-q</code></dt>
+<dd><p>Quiet mode - print nothing when two components in comparison are the same
+</p></dd>
+<dt><code>-h</code></dt>
+<dd><p>Compare file header only
+</p></dd>
+<dt><code>-v var1,...,varn</code></dt>
+<dd><p>Compare only the given list of variables, with names separated by comma and no
+space in between (file header comparison is skipped, unless -h is used.)
+</p></dd>
+<dt><code>-t diff,ratio</code></dt>
+<dd><p>Compare variables elementwisely with tolerance (diff and ratio separated by
+comma without space). <strong>diff</strong> is the absolute value of element-wise
+difference of any two variables. <strong>ratio</strong> is the relative element-wise
+ratio, for instance, MAX(x,y) / MIN(x,y) - 1, where x is an array element from
+a variable in the first file and y is the corresponding array element of the
+same variable in the second file. Note when this option is used, the comparison
+will compare the entire variables and reports the array indices of element with
+the largest difference that fails to meet the both tolerance requirements.
+(This option was first added in version 1.12.0.)
+</p></dd>
+</dl>
+
+<a name="Example-output-on-screen"></a>
+<h3 class="heading">Example output on screen</h3>
+<p>Below shows an example when comparing two files in verbose mode.
+</p><div class="example">
+<pre class="example">% mpiexec -n 1 ncmpidiff -b tst_rec.nc1 tst_recx.nc2
+DIFF: file format (CDF-1) != (CDF-2)
+SAME: number of dimensions (3)
+SAME: number of variables (2)
+SAME: number of global attributes (1)
+Global attribute &quot;history&quot;:
+	SAME: data type (NC_CHAR)
+	SAME: length (24)
+	SAME: attribute contents
+Dimension:
+	SAME: dimension &quot;time&quot; length (0)
+	SAME: dimension &quot;Y&quot; length (4)
+	SAME: dimension &quot;X&quot; length (12)
+Variables:
+Variable &quot;rec_var&quot;:
+	SAME: data type (NC_FLOAT)
+	SAME: number of dimensions (2)
+	dimension 0:
+		SAME: name (time)
+		SAME: length (0)
+	dimension 1:
+		SAME: name (X)
+		SAME: length (12)
+	SAME: number of attributes (0)
+Variable &quot;fix_var&quot;:
+	SAME: data type (NC_FLOAT)
+	SAME: number of dimensions (2)
+	dimension 0:
+		SAME: name (Y)
+		SAME: length (4)
+	dimension 1:
+		SAME: name (X)
+		SAME: length (12)
+	SAME: number of attributes (0)
+number of variables to be compared = 2
+DIFF: variable &quot;rec_var&quot; of type &quot;NC_FLOAT&quot; at element [1, 1]
+	SAME: variable &quot;rec_var&quot; contents
+DIFF: variable &quot;fix_var&quot; of type &quot;NC_FLOAT&quot; at element [1, 2]
+Number of differences in header: 1
+Number of differences in variables: 2
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="pnetcdf_005fversion.html#pnetcdf_005fversion" accesskey="n" rel="next">pnetcdf_version</a>, Up: <a href="Utility-programs.html#Utility-programs" accesskey="u" rel="up">Utility programs</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncvalidator (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncvalidator (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncvalidator (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Utility-programs.html#Utility-programs" rel="up" title="Utility programs">
+<link href="pnetcdf_002dconfig.html#pnetcdf_002dconfig" rel="next" title="pnetcdf-config">
+<link href="ncoffsets.html#ncoffsets" rel="prev" title="ncoffsets">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncvalidator"></a>
+<div class="header">
+<p>
+Next: <a href="pnetcdf_005fversion.html#pnetcdf_005fversion" accesskey="n" rel="next">pnetcdf_version</a>, Previous: <a href="ncoffsets.html#ncoffsets" accesskey="p" rel="prev">ncoffsets</a>, Up: <a href="Utility-programs.html#Utility-programs" accesskey="u" rel="up">Utility programs</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="node-heading">ncvalidator</h4>
+<a name="index-ncvalidator"></a>
+<p><b>ncvalidator</b> checks the header of a netCDF file for whether it conforms the
+classic CDF file formats. If the input file is a valid NetCDF file, then a
+message of successful validation is printed on command-line output, for
+example, File &quot;testfile.nc&quot; is a valid NetCDF file. Otherwise, a NetCDF error
+message is printed.
+</p>
+<p>If no argument is given, command usage information is printed.
+</p>
+<a name="Synopsis-3"></a>
+<h3 class="heading">Synopsis</h3>
+<div class="example">
+<pre class="example">ncvalidator [-h] | [-t] [-x] [-q] input_file
+</pre></div>
+
+<a name="Command_002dline-Options-3"></a>
+<h3 class="heading">Command-line Options</h3>
+<dl compact="compact">
+<dt><code>-t</code></dt>
+<dd><p>Turn on tracing mode, printing progress of validation (version 1.10.0 and
+later).
+</p></dd>
+<dt><code>-x</code></dt>
+<dd><p>Repair the null-byte padding in file header. The null-byte padding is required
+by the NetCDF Classic Format Specifications. PnetCDF enforces this requirement,
+but NetCDF has never enforced it. This option checks the header for locations
+where null bytes are expected and replaces them with null bytes if non-null
+bytes are found. The repaired file is then conformed with the specification and
+allows both PnetCDF and NetCDF libraries to read the file without reporting
+error code NC_ENOTNC or NC_ENULLPAD. Noted that this repair is done in place
+and users might want to backup the input file first. Once the file is repaired,
+one may run <a href="ncmpidiff.html#ncmpidiff">ncmpidiff</a> or See <a href="ncmpidiff.html#cdfdiff">cdfdiff</a> command to compare the contents of
+two files.
+</p>
+</dd>
+<dt><code>-q</code></dt>
+<dd><p>Quiet mode. Print nothing on the command-line output. When in quiet mode, users
+should check exit status.
+</p></dd>
+<dt><code>-h</code></dt>
+<dd><p>Print the available command-line options
+</p></dd>
+</dl>
+
+<a name="Example-66"></a>
+<h3 class="heading">Example</h3>
+<p>Print the file offset information for all variables in a netCDF file.
+</p><div class="example">
+<pre class="example">% ncvalidator test/cdf_format/bad_dimid.nc1
+Error &nbsp;[0x0000005c]:
+	Variable &quot;var0&quot;: dimid[0]=5 is larger than the number of dimensions defined in file (3)
+File &quot;test/cdf_format/bad_dimid.nc1&quot; fails to conform with CDF file format specifications
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="pnetcdf_005fversion.html#pnetcdf_005fversion" accesskey="n" rel="next">pnetcdf_version</a>, Previous: <a href="ncoffsets.html#ncoffsets" accesskey="p" rel="prev">ncoffsets</a>, Up: <a href="Utility-programs.html#Utility-programs" accesskey="u" rel="up">Utility programs</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

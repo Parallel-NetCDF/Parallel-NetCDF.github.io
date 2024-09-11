@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Use of the PnetCDF Library (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Use of the PnetCDF Library (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Use of the PnetCDF Library (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Creating.html#Creating" rel="next" title="Creating">
+<link href="index.html#Top" rel="prev" title="Top">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Use-of-the-PnetCDF-Library"></a>
+<div class="header">
+<p>
+Next: <a href="Files.html#Files" accesskey="n" rel="next">Files</a>, Previous: <a href="index.html#Top" accesskey="p" rel="prev">Top</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Use-of-the-PnetCDF-Library-1"></a>
+<h2 class="chapter">1 Use of the PnetCDF Library</h2>
+<a name="index-ncmpi_005fcreate_002c-typical-use"></a>
+<a name="index-ncmpi_005fdef_005fdim_002c-typical-use"></a>
+<a name="index-ncmpi_005fdef_005fvar_002c-typical-use"></a>
+<a name="index-ncmpi_005fput_005fatt_002c-typical-use"></a>
+<a name="index-ncmpi_005fenddef_002c-typical-use"></a>
+<a name="index-ncmpi_005fput_005fvar_002c-typical-use"></a>
+<a name="index-ncmpi_005fclose_002c-typical-use"></a>
+<a name="index-creating-a-file"></a>
+<a name="index-abnormal-termination"></a>
+<a name="index-call-sequence_002c-typical"></a>
+<a name="index-templates_002c-code"></a>
+<a name="index-code-templates"></a>
+
+<p>You can use the PnetCDF library without knowing about all of the PnetCDF
+interface. If you are creating a netCDF file, only a handful of
+routines are required to define the necessary dimensions, variables,
+and attributes, and to write the data to the netCDF file. (Even
+less are needed if you use the ncmpigen utility to create the file
+before running a program using PnetCDF library calls to write data.)
+Similarly, if you are writing software to access data stored in a
+particular netCDF object, only a small subset of the PnetCDF library is
+required to open the netCDF file and access the data. Authors of
+generic applications that access arbitrary netCDF files need to be
+familiar with more of the PnetCDF library.
+</p>
+<p>In this chapter we provide templates of common sequences of PnetCDF
+calls needed for common uses. For clarity we present only the names of
+routines; omit declarations and error checking; omit the type-specific
+suffixes of routine names for variables and attributes; indent
+statements that are typically invoked multiple times; and use ... to
+represent arbitrary sequences of other statements. Full parameter
+lists are described in later chapters.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Creating.html#Creating" accesskey="1">Creating</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Creating a NetCDF file
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Reading-Known.html#Reading-Known" accesskey="2">Reading Known </a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Reading a NetCDF file with Known Names
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Reading-Unknown.html#Reading-Unknown" accesskey="3">Reading Unknown </a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Reading a netCDF file with Unknown Names
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Adding.html#Adding" accesskey="4">Adding</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Adding New Dimensions, Variables, Attributes
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Nonblocking-Write.html#Nonblocking-Write" accesskey="5">Nonblocking Write</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Nonblocking write to one or more variables
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Nonblocking-Read.html#Nonblocking-Read" accesskey="6">Nonblocking Read</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Nonblocking read from one or more variables
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Errors.html#Errors" accesskey="7">Errors</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Error Handling
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Compiling.html#Compiling" accesskey="8">Compiling</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Compiling and Linking with the PnetCDF Library
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Files.html#Files" accesskey="n" rel="next">Files</a>, Previous: <a href="index.html#Top" accesskey="p" rel="prev">Top</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

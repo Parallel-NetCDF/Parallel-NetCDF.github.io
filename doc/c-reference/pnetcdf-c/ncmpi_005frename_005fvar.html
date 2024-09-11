@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_rename_var (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_rename_var (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_rename_var (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="ncmpi_005fiput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fiput_005fvar_003ckind_003e_005f_003ctype_003e" rel="next" title="ncmpi_iput_var&lt;kind&gt;_&lt;type&gt;">
+<link href="Fill-Values.html#Fill-Values" rel="prev" title="Fill Values">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005frename_005fvar"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fiput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fiput_005fvar_003ckind_003e_005f_003ctype_003e" accesskey="n" rel="next">ncmpi_iput_var<var>&lt;kind&gt;</var>_<var>&lt;type&gt;</var></a>, Previous: <a href="Fill-Values.html#Fill-Values" accesskey="p" rel="prev">Fill Values</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Rename-a-Variable_003a-ncmpi_005frename_005fvar"></a>
+<h3 class="section">4.25 Rename a Variable: ncmpi_rename_var</h3>
+<a name="index-ncmpi_005frename_005fvar"></a>
+<a name="index-ncmpi_005frename_005fvar_002c-example"></a>
+<a name="index-renaming-variable"></a>
+<a name="index-variable_002c-renaming"></a>
+
+<p>The function ncmpi_rename_var changes the name of a netCDF variable in an
+opened netCDF file.
+It is illegal to rename a variable to the name of any existing variable.
+</p>
+<a name="Operational-Mode-48"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>This API is a collective subroutine, argument newname must be consistent among all calling processes.
+</p>
+<p>If the new name is longer than the old name, the netCDF file must be in define mode. Otherwise, it can be called in either define or data mode.
+</p>
+<a name="Usage-48"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_rename_var(int         ncid,
+                     int         varid,
+                     const char *newname);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>varid</code></dt>
+<dd><p>Variable ID. This value must be consistent across all calling MPI processes.
+</p>
+</dd>
+<dt><code>newname</code></dt>
+<dd><p>New name for the specified variable.
+</p>
+</dd>
+</dl>
+
+<a name="Return-Error-Codes-45"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_rename_var returns the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_EPERM: Attempt write operations in read-only file.
+</li><li> NC_ENOTVAR: The variable ID is invalid for the specified netCDF file.
+</li><li> NC_EGLOBAL: NC_GLOBAL is considered invalid for this API.
+</li><li> NC_EBADNAME: Name contains illegal characters.
+</li><li> NC_ENAMEINUSE: The new name is in use as the name of another variable.
+</li><li> NC_ENOTINDEFINE: Must in define mode when newname is longer.
+</li><li> NC_EMAXNAME: NC_MAX_NAME exceeded.
+</li><li> NC_EMULTIDEFINE_VAR_NAME: Variable name is inconsistent among processes.
+</li><li> NC_EMULTIDEFINE_FNC_ARGS: Inconsistent function arguments used in collective API.
+</li></ul>
+
+<a name="Example-47"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_rename_var to rename the variable rh to
+rel_hum in an existing netCDF file named foo.nc:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int  status;              /* error status */
+int  ncid;                /* netCDF ID */
+int  rh_id;               /* variable ID */
+   ...
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_WRITE, MPI_INFO_NULL,  &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005fredef.html#ncmpi_005fredef">ncmpi_redef</a>(ncid);  /* put in define mode to rename variable */
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid">ncmpi_inq_varid</a>(ncid, &quot;rh&quot;, &amp;rh_id);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="#ncmpi_005frename_005fvar">ncmpi_rename_var</a>(ncid, rh_id, &quot;rel_hum&quot;);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005fenddef.html#ncmpi_005fenddef">ncmpi_enddef</a>(ncid); /* leave define mode */
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fiput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fiput_005fvar_003ckind_003e_005f_003ctype_003e" accesskey="n" rel="next">ncmpi_iput_var<var>&lt;kind&gt;</var>_<var>&lt;type&gt;</var></a>, Previous: <a href="Fill-Values.html#Fill-Values" accesskey="p" rel="prev">Fill Values</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

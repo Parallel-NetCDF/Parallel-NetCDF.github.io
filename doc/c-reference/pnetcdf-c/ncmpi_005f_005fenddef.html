@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi__enddef (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi__enddef (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi__enddef (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Files.html#Files" rel="up" title="Files">
+<link href="ncmpi_005fclose.html#ncmpi_005fclose" rel="next" title="ncmpi_close">
+<link href="ncmpi_005fenddef.html#ncmpi_005fenddef" rel="prev" title="ncmpi_enddef">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005f_005fenddef"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fclose.html#ncmpi_005fclose" accesskey="n" rel="next">ncmpi_close</a>, Previous: <a href="ncmpi_005fenddef.html#ncmpi_005fenddef" accesskey="p" rel="prev">ncmpi_enddef</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Leave-Define-Mode-with-Performance-Tuning_003a-ncmpi_005f_005fenddef"></a>
+<h3 class="section">2.11 Leave Define Mode with Performance Tuning: ncmpi__enddef</h3>
+<a name="index-ncmpi_005f_005fenddef"></a>
+<a name="index-ncmpi_005f_005fenddef_002c-example"></a>
+
+<p>The function ncmpi__enddef takes an opened netCDF file out of define
+mode. The changes made to the netCDF file while it was in define
+mode are checked and committed to disk if no problems
+occurred. Non-record variables may be initialized to a &quot;fill value&quot; as
+well. See <a href="ncmpi_005fset_005ffill.html#ncmpi_005fset_005ffill">ncmpi_set_fill</a>. The netCDF file is then placed in data
+mode, so variable data can be read or written.
+</p>
+<p>This call may involve moving (shifting) data under some circumstances.
+For instance, when opening an existing file and entering redefine more to add
+more metadata which causes file header to expands, all fixed and record
+variables will be moved to higher file offsets to make room for the new file
+header. Such operations can be very expensive. Users are encouraged to set
+h_minfree to reserve a sufficient large space for file header if it is expected
+to expand.
+</p>
+<p>The current netcdf file format has three sections, the &quot;header&quot;
+section, the data section for fixed-size variables, and the data
+section for variables which have an unlimited dimension (record
+variables).
+</p>
+<p>The header begins at the beginning of the file. The index (offset) of
+the beginning of the other two sections is contained in the
+header. Typically, there is no space between the sections. This causes
+copying (moving) overhead to accrue if one wishes to change the size of the
+sections, as may happen when changing names of things, text attribute
+values, adding attributes or adding variables.
+</p>
+<p>The minfree parameters allow one to control costs of future calls to
+ncmpi_redef, ncmpi_enddef by requesting that minfree bytes be available at
+the end of the section.
+</p>
+<p>The align parameters allow one to set the alignment of the beginning
+of the corresponding sections. The beginning of the section is rounded
+up to an index which is a multiple of the align parameter.
+</p>
+<p>The file format requires a 4-byte alignment, so the align parameters
+are silently rounded up to multiples of 4.
+</p>
+<p>The usual call of
+</p>
+<div class="example">
+<pre class="example">ncmpi_enddef(ncid);
+</pre></div>
+
+<p>is equivalent to
+</p>
+<div class="example">
+<pre class="example">ncmpi__enddef(ncid, 0, 0, 0, 0);
+</pre></div>
+
+<p>The file format does not contain a &quot;record size&quot; value, this is
+calculated from the sizes of the record variables. This unfortunate
+fact prevents us from providing minfree and alignment control of the
+&quot;records&quot; in a netcdf file. If you add a variable which has an
+unlimited dimension, the third section will always be copied with the
+new variable added.
+</p>
+<p>Note the alignment hints set in the environment variable &quot;PNETCDF_HINTS&quot; have
+the highest precedence, which overwrite the alignment hints set in the MPI_Info
+object used in the call of ncmpi_create() and ncmpi_open(), which overwrite the
+alignment arguments, i.e. v_align and r_align, used in the call to
+ncmpi__enddef().
+</p>
+<a name="Operational-Mode-7"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>This API is a collective routine: all processes must provide the same values
+for all arguments.
+</p>
+<p>This API must be called while the file is in define mode.
+</p>
+<a name="Usage-7"></a>
+<h3 class="heading">Usage</h3>
+
+<div class="example">
+<pre class="example">int ncmpi__enddef(int        ncid,
+                  MPI_Offset h_minfree,
+                  MPI_Offset v_align,
+                  MPI_Offset v_minfree,
+                  MPI_Offset r_align);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>h_minfree</code></dt>
+<dd><p>Sets the pad at the end of the &quot;header&quot; section.
+</p>
+</dd>
+<dt><code>v_align</code></dt>
+<dd><p>Controls the alignment of the beginning of the data section for fixed-size
+variables. 1 means no alignment. 0 means to let PnetCDF chose the best value.
+This value is ignored if the PnetCDF hint <a href="PNETCDF_005fHINTS.html#PNETCDF_005fHINTS">nc_header_align_size</a> is set.
+</p>
+</dd>
+<dt><code>v_minfree</code></dt>
+<dd><p>Sets the pad at the end of the data section for fixed-size variables.
+</p>
+</dd>
+<dt><code>r_align</code></dt>
+<dd><p>Controls the alignment of the beginning of the data section for variables which
+have an unlimited dimension (record variables).  1 means no alignment. 0 means
+to let PnetCDF chose the best value. This value can be set at the run time
+using PnetCDF hint environment variable
+<a href="PNETCDF_005fHINTS.html#PNETCDF_005fHINTS">nc_record_align_size</a>.
+</p>
+</dd>
+</dl>
+
+<a name="Return-Error-Codes-4"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi__enddef returns the value NC_NOERR if no errors occurred. Otherwise,
+the returned status indicates an error. Possible causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_ENOTINDEFINE: Operation not allowed in data mode.
+</li><li> NC_EVARSIZE: The size of one or more variables exceed the size constraints for whichever variant of the file format is in use.
+</li><li> NC_EMULTIDEFINE_FNC_ARGS: Inconsistent function arguments used in collective API.
+</li><li> NC_EMULTIDEFINE: File header is inconsistent among processes.
+</li></ul>
+
+<a name="Example-6"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi__enddef to finish the definitions of a new
+netCDF file named foo.nc and put it into data mode:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int err, ncid, cmode = NC_NOCLOBBER | NC_64BIT_DATA;
+MPI_Offset header_size, header_extent;
+MPI_Offset h_minfree, v_align, v_minfree, r_align;
+   ...
+err = <a href="ncmpi_005fcreate.html#ncmpi_005fcreate">ncmpi_create</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, cmode, MPI_INFO_NULL, &amp;ncid);
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+
+   ...       /* create dimensions, variables, attributes */
+
+h_minfree = 4194304;  /* 4 MB */
+v_align   = 1048576;  /* 1 MB */
+v_minfree = 4194304;  /* 4 MB */
+r_align   = 1048576;  /* 1 MB */
+err = <a href="#ncmpi_005f_005fenddef">ncmpi__enddef</a>(ncid, h_minfree, v_align, v_minfree, r_align);  /*leave define mode*/
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+
+err = <a href="ncmpi_005finq_005fheader_005fsize.html#ncmpi_005finq_005fheader_005fsize">ncmpi_inq_header_size</a>(ncid, &amp;header_size);
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+
+err = <a href="ncmpi_005finq_005fheader_005fextent.html#ncmpi_005finq_005fheader_005fextent">ncmpi_inq_header_extent</a>(ncid, &amp;header_extent);
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+
+/* check if minimum free space for file header is honored */
+assert(header_extent - header_size &gt;= h_minfree);
+
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fclose.html#ncmpi_005fclose" accesskey="n" rel="next">ncmpi_close</a>, Previous: <a href="ncmpi_005fenddef.html#ncmpi_005fenddef" accesskey="p" rel="prev">ncmpi_enddef</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

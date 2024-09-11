@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Compiling (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Compiling (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Compiling (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Use-of-the-PnetCDF-Library.html#Use-of-the-PnetCDF-Library" rel="up" title="Use of the PnetCDF Library">
+<link href="Files.html#Files" rel="next" title="Files">
+<link href="Errors.html#Errors" rel="prev" title="Errors">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Compiling"></a>
+<div class="header">
+<p>
+Previous: <a href="Errors.html#Errors" accesskey="p" rel="prev">Errors</a>, Up: <a href="Use-of-the-PnetCDF-Library.html#Use-of-the-PnetCDF-Library" accesskey="u" rel="up">Use of the PnetCDF Library</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Compiling-and-Linking-with-the-PnetCDF-Library"></a>
+<h3 class="section">1.8 Compiling and Linking with the PnetCDF Library</h3>
+<a name="index-linking-to-PnetCDF-library"></a>
+<a name="index-compiling-with-PnetCDF-library"></a>
+
+<p>Details of how to compile and link a program that uses the PnetCDF C or
+FORTRAN interfaces differ, depending on the operating system, the
+available compilers, and where the PnetCDF library and include files
+are installed. Nevertheless, we provide here examples of how to
+compile and link a program that uses the PnetCDF library on a Unix
+platform, so that you can adjust these examples to fit your
+installation.
+</p>
+<a name="Building-and-Installing-PnetCDF-Library"></a>
+<h3 class="heading">Building and Installing PnetCDF Library</h3>
+<p>Full instructions of building and installing PnetCDF library are described in
+the file named INSTALL come with every release of
+<a href="https://parallel-netcdf.github.io/wiki/Download.html">PnetCDF source codes</a>.
+An example configure command and output are given below.
+</p><div class="example">
+<pre class="example">% ./configure --prefix=$HOME/PnetCDF/1.12.0 --enable-shared --with-mpi=/usr
+
+------------------------------------------------------------------------------
+
+   PnetCDF Version 1.12.0
+
+   Features:  Build static libraries                      - yes
+              Build shared libraries                      - yes
+              Build Fortran APIs                          - yes
+              Build C++ APIs                              - yes
+
+   Compilers: MPICC    = /usr/bin/mpicc
+              MPICXX   = /usr/bin/mpicxx
+              MPIF77   = /usr/bin/mpif77
+              MPIF90   = /usr/bin/mpif90
+              CFLAGS   = -g -O2
+              CXXFLAGS = -g -O2
+              FFLAGS   = -g -O2
+              FCFLAGS  = -g -O2
+
+   Now run 'make' to build the library and utility tools.
+   Then run 'make [&lt;target&gt;]' for testing and installation, where the
+   optional &lt;target&gt; can be:
+              tests    - build all test programs (build only, no run)
+              check    - run sequential test programs
+              ptest    - run parallel test programs on 4 MPI processes
+              ptests   - run parallel test programs on 3,4,6,8 MPI processes
+              install  - install PnetCDF library in $HOME/PnetCDF/1.12.0
+
+------------------------------------------------------------------------------
+</pre></div>
+<p>In this example, configure command uses the MPI compilers installed under the
+folder of /usr, where the MPI header files can be found under /usr/include,
+MPI compiler commands and utility programs can be found under /usr/bin, and
+MPI library files can be found under /usr/lib.
+The location of PnetCDF library to be install is is specified by option
+&ndash;prefix which is the folder PnetCDF/1.12.0 under the user&rsquo;s home folder.
+</p>
+<p>Command to build PnetCDF library is
+</p><div class="example">
+<pre class="example">% make
+</pre></div>
+<p>Command to install PnetCDF library is
+</p><div class="example">
+<pre class="example">% make install
+</pre></div>
+<p>At the end of installation process, the following message should appear.
+</p><div class="example">
+<pre class="example">+----------------------------------------------------------------------------+
+|
+|  PnetCDF has been successfully installed under
+|          $HOME/PnetCDF/1.12.0
+|
+|  * PnetCDF header files have been installed in
+|          $HOME/PnetCDF/1.12.0/include
+|  * PnetCDF library files have been installed in
+|          $HOME/PnetCDF/1.12.0/lib
+|  * PnetCDF utility programs have been installed in
+|          $HOME/PnetCDF/1.12.0/bin
+|  * PnetCDF man pages have been installed in
+|          $HOME/PnetCDF/1.12.0/share/man
+|
+|  To compile your PnetCDF programs, please add the following to the command
+|  line, so the compiler can find the PnetCDF header files:
+|      -I$HOME/PnetCDF/1.12.0/include
+|
+|  Add the following line to link your program to PnetCDF library:
+|      -L$HOME/PnetCDF/1.12.0/lib -lpnetcdf
+|
+|  Add the following to your run-time environment variable LD_LIBRARY_PATH,
+|  when linking your executable with the PnetCDF shared libraries.
+|      $HOME/PnetCDF/1.12.0/lib
+|
+|
+|  PnetCDF is jointly developed by a team at Northwestern University and
+|  Argonne National Laboratory.
+|
+|  Visit PnetCDF project web site for more information
+|      https://parallel-netcdf.github.io
+|
++----------------------------------------------------------------------------+
+</pre></div>
+
+<a name="Compiling-Your-User-Programs"></a>
+<h3 class="heading">Compiling Your User Programs</h3>
+<p>Every C file that references PnetCDF functions or constants must
+contain an appropriate #include statement before the first such
+reference:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+</pre></div>
+
+<p>For Fortran programs, the header file is pnetcdf.inc for Fortran 77
+and the module file is pnetcdf.mod for Fortran 90 and later.
+The following code statement should be used in the user programs.
+For Fortran 77
+</p><div class="example">
+<pre class="example">include &quot;pnetcdf.inc&quot;
+</pre></div>
+<p>For Fortran 90 and later
+</p><div class="example">
+<pre class="example">use pnetcdf
+</pre></div>
+
+<p>These three files pnetcdf.h, pnetcdf.inc, and pnetcdf.mod are installed in the
+same location. Unless they are installed in a standard directory where the C
+and Fortran compilers always look, you must use the -I option when invoking the
+compiler, to specify a directory where pnetcdf.h is installed, for example:
+</p><div class="example">
+<pre class="example">/usr/bin/mpicc -O2 -c -I$HOME/PnetCDF/1.12.0/include myprogram.c
+</pre></div>
+<p>or for Fortran
+</p><div class="example">
+<pre class="example">/usr/bin/mpifort -O2 -c -I$HOME/PnetCDF/1.12.0/include myprogram.f
+</pre></div>
+
+<p>Unless the PnetCDF library is installed in a standard directory where
+the linker always looks, you must use the -L and -l options to link an
+object file that uses the PnetCDF library. For example:
+</p><div class="example">
+<pre class="example">/usr/bin/mpicc -O2 -o myprogram myprogram.o -L$HOME/PnetCDF/1.12.0/lib -lpnetcdf
+</pre></div>
+<p>or for Fortran
+</p><div class="example">
+<pre class="example">/usr/bin/mpifort -O2 -o myprogram myprogram.o -L$HOME/PnetCDF/1.12.0/lib -lpnetcdf
+</pre></div>
+
+<a name="Running-Your-User-Program"></a>
+<h3 class="heading">Running Your User Program</h3>
+<p>If PnetCDF is configured with &ndash;enable-shared option, then one may need to add
+the installation path of PnetCDF to the environment variable before running.
+For bash shell,
+</p><div class="example">
+<pre class="example">export LD_LIBRARY_PATH=$HOME/PnetCDF/1.12.0/lib
+</pre></div>
+<p>For csh or tcsh shell,
+</p><div class="example">
+<pre class="example">setenv LD_LIBRARY_PATH $HOME/PnetCDF/1.12.0/lib
+</pre></div>
+<p>If PnetCDF is configured and built with static library only (default), then
+one can skip the above setting for environment variable LD_LIBRARY_PATH.
+</p>
+<p>An example command to run the user program in parallel using 4 MPI processes
+is shown below.
+</p><div class="example">
+<pre class="example">/usr/bin/mpiexec -n 4 ./myprogram
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Errors.html#Errors" accesskey="p" rel="prev">Errors</a>, Up: <a href="Use-of-the-PnetCDF-Library.html#Use-of-the-PnetCDF-Library" accesskey="u" rel="up">Use of the PnetCDF Library</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
