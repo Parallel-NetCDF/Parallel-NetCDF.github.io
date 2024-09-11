@@ -5,91 +5,14 @@
 </title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="keywords" content="PnetCDF,Parallel netCDF,parallel-netcdf,netCDF,parallel I/O,MPI-IO" />
-<link href="../../CSS/default.css" rel="stylesheet" type="text/css" />
-<link rel="icon" href="../../images/nuitfavicon.ico" />
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CJ8LEHVTXW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-CJ8LEHVTXW');
-</script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-45938012-1', 'auto');
-  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
-  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
-
-  ga('send', 'pageview');
-  ga('pnetcdfTracker.send', 'pageview');
-  ga('parallelnetcdfTracker.send', 'pageview');
-</script>
 </head>
 
 <body>
-<div id="topContainer"> <img src="../../images/CUCIS banner.jpg" width="765" height="180" align="left" name="Map" usemap="#Map" border="none"/>
-  <map name="Map" id="Map">
-    <area shape="rect" coords="186,9,351,40" href="http://www.mccormick.northwestern.edu/" target="_blank" alt="Robert R. McCormick School of Engineering and Applied Science"/>
-    <area shape="rect" coords="238,50,665,78" href="http://www.eecs.northwestern.edu/" target="_blank" alt="Electrical Engineering and Computer Science Department" />
-    <area shape="rect" coords="184,130,751,159" href="http://cucis.ece.northwestern.edu/" alt="Center for Ultra-scale Computing and Information Security at Northwestern University" />
-  </map>
-</div>
-<div id="navcontainer">
-  <ul id="navlist">
-    <li> <a href="../../index.html">CUCIS Home</a> </li>
-    <li> <a href="index.html">PnetCDF Home</a> </li>
-    <li> <a href="../../projects/index.html">Projects</a> </li>
-    <li> <a href="../../publications/index.html">Publications</a> </li>
-    <li> <a href="../../members/index.html">Members</a> </li>
-  </ul>
-</div>
-
-<div id="main">
-  <div id="mainLeft">
-    <!-- SIDE CONTENT AREA -->
-    <h3>Sponsor:</h3>
-    PnetCDF development was sponsored by the Scientific Data Management Center (<a href="http://sdm.lbl.gov/sdmcenter/" target="_new">SDM</a>) under the DOE program of Scientific Discovery through Advanced Computing (<a href="http://www.scidac.org/" target="_new">SciDAC</a>). It was also supported in part by National Science Foundation under the SDCI HPC program award numbers OCI-0724599 and HECURA program award numbers CCF-0938000.
-    <br>
-    <h3>Project Team Members:</h3>
-    <h4>Northwestern University</h4>
-    <ul>
-      <li><a href="../../members/wkliao">Wei-keng Liao</a></li>
-      <li><a href="http://users.eecs.northwestern.edu/~choudhar/">Alok Choudhary</a></li>
-      <li><a href="../../members/khl7265" target="_new">Kai-Yuan Hou</a> (graduate student)</li>
-      <li><a href="../../members/sson">Seung Woo Son</a>(formerly a postdoc, now an Assistant Professor at UMass Lowell)</li>
-      <li><a href="../../members/kuigao">Kui Gao</a> (formerly postdoc, now Dassault Systèmes Simulia Corp.</li>
-      <li><a href="../../members/jianwei">Jianwei Li</a> (since graduated, now Bloomberg L.P.)</li>
-    </ul>
-    <h4>Argonne National Laboratory</h4>
-    <ul>
-      <li><a href="http://www.mcs.anl.gov/%7Erobl" target="_new">Rob Latham</a></li>
-      <li><a href="http://www.mcs.anl.gov/%7Erross/" target="_new">Rob Ross</a></li>
-      <li><a href="http://www.mcs.anl.gov/%7Ethakur/" target="_new">Rajeev Thakur</a></li>
-      <li><a href="http://www.mcs.anl.gov/%7Egropp/" target="_new">William Gropp</a>(now UIUC)</li>
-    </ul>
-    </p>
-    <hr>
-    <p align="center"> <a href="http://www.facebook.com/pages/Cucis/279330455410343?sk=wall" target="_new"><img src="../../images/facebook_image.jpg" /></a><br /><br/>
-    <a href="http://twitter.com/#!/CucisNU" target="_new"><img src="../../images/twitter image.jpg" width="125" /></a><br><br/>
-    <a href="http://www.eecs.northwestern.edu" target="new"><img src="../../images/eecs.jpg" alt="Northwestern University - EECS Dept." width="72" border="0" ></a><br/>
-    </p>
-  </div>
-
-  <div id="mainRight">
-    <br/>
-    <!-- MAIN CONTENT AREA -->
-    <center>
-    <hr>
-    <h1>Parallel netCDF Q&amp;A</h1>
-    <hr>
-    </center>
+<center>
+<hr>
+<h1>Parallel netCDF Q&amp;A</h1>
+<hr>
+</center>
 
 This page provides frequently asked questions and tips for obtaining better I/O performance.
 Readers are also referred to <a href=http://www.unidata.ucar.edu/software/netcdf/docs/faq.html>NetCDF FAQ</a> for netCDF specific questions.
@@ -310,7 +233,7 @@ Readers are also referred to <a href=http://www.unidata.ucar.edu/software/netcdf
     settings.
 <p>
     Example programs that print PnetCDF hints only can be found in the
-    <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples>"examples"</a> directory of the PnetCDF release: 
+    <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples>"examples"</a> directory of the PnetCDF release:
     <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples/C/hints.c>hints.c</a>,
     <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples/F77/hints.f>hints.f</a>, and
     <a href=https://trac.mcs.anl.gov/projects/parallel-netcdf/browser/trunk/examples/F90/hints.f90>hints.f90</a>.
@@ -583,12 +506,12 @@ PnetCDF Release date:	03 Mar 2016
 PnetCDF configure: 	--prefix=/usr/local/PnetCDF --with-mpi=/usr/local
 MPICC:  /usr/local/bin/mpicc -g -O2
 MPICXX: /usr/local/bin/mpicxx -g -O2
-MPIF77: /usr/local/bin/mpif77 -g -O2 
-MPIF90: /usr/local/bin/mpif90 -g -O2 
+MPIF77: /usr/local/bin/mpif77 -g -O2
+MPIF90: /usr/local/bin/mpif90 -g -O2
     </pre>
     Alternatively, two commands below also show the version information.
     <pre>
-% ident libpnetcdf.a 
+% ident libpnetcdf.a
 src/lib/libpnetcdf.a:
      $Id: @(#) PnetCDF library version 1.7.0 of 03 Mar 2016 $
 
@@ -604,30 +527,6 @@ $Id: @(#) PnetCDF library version 1.7.0 of 03 Mar 2016 $
 </li><hr>
 </ol>
 
-  </div>
-</div>
-
-<div id="bottomStrip">
-<!-- BOTTOM LEFT (BLUE background) CONTENT AREA -->
-  <table>
-    <tr>
-    <td width="200">
-      <a href="http://www.northwestern.edu" target="new"><img src="../../images/nu-logo.png" alt="Northwestern University" width="170" /></a>
-    </td>
-    <td valign="top">
-      <a href="http://www.eecs.northwestern.edu/">EECS Home</a> |
-      <a href="http://www.mccormick.northwestern.edu/">McCormick Home</a> |
-      <a href="http://www.northwestern.edu/">Northwestern Home</a> | 
-      <a href="http://planitpurple.northwestern.edu">Calendar: Plan-It Purple </a> <br/>
-      &copy; 2011 Robert R. McCormick School of Engineering and Applied Science, Northwestern University<br/>
-      &quot;<strong>Tech</strong>&quot;: 2145 Sheridan Rd, Tech  L359, Evanston IL 60208-3118&nbsp; |&nbsp; Phone: (847) 491-5410 &nbsp;| &nbsp;Fax: (847) 491-4455<br />
-      &quot;<strong>Ford</strong>&quot;: 2133 Sheridan Rd, Ford Building, Rm 3-320, Evanston, IL 60208&nbsp; |&nbsp; Fax: (847) 491-5258<br />
-      <a href="mailto:choudhar@eecs.northwestern.edu">Email Director</a><br/>
-      <p align=right>Last Updated: $LastChangedDate: 2019-10-12 20:36:42 -0500 (Sat, 12 Oct 2019) $</p>
-    </td>
-    </tr>
-  </table>
-</div>
-
 </body>
 </html>
+
