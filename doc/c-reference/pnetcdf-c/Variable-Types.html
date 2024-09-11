@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Variable Types (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Variable Types (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Variable Types (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="ncmpi_005fdef_005fvar.html#ncmpi_005fdef_005fvar" rel="next" title="ncmpi_def_var">
+<link href="Variable-Introduction.html#Variable-Introduction" rel="prev" title="Variable Introduction">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Variable-Types"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fdef_005fvar.html#ncmpi_005fdef_005fvar" accesskey="n" rel="next">ncmpi_def_var</a>, Previous: <a href="Variable-Introduction.html#Variable-Introduction" accesskey="p" rel="prev">Variable Introduction</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Language-Types-Corresponding-to-netCDF-external-data-types"></a>
+<h3 class="section">4.2 Language Types Corresponding to netCDF external data types</h3>
+<a name="index-bit-lengths-of-data-types"></a>
+
+<p>The following table gives the netCDF external data types defined in CDF-1 and CDF-2 and the
+corresponding type constants for defining variables in the C
+interface:
+</p>
+<table>
+<tr><td width="20%">Type</td><td width="20%">C #define</td><td width="10%">Bits</td><td width="50%">Intent of use</td></tr>
+<tr><td width="20%">char</td><td width="20%">NC_CHAR</td><td width="10%">8</td><td width="50%">text data</td></tr>
+<tr><td width="20%">byte</td><td width="20%">NC_BYTE</td><td width="10%">8</td><td width="50%">1-byte integer*</td></tr>
+<tr><td width="20%">short</td><td width="20%">NC_SHORT</td><td width="10%">16</td><td width="50%">2-byte signed integer</td></tr>
+<tr><td width="20%">int</td><td width="20%">NC_INT</td><td width="10%">32</td><td width="50%">4-byte signed integer</td></tr>
+<tr><td width="20%">float</td><td width="20%">NC_FLOAT</td><td width="10%">32</td><td width="50%">4-byte floating point number</td></tr>
+<tr><td width="20%">double</td><td width="20%">NC_DOUBLE</td><td width="10%">64</td><td width="50%">8-byte real number in double precision</td></tr>
+</table>
+
+<p>The first column gives the netCDF external data type, which is the
+same as the CDL data type. The next column gives the corresponding C
+preprocessor macro for use in PnetCDF functions (the preprocessor
+macros are defined in the netCDF C header-file pnetcdf.h). The third
+column gives the number of bits used in the external representation of
+values of the corresponding type.
+</p>
+<p>* NC_BYTE is considered unsigned when calling from _uchar APIs and the
+file is in either CDF-1 or CDF-2 format. In all other cases, NC_BYTE is
+considered signed. For more information about this special treatment, see
+<a href="http://www.unidata.ucar.edu/software/netcdf/docs/data_type.html#type_conversion">http://www.unidata.ucar.edu/software/netcdf/docs/data_type.html#type_conversion</a>
+</p>
+<a name="New-data-types-supported-in-CDF_002d5-format"></a>
+<h3 class="heading">New data types supported in CDF-5 format</h3>
+
+<table>
+<tr><td width="30%">Type</td><td width="20%">C #define</td><td width="10%">Bits</td><td width="40%">Intent of use</td></tr>
+<tr><td width="30%">unsigned byte</td><td width="20%">NC_UBYTE</td><td width="10%">8</td><td width="40%">unsigned 1-byte integer</td></tr>
+<tr><td width="30%">unsigned short</td><td width="20%">NC_USHORT</td><td width="10%">16</td><td width="40%">unsigned 2-byte integer</td></tr>
+<tr><td width="30%">unsigned int</td><td width="20%">NC_UINT</td><td width="10%">32</td><td width="40%">unsigned 4-byte integer</td></tr>
+<tr><td width="30%">long long</td><td width="20%">NC_INT64</td><td width="10%">64</td><td width="40%">signed 8-byte integer</td></tr>
+<tr><td width="30%">unsigned long long</td><td width="20%">NC_UINT64</td><td width="10%">64</td><td width="40%">unsigned 8-byte integer</td></tr>
+</table>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fdef_005fvar.html#ncmpi_005fdef_005fvar" accesskey="n" rel="next">ncmpi_def_var</a>, Previous: <a href="Variable-Introduction.html#Variable-Introduction" accesskey="p" rel="prev">Variable Introduction</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

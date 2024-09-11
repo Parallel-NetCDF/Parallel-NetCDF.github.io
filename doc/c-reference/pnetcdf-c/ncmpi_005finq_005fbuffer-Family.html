@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_inq_buffer Family (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_inq_buffer Family (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_inq_buffer Family (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="ncmpi_005fcancel.html#ncmpi_005fcancel" rel="next" title="ncmpi_cancel">
+<link href="ncmpi_005finq_005fnreqs.html#ncmpi_005finq_005fnreqs" rel="prev" title="ncmpi_inq_nreqs">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005finq_005fbuffer-Family"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fcancel.html#ncmpi_005fcancel" accesskey="n" rel="next">ncmpi_cancel</a>, Previous: <a href="ncmpi_005finq_005fnreqs.html#ncmpi_005finq_005fnreqs" accesskey="p" rel="prev">ncmpi_inq_nreqs</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Inquire-the-metadata-of-attached-buffer-used-in-buffered-nonblocking-put-APIs"></a>
+<h3 class="section">4.34 Inquire the metadata of attached buffer used in buffered nonblocking put APIs</h3>
+<a name="index-ncmpi_005finq_005fbuffer_005fusage"></a>
+<a name="index-ncmpi_005finq_005fbuffer_005fsize"></a>
+<a name="index-ncmpi_005finq_005fbuffer_005fusage_002c-example"></a>
+<a name="index-ncmpi_005finq_005fbuffer_005fsize_002c-example"></a>
+<a name="index-inquire-the-metadata-of-attached-buffer-used-in-buffered-nonblocking-put-APIs"></a>
+
+<p>A family of functions that returns information about the attached buffer
+used by buffered nonblocking put APIs.
+</p>
+<p>ncmpi_inq_buffer_usage returns the current usage (in bytes) of the attached buffer (version 1.3.1 and later).
+</p>
+<p>ncmpi_inq_buffer_size returns the size (in bytes) of the attached buffer (version 1.6.0 and later).
+</p>
+<a name="Operational-Mode-57"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>These APIs are independent subroutines.
+</p>
+<p>These APIs can be called while the file is in either define or data mode (collective or independent).
+</p>
+<a name="Usage-57"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_inq_buffer_usage(int         ncid,
+                           MPI_Offset *usage);
+
+int ncmpi_inq_buffer_size (int         ncid,
+                           MPI_Offset *buf_size);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p></dd>
+<dt><code>usage</code></dt>
+<dd><p>The current usage of the internal buffer. Its value in bytes shows much space
+is left for any further buffered APIs calls.
+Prior to 1.9.0, if this argument is NULL, error code NC_EINVAL is returned.
+Starting from 1.9.0, if this argument is NULL, it is ignored.
+</p></dd>
+<dt><code>buf_size</code></dt>
+<dd><p>The size (in number of bytes) of the attached buffer.
+This value is the same as the one used in a call to ncmpi_buffer_attach() earlier.
+Prior to 1.9.0, if this argument is NULL, error code NC_EINVAL is returned.
+Starting from 1.9.0, if this argument is NULL, it is ignored.
+</p></dd>
+</dl>
+
+<a name="Return-Error-Codes-54"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_inq_buffer_usage/ncmpi_inq_buffer_size returns the value NC_NOERR if no errors occurred.
+Otherwise, the returned status indicates an error. Possible causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_ENULLABUF: no attached buffer is found
+</li><li> NC_ENOTSUPPORT: This API for NetCDF-4 files is not yet supported.
+</li></ul>
+
+<a name="Example-56"></a>
+<h3 class="heading">Example</h3>
+<p>Here is an example using ncmpi_inq_buffer_usage and ncmpi_inq_buffer_size.
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int varid1, varid2, varid3, nreqs, err;
+int i_buf[8], req_ids[10], st[10];
+long long ll_buf[10];
+double d_buf[20], d2_buf[12];
+MPI_Offset start1[2], count1[2], start2[3], count2[3];
+MPI_Offset start3[2], count3[2], usage, buf_size;
+   ...
+
+/* attach buffer of size 1MB */
+status = <a href="ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_buffer_attach</a>(ncid, 1048576);
+if (status != NC_NOERR) handle_error(status);
+
+/* several writes into netCDF variables */
+status = <a href="ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_bput_vara_double</a>(ncid, varid1, start1, count1, d_buf, &amp;request[0]);
+if (status != NC_NOERR) handle_error(status);
+
+status = <a href="ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_bput_vara_int</a>(ncid, varid2, start2, count2, i_buf, &amp;request[1]);
+if (status != NC_NOERR) handle_error(status);
+
+status = <a href="ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_bput_vars_longlong</a>(ncid, varid3, start3, count3, stride3, ll_buf, &amp;request[2]);
+if (status != NC_NOERR) handle_error(status);
+
+/* check the usage of the buffer */
+status = <a href="#ncmpi_005finq_005fbuffer-Family">ncmpi_inq_buffer_usage</a>(ncid, &amp;usage);
+if (status != NC_NOERR) handle_error(status);
+
+/* inquire the attached buffer size */
+status = <a href="#ncmpi_005finq_005fbuffer-Family">ncmpi_inq_buffer_size</a>(ncid, &amp;buf_size);
+if (status != NC_NOERR) handle_error(status);
+
+status = <a href="ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_bput_var_double</a>(ncid, varid4, d2_buf, &amp;request[3]);
+if (status != NC_NOERR) handle_error(status);
+
+/* wait here for all 4 nonblocking APIs to complete */
+status = <a href="ncmpi_005fwait_002fwait_005fall.html#ncmpi_005fwait_002fwait_005fall">ncmpi_wait_all</a>(ncid, 4, request, st);
+if (status != NC_NOERR) handle_error(status);
+
+/* release buffer */
+status = <a href="ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005fbput_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_buffer_detach</a>(ncid);
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fcancel.html#ncmpi_005fcancel" accesskey="n" rel="next">ncmpi_cancel</a>, Previous: <a href="ncmpi_005finq_005fnreqs.html#ncmpi_005finq_005fnreqs" accesskey="p" rel="prev">ncmpi_inq_nreqs</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

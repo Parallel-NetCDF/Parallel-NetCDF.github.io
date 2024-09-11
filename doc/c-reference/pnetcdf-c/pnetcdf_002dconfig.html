@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>pnetcdf-config (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="pnetcdf-config (PnetCDF C Interface Guide)">
+<meta name="keywords" content="pnetcdf-config (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Utility-programs.html#Utility-programs" rel="up" title="Utility programs">
+<link href="Summary-of-C-Interface.html#Summary-of-C-Interface" rel="next" title="Summary of C Interface">
+<link href="ncvalidator.html#ncvalidator" rel="prev" title="ncvalidator">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="pnetcdf_002dconfig"></a>
+<div class="header">
+<p>
+Previous: <a href="ncvalidator.html#ncvalidator" accesskey="p" rel="prev">ncvalidator</a>, Up: <a href="Utility-programs.html#Utility-programs" accesskey="u" rel="up">Utility programs</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="node-heading">pnetcdf-config</h4>
+<a name="index-pnetcdf_002dconfig"></a>
+<p><b>pnetcdf-config</b> prints the configure command-line options used to build the PnetCDF library.
+</p>
+<a name="Synopsis-4"></a>
+<h3 class="heading">Synopsis</h3>
+<div class="example">
+<pre class="example">pnetcdf-config [OPTION]
+</pre></div>
+
+<a name="Command_002dline-Options-4"></a>
+<h3 class="heading">Command-line Options</h3>
+<div class="example">
+<pre class="example">  --help                      display this help message and exit
+  --all                       display all options
+  --cc                        C compiler
+  --cflags                    C compiler flags
+  --cppflags                  C pre-processor flags
+  --has-c++                   whether C++ API is installed
+  --c++                       C++ compiler
+  --cxxflags                  C++ compiler flags
+  --has-fortran               whether Fortran API is installed
+  --f77                       Fortran 77 compiler
+  --fflags                    Fortran 77 compiler flags
+  --fppflags                  Fortran pre-processor flags
+  --fc                        Fortran 9x compiler
+  --fcflags                   Fortran 9x compiler flags
+  --ldflags                   Linker options
+  --libs                      Libraries used to build PnetCDF
+  --netcdf4                   Whether NetCDF-4 support is enabled or disabled
+  --relax-coord-bound         Whether using a relaxed coordinate boundary check
+  --in-place-swap             Whether using buffer in-place Endianness byte swap
+  --erange-fill               Whether using fill values for NC_ERANGE error
+  --subfiling                 Whether subfiling is enabled or disabled
+  --large-single-req          Whether to allow large (&gt;2GiB) single MPI-IO requests
+  --null-byte-header-padding  Whether to check null-byte padding in header
+  --burst-buffering           Whether burst buffer driver is built or not
+  --profiling                 Whether internal profiling is enabled or not
+  --debug                     Whether PnetCDF is built with debug mode
+  --prefix                    Install prefix
+  --includedir                Include directory
+  --libdir                    Library directory
+  --version                   Library version
+  --release-date              Date of PnetCDF source was released
+  --config-date               Date of PnetCDF library was configured
+</pre></div>
+
+<a name="Example-67"></a>
+<h3 class="heading">Example</h3>
+<div class="example">
+<pre class="example">% pnetcdf-config --all
+
+This parallel-netcdf 1.10.0 has been built with the following features:
+
+  --cc                        -&gt; /usr/local/bin/mpicc
+  --cflags                    -&gt; -O2
+  --cppflags                  -&gt;
+  --ldflags                   -&gt;
+  --libs                      -&gt;
+
+  --has-c++                   -&gt; yes
+  --cxx                       -&gt; /usr/local/bin/mpicxx
+  --cxxflags                  -&gt; -O2
+
+  --has-fortran               -&gt; yes
+  --f77                       -&gt; /usr/local/bin/mpif77
+  --fflags                    -&gt; -O2
+
+  --fc                        -&gt; /usr/local/bin/mpif90
+  --fcflags                   -&gt; -O2
+
+  --netcdf4                   -&gt; enabled
+  --relax-coord-bound         -&gt; enabled
+  --in-place-swap             -&gt; auto
+  --erange-fill               -&gt; enabled
+  --subfiling                 -&gt; enabled
+  --large-single-req          -&gt; disabled
+  --null-byte-header-padding  -&gt; disabled
+  --burst-buffering           -&gt; enabled
+  --profiling                 -&gt; enabled
+  --debug                     -&gt; disabled
+
+  --prefix                    -&gt; /usr/local
+  --includedir                -&gt; /usr/local/include
+  --libdir                    -&gt; /usr/local/lib
+  --version                   -&gt; parallel-netcdf 1.10.0
+  --release-date              -&gt; 2 Jul 2018
+  --config-date               -&gt; Mon Jul  9 11:01:38 CDT 2018
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="ncvalidator.html#ncvalidator" accesskey="p" rel="prev">ncvalidator</a>, Up: <a href="Utility-programs.html#Utility-programs" accesskey="u" rel="up">Utility programs</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

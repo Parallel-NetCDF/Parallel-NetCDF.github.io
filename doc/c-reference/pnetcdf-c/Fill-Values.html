@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Fill Values (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Fill Values (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Fill Values (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="ncmpi_005frename_005fvar.html#ncmpi_005frename_005fvar" rel="next" title="ncmpi_rename_var">
+<link href="Strings.html#Strings" rel="prev" title="Strings">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Fill-Values"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005frename_005fvar.html#ncmpi_005frename_005fvar" accesskey="n" rel="next">ncmpi_rename_var</a>, Previous: <a href="Strings.html#Strings" accesskey="p" rel="prev">Strings</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Fill-Values-1"></a>
+<h3 class="section">4.24 Fill Values</h3>
+<a name="index-fill-values"></a>
+<a name="index-byte-vs_002e-char-fill-values"></a>
+
+<p>Prior to version 1.6.1, PnetCDF supports only NC_NOFILL mode.
+Starting from 1.6.1, PnetCDF supports fill mode in a slightly different
+way from netCDF.
+</p>
+<p>What happens when you try to read a value that was never written in an
+opened netCDF file? You might expect that this should always be an
+error, and that you should get an error message or an error status
+returned. You do get an error if you try to read data from a netCDF
+file that is not open for reading, if the variable ID is invalid
+for the specified netCDF file, or if the specified indices are not
+properly within the range defined by the dimension lengths of the
+specified variable. Otherwise, reading a value that was not written
+returns a special fill value used to fill in any undefined values when
+a netCDF variable is first written.
+</p>
+<p>You may ignore fill values and use the entire range of a netCDF
+external data type, but in this case you should make sure you write
+all data values before reading them. If you know you will be writing
+all the data before reading it, you can specify that no pre-filling of
+variables with fill values will occur by calling ncmpi_def_var_fill
+after defining a non-record variable.
+</p>
+<a name="Differences-from-NetCDF"></a>
+<h3 class="heading">Differences from NetCDF</h3>
+<ul>
+<li> <strong>Default fill mode</strong> &ndash;
+PnetCDF&rsquo;s default mode is NC_NOFILL, while netCDF&rsquo;s is NC_FILL.
+
+</li><li> <strong>Filling a record variable</strong> &ndash;
+In PnetCDF, filling a record variable must be requested by calling
+<a href="ncmpi_005ffill_005fvar_005frec.html#ncmpi_005ffill_005fvar_005frec">ncmpi_fill_var_rec</a> explicitly in the data mode, prior to write a
+new record. This API will fill only one record of a record variable.
+It will overwrite the contents of the record if the contents
+are previously written.
+</li></ul>
+
+<p>The variable attribute _FillValue may be used to specify the fill
+value for a variable. Their are default fill values for each type,
+defined in the include file pnetcdf.h: NC_FILL_CHAR, NC_FILL_BYTE,
+NC_FILL_SHORT, NC_FILL_INT, NC_FILL_FLOAT, and NC_FILL_DOUBLE.
+For CDF-5 file format, more default fill values are available
+for additional data types: NC_FILL_UBYTE, NC_FILL_USHORT,
+NC_FILL_UINT, NC_FILL_INT64, and NC_FILL_UINT64.
+</p>
+<p>The netCDF byte and character types have different default fill
+values. The default fill value for characters is the zero byte, a
+useful value for detecting the end of variable-length C character
+strings. If you need a fill value for a byte variable, it is
+recommended that you explicitly define an appropriate _FillValue
+attribute, as generic utilities such as ncmpidump/ncdump will not assume a
+default fill value for byte variables.
+</p>
+<p>Type conversion for fill values is identical to type conversion for
+other values: attempting to convert a value from one type to another
+type that can&rsquo;t represent the value results in a range error. Such
+errors may occur on writing or reading values from a larger type (such
+as double) to a smaller type (such as float), if the fill value for
+the larger type cannot be represented in the smaller type.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005frename_005fvar.html#ncmpi_005frename_005fvar" accesskey="n" rel="next">ncmpi_rename_var</a>, Previous: <a href="Strings.html#Strings" accesskey="p" rel="prev">Strings</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

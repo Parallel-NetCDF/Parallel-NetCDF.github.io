@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_get_att_&lt;type&gt; (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_get_att_&lt;type&gt; (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_get_att_&lt;type&gt; (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Attributes.html#Attributes" rel="up" title="Attributes">
+<link href="ncmpi_005fcopy_005fatt.html#ncmpi_005fcopy_005fatt" rel="next" title="ncmpi_copy_att">
+<link href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family" rel="prev" title="ncmpi_inq_att Family">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fget_005fatt_005f_003ctype_003e"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fcopy_005fatt.html#ncmpi_005fcopy_005fatt" accesskey="n" rel="next">ncmpi_copy_att</a>, Previous: <a href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family" accesskey="p" rel="prev">ncmpi_inq_att Family</a>, Up: <a href="Attributes.html#Attributes" accesskey="u" rel="up">Attributes</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Get-Attribute_0027s-Values_003ancmpi_005fget_005fatt_005f_003ctype_003e"></a>
+<h3 class="section">5.4 Get Attribute&rsquo;s Values:ncmpi_get_att_<var>&lt;type&gt;</var></h3>
+<a name="index-ncmpi_005fget_005fatt"></a>
+<a name="index-ncmpi_005fget_005fatt_005ftext"></a>
+<a name="index-ncmpi_005fget_005fatt_005fuchar"></a>
+<a name="index-ncmpi_005fget_005fatt_005fschar"></a>
+<a name="index-ncmpi_005fget_005fatt_005fshort"></a>
+<a name="index-ncmpi_005fget_005fatt_005fint"></a>
+<a name="index-ncmpi_005fget_005fatt_005ffloat"></a>
+<a name="index-ncmpi_005fget_005fatt_005fdouble"></a>
+<a name="index-ncmpi_005fget_005fatt_005fushort"></a>
+<a name="index-ncmpi_005fget_005fatt_005funit"></a>
+<a name="index-ncmpi_005fget_005fatt_005flonglong"></a>
+<a name="index-ncmpi_005fget_005fatt_005fulonglong"></a>
+<a name="index-ncmpi_005fget_005fatt_005ftext_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005fuchar_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005fschar_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005fshort_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005fint_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005ffloat_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005fdouble_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005fushort_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005funit_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005flonglong_002c-example"></a>
+<a name="index-ncmpi_005fget_005fatt_005fulonglong_002c-example"></a>
+<a name="index-attributes_002c-reading"></a>
+<a name="index-reading-attributes"></a>
+
+<p>Members of the ncmpi_get_att_<var>&lt;type&gt;</var> family of functions get the value(s)
+of a netCDF attribute, given its variable ID and name.
+</p>
+<a name="Data-types-19"></a>
+<h3 class="heading">Data types</h3>
+<table cellpadding="4" border="1">
+<tr class="spacer" align=center>
+    <td> &lt;<b>type  </b>&gt; for API names </td>
+    <td> &lt;<b>C type</b>&gt; for API arguments </td>
+</tr>
+<tr align=center> <td>text     </td> <td>char             </td> </tr>
+<tr align=center> <td>schar    </td> <td>signed char      </td> </tr>
+<tr align=center> <td>short    </td> <td>short            </td> </tr>
+<tr align=center> <td>int      </td> <td>int              </td> </tr>
+<tr align=center> <td>float    </td> <td>float            </td> </tr>
+<tr align=center> <td>double   </td> <td>double           </td> </tr>
+<tr align=center> <td>uchar    </td> <td>unsigned char    </td> </tr>
+<tr align=center> <td>ushort   </td> <td>unsigned short   </td> </tr>
+<tr align=center> <td>uint     </td> <td>unsigned int     </td> </tr>
+<tr align=center> <td>longlong </td> <td>long long        </td> </tr>
+<tr align=center> <td>ulonglong</td> <td>unsigned longlong</td> </tr>
+</table>
+
+<a name="Operational-Mode-61"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>These APIs are independent subroutines.
+</p>
+<p>These APIs can be called while the file is in either define or data mode (collective or independent).
+</p>
+<a name="Usage-61"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_get_att        (int         ncid,
+                          int         varid,
+                          const char *name,
+                          void       *buf);
+
+int ncmpi_get_att_<strong>&lt;type&gt;</strong>(int         ncid,
+                          int         varid,
+                          const char *name,
+                          <strong>&lt;C type&gt;</strong>  *buf);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>varid</code></dt>
+<dd><p>Variable ID of the attribute&rsquo;s variable, or NC_GLOBAL for a global attribute.
+</p>
+</dd>
+<dt><code>name</code></dt>
+<dd><p>Attribute name.
+</p>
+</dd>
+<dt><code>buf</code></dt>
+<dd><p>Pointer to location for returned attribute value(s). All elements of
+the vector of attribute values are returned, so you must allocate
+enough space to hold them. For attributes of type NC_CHAR, you should
+not assume that the returned values include a trailing zero byte; they
+won&rsquo;t if the attribute was stored without a trailing zero byte, for
+example from a FORTRAN program. Before using the value as a C string,
+make sure it is null-terminated. If you don&rsquo;t know how much space to
+reserve, call ncmpi_inq_attlen first to find out the length of the
+attribute.
+</p>
+</dd>
+</dl>
+
+<a name="Return-Error-Codes-58"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_get_att_<var>&lt;type&gt;</var> returns the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_ENOTVAR: The input or output variable ID is invalid for the specified netCDF file.
+</li><li> NC_EBADNAME: Name contains illegal characters.
+</li><li> NC_EMAXNAME: NC_MAX_NAME exceeded.
+</li><li> NC_ENOMEM: Out of memory.
+</li><li> NC_ENOTATT: The specified attribute does not exist in ncid.
+</li><li> NC_ECHAR: Attempt to convert numerical values to or from text data.
+</li><li> NC_EINVAL: buf is NULL.
+</li><li> NC_ERANGE: One or more elements of the external attribute are out of the range of values representable by the internal data type of read buffer, buf.
+</li></ul>
+
+<a name="Example-60"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_get_att_double to determine the values of
+a variable attribute named valid_range for a netCDF variable named rh
+and a global attribute named title in an existing netCDF file named
+foo.nc. In this example, it is assumed that we don&rsquo;t know how many
+values will be returned, but that we do know the types of the
+attributes. Hence, to allocate enough space to store them, we must
+first inquire about the length of the attributes.
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int  status;               /* error status */
+int  ncid;                 /* netCDF ID */
+int  rh_id;                /* variable ID */
+MPI_Offset  vr_len, t_len; /* attribute lengths */
+double *vr_val;            /* pointer to attribute values */
+char *title;               /* pointer to attribute values */
+extern char *malloc();     /* memory allocator */
+
+   ...
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_NOWRITE, MPI_INFO_NULL, &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid">ncmpi_inq_varid</a>(ncid, &quot;rh&quot;, &amp;rh_id);
+if (status != NC_NOERR) handle_error(status);
+   ...
+/* find out how much space is needed for attribute values */
+status = <a href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family">ncmpi_inq_attlen</a>(ncid, rh_id, &quot;valid_range&quot;, &amp;vr_len);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family">ncmpi_inq_attlen</a>(ncid, NC_GLOBAL, &quot;title&quot;, &amp;t_len);
+if (status != NC_NOERR) handle_error(status);
+
+/* allocate required space before retrieving values */
+vr_val = (double *) malloc(vr_len * sizeof(double));
+title = (char *) malloc(t_len + 1);  /* + 1 for trailing null */
+
+/* get attribute values */
+status = <a href="#ncmpi_005fget_005fatt_005f_003ctype_003e">ncmpi_get_att_double</a>(ncid, rh_id, &quot;valid_range&quot;, vr_val);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="#ncmpi_005fget_005fatt_005f_003ctype_003e">ncmpi_get_att_text</a>(ncid, NC_GLOBAL, &quot;title&quot;, title);
+if (status != NC_NOERR) handle_error(status);
+title[t_len] = '\0';       /* null terminate */
+   ...
+</pre></div>
+
+<a name="Full-example-C-program-19"></a>
+<h3 class="heading">Full example C program</h3>
+<ul>
+<li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/global_attributes.c">global_attributes.c</a>
+</li><li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/put_vara.c">put_vara.c</a>
+</li><li> The above programs are available in all PnetCDF releases under directory examples/C.
+</li></ul>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fcopy_005fatt.html#ncmpi_005fcopy_005fatt" accesskey="n" rel="next">ncmpi_copy_att</a>, Previous: <a href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family" accesskey="p" rel="prev">ncmpi_inq_att Family</a>, Up: <a href="Attributes.html#Attributes" accesskey="u" rel="up">Attributes</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

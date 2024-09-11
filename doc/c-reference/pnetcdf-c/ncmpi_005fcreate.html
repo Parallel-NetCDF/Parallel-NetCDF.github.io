@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_create (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_create (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_create (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Files.html#Files" rel="up" title="Files">
+<link href="ncmpi_005f_005fcreate.html#ncmpi_005f_005fcreate" rel="next" title="ncmpi__create">
+<link href="ncmpi_005finq_005flibvers.html#ncmpi_005finq_005flibvers" rel="prev" title="ncmpi_inq_libvers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fcreate"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005f_005fcreate.html#ncmpi_005f_005fcreate" accesskey="n" rel="next">ncmpi__create</a>, Previous: <a href="ncmpi_005finq_005flibvers.html#ncmpi_005finq_005flibvers" accesskey="p" rel="prev">ncmpi_inq_libvers</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Create-a-NetCDF-File_003a-ncmpi_005fcreate"></a>
+<h3 class="section">2.5 Create a NetCDF File: ncmpi_create</h3>
+<a name="index-ncmpi_005fcreate"></a>
+<a name="index-ncmpi_005fcreate_002c-example"></a>
+<a name="index-ncmpi_005fcreate_002c-flags"></a>
+<a name="index-NC_005fNOCLOBBER"></a>
+<a name="index-NC_005fCLOBBER"></a>
+<a name="index-NC_005f64BIT_005fOFFSET"></a>
+<a name="index-NC_005f64BIT_005fDATA"></a>
+<a name="index-nc_005fheader_005falign_005fsize"></a>
+<a name="index-nc_005fvar_005falign_005fsize"></a>
+<a name="index-nc_005frecord_005falign_005fsize"></a>
+<a name="index-nc_005fheader_005fread_005fchunk_005fsize"></a>
+
+<p>This function creates a new netCDF file, returning a netCDF ID that
+can subsequently be used to refer to the netCDF file in other
+PnetCDF function calls. The new netCDF file opened for write access
+and placed in define mode, ready for you to add dimensions, variables,
+and attributes.
+</p>
+<p>A creation mode flag specifies:
+</p><ul>
+<li> whether to overwrite any existing file with the same name,
+</li><li> whether access to the file is shared,
+</li><li> whether this file should be in netCDF classic format (the default), 64-bit offset format, or 64-bit data format.
+</li></ul>
+
+<a name="Operational-Mode-3"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>This API is a collective routine.
+All processes must provide the same value for cmode, and all processes must provide filenames that reference the same file. (Values for info may vary.)
+</p>
+<a name="Usage-3"></a>
+<h3 class="heading">Usage</h3>
+
+<div class="example">
+<pre class="example">int ncmpi_create (MPI_Comm    comm,
+                  const char *path,
+                  int         cmode,
+                  MPI_Info    info,
+                  int        *ncidp);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>comm</code></dt>
+<dd><p>An MPI communicator and must be an MPI intracommunicator.
+</p>
+</dd>
+<dt><code>path</code></dt>
+<dd><p>The file name of the new netCDF file.
+</p>
+</dd>
+<dt><code>cmode</code></dt>
+<dd><p>The creation mode flag. The following flags are available:
+NC_NOCLOBBER, NC_64BIT_OFFSET, and NC_64BIT_DATA.
+</p>
+<p>Setting NC_NOCLOBBER means you do not want to clobber (overwrite) an
+existing file; an error (NC_EEXIST) is returned if the specified
+file already exists.
+</p>
+<p>Setting NC_64BIT_OFFSET causes PnetCDF to create a 64-bit offset format file (CDF-2), instead of a netCDF classic format file. The 64-bit offset format imposes far fewer restrictions on large (i.e. over 2 GB) data files.
+</p>
+<p>Setting NC_64BIT_DATA causes PnetCDF to create a 64-bit data format file (CDF-5). The 64-bit data format allows define variables with more than 4 billion array elements.
+</p>
+<p>It is illegal to set a cmode with both NC_64BIT_OFFSET and NC_64BIT_DATA. Error code NC_EINVAL_CMODE will be returned in this case.
+</p>
+<p>A zero value (defined for convenience as NC_CLOBBER) specifies the
+default behavior: overwrite any existing file with the same file
+name and buffer and cache accesses for efficiency. The file will be
+in netCDF classic format. See <a href="../netcdf/NetCDF-Classic-Format-Limitations.html#NetCDF-Classic-Format-Limitations">NetCDF Classic Format Limitations</a> in <cite>The PnetCDF Users Guide</cite>.
+</p>
+<p>The following modes available in netCDF are not yet supported: NC_DISKLESS, NC_MMAP, NC_CLASSIC_MODEL, NC_NETCDF4, NC_MPIPOSIX, and NC_INMEMORY.
+</p>
+<p>The following modes available in netCDF are ignored: NC_SHARE and NC_MPIIO.
+</p>
+</dd>
+<dt><code>info</code></dt>
+<dd><p>An MPI info object that provides file access hints,including existing MPI hints
+as well as PnetCDF hints. For MPI hints, users are referred to MPI user guide
+for further information. Starting from version 1.3.1, the following
+<a href="PNETCDF_005fHINTS.html#PNETCDF_005fHINTS">PnetCDF hints</a> are available:
+</p>
+<dl compact="compact">
+<dt><code>nc_header_align_size</code></dt>
+<dd><p>This hint allows some extra space between the end of the header describing the
+entire file and the first variable. If you have an application that
+periodically wishes to add more variables or attributes to an already existing
+file, expanding the file header size may result in an expensive move of the
+entire data file to make room for the definition of the new metadata. Hence,
+setting this hint to a value that is big enough to accommodate any additional
+variables means you may leave your application code as-is and yet still see
+tremendous performance improvements.
+</p>
+</dd>
+<dt><code>nc_var_align_size</code></dt>
+<dd><p>If you are writing to a block-based parallel file system, such as IBM&rsquo;s GPFS or
+Lustre, then an application&rsquo;s write request will be divided into several blocks
+(file stripes) and each is sent to a file server based on the file striping
+setting. If a write straddles two blocks, then locks must be acquired for both
+blocks. Aligning the start of a variable to a block boundary, combined with
+collective I/O optimizations in the MPI-IO library can often eliminate all
+unaligned file system accesses.
+Starting from version 1.13.0, this hint will only align the starting offset of
+the entire data section, rather than individual fixed-size variables.
+</p>
+</dd>
+<dt><code>nc_record_align_size</code></dt>
+<dd><p>This hint specifies the alignment size for the starting file offset of the
+record variable section. Note this is not the alignment for individual record
+variables.
+</p>
+</dd>
+<dt><code>nc_header_read_chunk_size</code></dt>
+<dd><p>PnetCDF reads the file headers in chunks. This hint indicates the chunk size
+(in bytes). The default is 256 KB.
+</p>
+</dd>
+</dl>
+
+<p>Note the alignment hints set in the run-time environment variable
+&quot;PNETCDF_HINTS&quot; have the highest priority, which overwrite the alignment hints
+set in ncmpi__enddef(), which overwrite the alignment hints set in this
+MPI_Info object.
+</p>
+</dd>
+<dt><code>ncidp</code></dt>
+<dd><p>Pointer to location where returned netCDF ID is to be stored.
+</p></dd>
+</dl>
+
+<a name="Return-Error-Codes"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_create returns the value NC_NOERR if no errors occurred. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBAD_FILE: Invalid file name, file name too long, or the directory does not exist.
+</li><li> NC_EINVAL_CMODE: Invalid values used in file create mode. Note it is illegal to set a cmode with both NC_64BIT_OFFSET and NC_64BIT_DATA.
+</li><li> NC_EEXIST: Specifying a file name of a file that exists and also specifying NC_NOCLOBBER.
+</li><li> NC_EPERM: Attempting to create a netCDF file in a directory where you do not have permission to create files.
+</li><li> NC_ESMALL: size of MPI_Offset on the running system is too small for the file format (CDF-2 or CDF-5) in request
+</li><li> NC_ENOMEM: unable to allocate memory
+</li><li> NC_ENFILE: Too many files open
+</li><li> NC_EQUOTA: Quota exceeded
+</li><li> NC_ENO_SPACE: Not enough space
+</li><li> NC_EFILE: other unknown I/O error, including unable to clobber the file
+</li><li> NC_EMULTIDEFINE_CMODE: inconsistent file create modes among processes.
+</li><li> NC_EMULTIDEFINE_FNC_ARGS: one or more arguments are inconsistent among processes
+</li></ul>
+
+<a name="Examples-2"></a>
+<h3 class="heading">Examples</h3>
+
+<p>In this example we create a netCDF file named foo.nc; we want the
+file to be created in the current directory only if a dataset with
+that name does not already exist:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int err, ncid, cmode = NC_NOCLOBBER;
+MPI_Info info;
+   ...
+MPI_Info_create (&amp;info);
+MPI_Info_set (info, &quot;romio_no_indep_rw&quot;,    &quot;true&quot;);
+MPI_Info_set (info, &quot;nc_header_align_size&quot;, &quot;4194304&quot;);
+MPI_Info_set (info, &quot;nc_var_align_size&quot;,    &quot;1048576&quot;);
+
+err = <strong>ncmpi_create</strong>(MPI_COMM_WORLD, &quot;foo.nc&quot;, cmode, info, &amp;ncid);
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+MPI_Info_free(&amp;info);
+</pre></div>
+
+<p>The following example creates a netCDF file named foo_large.nc.
+The new file will be in the 64-bit data format.
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int err, cmode = NC_NOCLOBBER | NC_64BIT_DATA;
+MPI_Info info = MPI_INFO_NULL;
+   ...
+err = <a href="#ncmpi_005fcreate">ncmpi_create</a>(MPI_COMM_WORLD, &quot;foo_large.nc&quot;, cmode, info, &amp;ncid);
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005f_005fcreate.html#ncmpi_005f_005fcreate" accesskey="n" rel="next">ncmpi__create</a>, Previous: <a href="ncmpi_005finq_005flibvers.html#ncmpi_005finq_005flibvers" accesskey="p" rel="prev">ncmpi_inq_libvers</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_inq Family (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_inq Family (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_inq Family (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Files.html#Files" rel="up" title="Files">
+<link href="ncmpi_005fsync.html#ncmpi_005fsync" rel="next" title="ncmpi_sync">
+<link href="ncmpi_005fclose.html#ncmpi_005fclose" rel="prev" title="ncmpi_close">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005finq-Family"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fsync.html#ncmpi_005fsync" accesskey="n" rel="next">ncmpi_sync</a>, Previous: <a href="ncmpi_005fclose.html#ncmpi_005fclose" accesskey="p" rel="prev">ncmpi_close</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Inquire-about-an-Open-NetCDF-File_003a-ncmpi_005finq-Family"></a>
+<h3 class="section">2.13 Inquire about an Open NetCDF File: ncmpi_inq Family</h3>
+<a name="index-ncmpi_005finq-Family"></a>
+<a name="index-ncmpi_005finq_005fndims"></a>
+<a name="index-ncmpi_005finq_005fnvars"></a>
+<a name="index-ncmpi_005finq_005fnatts"></a>
+<a name="index-ncmpi_005finq_005funlimdim"></a>
+<a name="index-ncmpi_005finq_005fformat"></a>
+<a name="index-ncmpi_005finq_005fversion"></a>
+<a name="index-ncmpi_005finq_005ffile_005fformat"></a>
+<a name="index-ncmpi_005finq_005fstriping"></a>
+<a name="index-ncmpi_005finq_005fnum_005frec_005fvars"></a>
+<a name="index-ncmpi_005finq_005fnum_005ffix_005fvars"></a>
+<a name="index-ncmpi_005finq_005frecsize"></a>
+<a name="index-ncmpi_005finq_005fpath"></a>
+<a name="index-attributes_002c-number-of"></a>
+<a name="index-variables_002c-number-of"></a>
+<a name="index-dimensions_002c-number-of"></a>
+<a name="index-format-version"></a>
+<a name="index-version_002c-format"></a>
+<a name="index-record-size"></a>
+<a name="index-number-of-record-variables"></a>
+<a name="index-number-of-fixed_002dsize-variables"></a>
+<a name="index-ncmpi_005finq-Family_002c-example"></a>
+
+<p>Members of the ncmpi_inq family of functions return information about an opened
+netCDF file, given its netCDF ID. These inquiry functions may be called from
+either define mode or data mode. The first function, ncmpi_inq, returns values
+for the number of dimensions, the number of variables, the number of global
+attributes, and the dimension ID of the dimension defined with unlimited
+length, if any. Other functions in the family each return just single items of
+information.
+</p>
+<p>No file I/O is actually performed when these functions are called, because the
+information in request is stored in the file header which is already cached in
+memory.
+</p>
+<a name="Operational-Mode-9"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>These APIs are independent subroutines.
+</p>
+<p>They can be called in either define or data mode (collective or independent).
+</p>
+<a name="Usage-9"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_inq             (int ncid, int *ndimsp, int *nvarsp, int *ngattsp, int *unlimdimidp);
+int ncmpi_inq_ndims       (int ncid, int *ndimsp);
+int ncmpi_inq_nvars       (int ncid, int *nvarsp);
+int ncmpi_inq_natts       (int ncid, int *ngattsp);
+int ncmpi_inq_unlimdim    (int ncid, int *unlimdimidp);
+int ncmpi_inq_format      (int ncid, int *formatp);
+
+int ncmpi_inq_version     (int ncid, int *nc_mode);
+int ncmpi_inq_file_format (const char *filename, int *formatp);
+int ncmpi_inq_path        (int ncid, int *pathlen, char *path);                 (1.8.0 and later)
+int ncmpi_inq_striping    (int ncid, int *striping_size, int *striping_count);  (1.5.0 and later)
+int ncmpi_inq_num_rec_vars(int ncid, int *num_rec_varsp);                       (1.6.0 and later)
+int ncmpi_inq_num_fix_vars(int ncid, int *num_fix_varsp);                       (1.6.0 and later)
+int ncmpi_inq_recsize     (int ncid, MPI_Offset *recsize);                      (1.6.0 and later)
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>ndimsp</code></dt>
+<dd><p>Pointer to location for returned number of dimensions defined for this
+netCDF file.
+</p>
+</dd>
+<dt><code>nvarsp</code></dt>
+<dd><p>Pointer to location for returned number of variables defined for this
+netCDF file.
+</p>
+</dd>
+<dt><code>ngattsp</code></dt>
+<dd><p>Pointer to location for returned number of global attributes defined
+for this netCDF file.
+</p>
+</dd>
+<dt><code>unlimdimidp</code></dt>
+<dd><p>Pointer to location for returned ID of the unlimited dimension, if
+there is one for this netCDF file. If no unlimited length dimension
+has been defined, -1 is returned.
+</p>
+</dd>
+<dt><code>formatp</code></dt>
+<dd><p>Pointer to location for returned format version, one of the following constants define in the header file pnetcdf.h.
+</p><ul>
+<li> NC_FORMAT_CLASSIC (CDF-1 format),
+</li><li> NC_FORMAT_CDF2 (CDF-2 format),
+</li><li> NC_FORMAT_64BIT_OFFSET (alias of NC_FORMAT_CDF2, also CDF-2 format),
+</li><li> NC_FORMAT_64BIT(alias of NC_FORMAT_CDF2, also CDF-2 format),
+</li><li> NC_FORMAT_CDF5 (CDF-5 format),
+</li><li> NC_FORMAT_64BIT_DATA (alias of NC_FORMAT_CDF5, also CDF-5 format).
+</li><li> NC_FORMAT_NETCDF4 (HDF-based NetCDF-4 format).
+</li><li> NC_FORMAT_BP (BP format).
+</li></ul>
+<p>Note the names of the returned constants are different from the ones returned by
+ncmpi_inq_version().
+</p>
+</dd>
+<dt><code>nc_mode</code></dt>
+<dd><p>Pointer to location for returned format version, one of
+NC_CLASSIC_MODEL, NC_64BIT_OFFSET, NC_64BIT_DATA,
+NC_NETCDF4, (NC_NETCDF4 | NC_CLASSIC_MODEL), and NC_BP.
+Note the names of the returned constants are different from the ones returned by
+ncmpi_inq_format().
+</p>
+</dd>
+<dt><code>filename</code></dt>
+<dd><p>A char string specifies the name of file in inquiry.
+</p>
+</dd>
+<dt><code>path</code></dt>
+<dd><p>Pointer where path name will be copied. Space must already be allocated.
+Ignored if NULL. ncmpi_inq_path can be used to obtain the file path name, given
+a ncid.
+</p>
+</dd>
+<dt><code>pathlen</code></dt>
+<dd><p>Pointer where length of path will be returned. Ignored if NULL.
+</p>
+</dd>
+<dt><code>striping_size</code></dt>
+<dd><p>File system striping size. This argument can be NULL.
+</p>
+</dd>
+<dt><code>striping_count</code></dt>
+<dd><p>(version 1.5.0 and later) File system striping count. This argument can be NULL.
+</p>
+</dd>
+<dt><code>num_rec_varsp</code></dt>
+<dd><p>(version 1.6.0, and later) Pointer to location for returned number of record variables defined for this netCDF file.
+</p>
+</dd>
+<dt><code>num_fix_varsp</code></dt>
+<dd><p>(version 1.6.0, and later) Pointer to location for returned number of fixed-size variables defined for this netCDF file.
+</p>
+</dd>
+<dt><code>recsize</code></dt>
+<dd><p>(version 1.6.0, and later) Pointer to location for returned size of record block, sum of individual record sizes (one record each) of all record variables, for this netCDF file.
+</p>
+</dd>
+</dl>
+
+<a name="Return-Error-Codes-6"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>All members of the ncmpi_inq family return the value NC_NOERR if no
+errors occurred. Otherwise, the returned status indicates an
+error. Possible causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_ENOTNC3: The file is not a classic netCDF file, but an HDF file.
+</li><li> NC_ENOTNC: The file is not a classic netCDF file.
+</li><li> NC_ENOENT: The specified netCDF file does not exist.
+</li><li> NC_EACCESS: Permission denied.
+</li><li> NC_EBAD_FILE: Invalid file name.
+</li><li> NC_EFILE: other unknown I/O error.
+</li></ul>
+
+<a name="Example-8"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_inq to find out about a netCDF file
+named foo.nc:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int err, ncid, ndims, nvars, ngatts, unlimdimid;
+   ...
+err = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_NOWRITE, MPI_INFO_NULL,  &amp;ncid);
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+   ...
+err = <a href="#ncmpi_005finq-Family">ncmpi_inq</a>(ncid, &amp;ndims, &amp;nvars, &amp;ngatts, &amp;unlimdimid);
+if (err != NC_NOERR) printf(&quot;Error: %s\n&quot;,ncmpi_strerror(err));
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fsync.html#ncmpi_005fsync" accesskey="n" rel="next">ncmpi_sync</a>, Previous: <a href="ncmpi_005fclose.html#ncmpi_005fclose" accesskey="p" rel="prev">ncmpi_close</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Strings (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Strings (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Strings (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="Fill-Values.html#Fill-Values" rel="next" title="Fill Values">
+<link href="ncmpi_005fget_005fvard.html#ncmpi_005fget_005fvard" rel="prev" title="ncmpi_get_vard">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Strings"></a>
+<div class="header">
+<p>
+Next: <a href="Fill-Values.html#Fill-Values" accesskey="n" rel="next">Fill Values</a>, Previous: <a href="ncmpi_005fget_005fvard.html#ncmpi_005fget_005fvard" accesskey="p" rel="prev">ncmpi_get_vard</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Reading-and-Writing-Character-String-Values"></a>
+<h3 class="section">4.23 Reading and Writing Character String Values</h3>
+<a name="index-attributes_002c-character-string"></a>
+<a name="index-byte_002c-zero"></a>
+<a name="index-zero-byte"></a>
+<a name="index-writing-character_002dstring-data"></a>
+<a name="index-character_002dstring-data_002c-writing"></a>
+
+<p>Character strings are not a primitive netCDF external data type, in
+part because FORTRAN does not support the abstraction of
+variable-length character strings (the FORTRAN LEN function returns
+the static length of a character string, not its dynamic length). As a
+result, a character string cannot be written or read as a single
+object in the PnetCDF interface. Instead, a character string must be
+treated as an array of characters, and array access must be used to
+read and write character strings as variable data in netCDF
+files. Furthermore, variable-length strings are not supported by
+the PnetCDF interface except by convention; for example, you may treat
+a zero byte as terminating a character string, but you must explicitly
+specify the length of strings to be read from and written to netCDF
+variables.
+</p>
+<p>Character strings as attribute values are easier to use, since the
+strings are treated as a single unit for access. However, the value of
+a character-string attribute is still an array of characters with an
+explicit length that must be specified when the attribute is defined.
+</p>
+<p>When you define a variable that will have character-string values, use
+a character-position dimension as the most quickly varying dimension
+for the variable (the last dimension for the variable in C). The
+length of the character-position dimension will be the maximum string
+length of any value to be stored in the character-string
+variable. Space for maximum-length strings will be allocated in the
+disk representation of character-string variables whether you use the
+space or not. If two or more variables have the same maximum length,
+the same character-position dimension may be used in defining the
+variable shapes.
+</p>
+<p>To write a character-string value into a character-string variable,
+use either entire variable access or array access. The latter requires
+that you specify both a corner and a vector of edge lengths. The
+character-position dimension at the corner should be zero for C. If
+the length of the string to be written is n, then the vector of edge
+lengths will specify n in the character-position dimension, and one
+for all the other dimensions:(1, 1, ... , 1, n).
+</p>
+<p>In C, fixed-length strings may be written to a netCDF file without
+the terminating zero byte, to save space. Variable-length strings
+should be written with a terminating zero byte so that the intended
+length of the string can be determined when it is later read.
+</p>
+<p>Here is an example that defines a record variable, tx, for character
+strings and stores a character-string value into the third record
+using ncmpi_put_vara_text. In this example, we assume the string variable
+and data are to be added to an existing netCDF file named foo.nc
+that already has an unlimited record dimension time.
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int  ncid;            /* netCDF ID */
+int  chid;            /* dimension ID for char positions */
+int  timeid;          /* dimension ID for record dimension */
+int  tx_id;           /* variable ID */
+#define TDIMS 2       /* rank of tx variable */
+int tx_dims[TDIMS];   /* variable shape */
+MPI_Offset tx_start[TDIMS];
+MPI_Offset tx_count[TDIMS];
+char tx_val[] = &quot;example string&quot;; /* string to be put */
+   ...
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_WRITE, MPI_INFO_NULL,  &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005fredef.html#ncmpi_005fredef">ncmpi_redef</a>(ncid);       /* enter define mode */
+if (status != NC_NOERR) handle_error(status);
+   ...
+/* define character-position dimension for strings of max length 40 */
+status = <a href="ncmpi_005fdef_005fdim.html#ncmpi_005fdef_005fdim">ncmpi_def_dim</a>(ncid, &quot;chid&quot;, 40L, &amp;chid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+/* define a character-string variable */
+tx_dims[0] = timeid;
+tx_dims[1] = chid;    /* character-position dimension last */
+status = <a href="ncmpi_005fdef_005fvar.html#ncmpi_005fdef_005fvar">ncmpi_def_var</a>(ncid, &quot;tx&quot;, NC_CHAR, TDIMS, tx_dims, &amp;tx_id);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005fenddef.html#ncmpi_005fenddef">ncmpi_enddef</a>(ncid);       /* leave define mode */
+if (status != NC_NOERR) handle_error(status);
+   ...
+/* write tx_val into tx netCDF variable in record 3 */
+tx_start[0] = 3;      /* record number to write */
+tx_start[1] = 0;      /* start at beginning of variable */
+tx_count[0] = 1;      /* only write one record */
+tx_count[1] = strlen(tx_val) + 1;  /* number of chars to write */
+status = <a href="ncmpi_005fput_005fvara_005f_003ctype_003e.html#ncmpi_005fput_005fvara_005f_003ctype_003e">ncmpi_put_vara_text</a>(ncid, tx_id, tx_start, tx_count, tx_val);
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Fill-Values.html#Fill-Values" accesskey="n" rel="next">Fill Values</a>, Previous: <a href="ncmpi_005fget_005fvard.html#ncmpi_005fget_005fvard" accesskey="p" rel="prev">ncmpi_get_vard</a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

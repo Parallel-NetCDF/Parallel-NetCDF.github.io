@@ -1,0 +1,647 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Summary of Fortran 90 Interface (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Summary of Fortran 90 Interface (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Summary of Fortran 90 Interface (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Error-Codes.html#Error-Codes" rel="next" title="Error Codes">
+<link href="Summary-of-Fortran-77-Interface.html#Summary-of-Fortran-77-Interface" rel="prev" title="Summary of Fortran 77 Interface">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Summary-of-Fortran-90-Interface"></a>
+<div class="header">
+<p>
+Next: <a href="Error-Codes.html#Error-Codes" accesskey="n" rel="next">Error Codes</a>, Previous: <a href="Summary-of-Fortran-77-Interface.html#Summary-of-Fortran-77-Interface" accesskey="p" rel="prev">Summary of Fortran 77 Interface</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Summary-of-Fortran-90-Interface-1"></a>
+<h2 class="appendix">Appendix C Summary of Fortran 90 Interface</h2>
+<a name="index-API_002c-Fortran-90-summary"></a>
+<a name="index-Fortran-90-API-summary"></a>
+
+<ol>
+<li> <a href="#lib_005fapi90">Library APIs</a>
+</li><li> <a href="#err_005fapi90">Error report APIs</a>
+</li><li> <a href="#file_005fapi90">File APIs</a>
+</li><li> <a href="#indep_005fapi90">Entering/exiting independent data mode APIs</a>
+</li><li> <a href="#wait_005fapi90">Nonblocking I/O control APIs</a>
+</li><li> <a href="#file_005finq_005fapi90">File inquiry APIs</a>
+</li><li> <a href="#dim_005fapi90">Dimension APIs</a>
+</li><li> <a href="#attr_005finq_005fapi90">Attribute inquiry APIs</a>
+</li><li> <a href="#attr_005fapi90">Attribute put/get APIs</a>
+</li><li> <a href="#def_005fvar_005fapi90">General variable APIs</a>
+</li><li> <a href="#var_005fapi90">Blocking put/get variable APIs</a>
+</li><li> <a href="#i_005fvar_005fapi90">Nonblocking iput/iget variable APIs</a>
+</li><li> <a href="#b_005fvar_005fapi90">Nonblocking buffered put APIs</a>
+</li><li> <a href="#vard_005fapi90">Blocking put/get an array of values using filetype</a>
+</li><li> <a href="#varn_005fapi90">Blocking and nonblocking put/get a list of subarrays</a>
+</li></ol>
+
+<a name="lib_005fapi90"></a><a name="Library-APIs-1"></a>
+<h3 class="heading">Library APIs</h3>
+<div class="example">
+<pre class="example">character(len=80) function nf90mpi_inq_libvers()
+</pre></div>
+
+<a name="err_005fapi90"></a><a name="Error-report-APIs-1"></a>
+<h3 class="heading">Error report APIs</h3>
+<div class="example">
+<pre class="example">character(len=80) function nf90mpi_strerror(ncerr)
+                  integer, intent(in) :: ncerr
+
+logical           function nf90mpi_issyserr(ncerr)
+                  integer, intent(in) :: ncerr
+
+character(len=80) function nf90mpi_strerrno(ncerr)
+                  integer, intent(in) :: ncerr
+</pre></div>
+
+<a name="file_005fapi90"></a><a name="File-APIs-2"></a>
+<h3 class="heading">File APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_create(mpi_comm, path, cmode, mpi_info, ncid)
+    character(len=*), intent( in) :: path
+    integer,          intent( in) :: mpi_comm
+    integer,          intent( in) :: cmode
+    integer,          intent( in) :: mpi_info
+    integer,          intent(out) :: ncid
+
+integer function nf90mpi_open(mpi_comm, path, omode, mpi_info, ncid)
+    character(len=*), intent( in) :: path
+    integer,          intent( in) :: mpi_comm
+    integer,          intent( in) :: omode
+    integer,          intent( in) :: mpi_info
+    integer,          intent(out) :: ncid
+
+integer function nf90mpi_enddef(ncid, h_minfree, v_align, v_minfree, r_align)
+    integer,                                 intent(in)  :: ncid
+    integer(kind=MPI_OFFSET_KIND), optional, intent(in)  :: h_minfree
+    integer(kind=MPI_OFFSET_KIND), optional, intent(in)  :: v_align
+    integer(kind=MPI_OFFSET_KIND), optional, intent(in)  :: v_minfree
+    integer(kind=MPI_OFFSET_KIND), optional, intent(in)  :: r_align
+
+integer function nf90mpi_redef(ncid)
+    integer, intent(in)  :: ncid
+
+integer function nf90mpi_flush(ncid)
+    integer, intent(in)  :: ncid
+
+integer function nf90mpi_sync(ncid)
+    integer, intent(in)  :: ncid
+
+integer function nf90mpi_sync_numrecs(ncid)
+    integer, intent(in)  :: ncid
+
+integer function nf90mpi_close(ncid)
+    integer, intent(in)  :: ncid
+
+integer function nf90mpi_set_fill(ncid, fillmode, old_mode)
+    integer, intent( in) :: ncid
+    integer, intent( in) :: fillmode
+    integer, intent(out) :: old_mode
+
+integer function nf90mpi_set_default_format(new_format, old_format)
+    integer, intent( in) :: new_format
+    integer, intent(out) :: old_format
+
+integer function nf90mpi_abort(ncid)
+    integer, intent(in)  :: ncid
+
+integer function nf90mpi_delete(name, mpi_info)
+    character(len=*), intent(in) :: name
+    integer,          intent(in) :: mpi_info
+</pre></div>
+
+<a name="indep_005fapi90"></a><a name="Entering_002fexiting-independent-data-mode-APIs-1"></a>
+<h3 class="heading">Entering/exiting independent data mode APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_begin_indep_data(ncid)
+    integer, intent(in) :: ncid
+
+integer function nf90mpi_end_indep_data(ncid)
+    integer, intent(in) :: ncid
+</pre></div>
+
+<a name="wait_005fapi90"></a><a name="Nonblocking-I_002fO-control-APIs-1"></a>
+<h3 class="heading">Nonblocking I/O control APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_wait(ncid, num, req, st)
+    integer,               intent(in)    :: ncid
+    integer,               intent(in)    :: num
+    integer, dimension(:), intent(inout) :: req
+    integer, dimension(:), intent(out)   :: st
+
+integer function nf90mpi_wait_all(ncid, num, req, st)
+    integer,               intent(in)    :: ncid
+    integer,               intent(in)    :: num
+    integer, dimension(:), intent(inout) :: req
+    integer, dimension(:), intent(out)   :: st
+
+integer function nf90mpi_cancel(ncid, num, req, st)
+    integer,               intent(in)    :: ncid
+    integer,               intent(in)    :: num
+    integer, dimension(:), intent(inout) :: req
+    integer, dimension(:), intent(out)   :: st
+</pre></div>
+
+<a name="file_005finq_005fapi90"></a><a name="File-inquiry-APIs-1"></a>
+<h3 class="heading">File inquiry APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_inquire(ncid, nDimensions, nVariables, nAttributes, unlimitedDimId, format)
+    integer,           intent( in) :: ncid
+    integer, optional, intent(out) :: nDimensions
+    integer, optional, intent(out) :: nVariables
+    integer, optional, intent(out) :: nAttributes
+    integer, optional, intent(out) :: unlimitedDimId
+    integer, optional, intent(out) :: format
+
+integer function nf90mpi_inq_file_format(path, format)
+    character(len=*), intent( in) :: path
+    integer,          intent(out) :: format
+
+integer function nf90mpi_inq_default_format(default_format)
+    integer, intent(out) :: default_format
+
+integer function nf90mpi_inq_header_size(ncid, h_size)
+    integer,                       intent( in) :: ncid
+    integer(kind=MPI_OFFSET_KIND), intent(out) :: h_size
+
+integer function nf90mpi_inq_header_extent(ncid, h_extent)
+    integer,                       intent( in) :: ncid
+    integer(kind=MPI_OFFSET_KIND), intent(out) :: h_extent
+
+integer function nf90mpi_inq_files_opened(nfiles, ncids)
+    integer,               intent(out) :: nfiles
+    integer, dimension(:), intent(out) :: ncids
+
+integer function nf90mpi_inq_path(ncid, pathlen, path)
+    integer,          intent( in) :: ncid
+    integer,          intent(out) :: pathlen
+    character(len=*), intent(out) :: path
+
+integer function nf90mpi_inq_num_rec_vars(ncid, nvars)
+    integer, intent( in) :: ncid
+    integer, intent(out) :: nvars
+
+integer function nf90mpi_inq_num_fix_vars(ncid, nvars)
+    integer, intent( in) :: ncid
+    integer, intent(out) :: nvars
+
+integer function nf90mpi_inq_recsize(ncid, recsize)
+    integer,                       intent( in) :: ncid
+    integer(kind=MPI_OFFSET_KIND), intent(out) :: recsize
+
+integer function nf90mpi_inq_file_info(ncid, mpi_info)
+    integer, intent( in) :: ncid
+    integer, intent(out) :: mpi_info
+
+integer function nf90mpi_get_file_info(ncid, mpi_info)
+    integer, intent( in) :: ncid
+    integer, intent(out) :: mpi_info
+
+integer function nf90mpi_inq_striping(ncid, striping_size, striping_count)
+    integer, intent( in) :: ncid
+    integer, intent(out) :: striping_size
+    integer, intent(out) :: striping_count
+
+integer function nf90mpi_inq_put_size(ncid, put_size)
+    integer,                       intent( in) :: ncid
+    integer(kind=MPI_OFFSET_KIND), intent(out) :: put_size
+
+integer function nf90mpi_inq_get_size(ncid, get_size)
+    integer,                       intent( in) :: ncid
+    integer(kind=MPI_OFFSET_KIND), intent(out) :: get_size
+
+integer function nf90mpi_inq_nreqs(ncid, nreqs)
+    integer, intent( in) :: ncid
+    integer, intent(out) :: nreqs
+
+integer function nf90mpi_inq_malloc_size(size)
+    integer(kind=MPI_OFFSET_KIND), intent(out) :: size
+
+integer function nf90mpi_inq_malloc_max_size(size)
+    integer(kind=MPI_OFFSET_KIND), intent(out) :: size
+
+integer function nf90mpi_inq_malloc_list()
+    integer :: nf90mpi_inq_malloc_list
+</pre></div>
+
+<a name="dim_005fapi90"></a><a name="Dimension-APIs-2"></a>
+<h3 class="heading">Dimension APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_def_dim(ncid, name, len, dimid)
+    integer,                       intent( in) :: ncid
+    character(len=*),              intent( in) :: name
+    integer(kind=MPI_OFFSET_KIND), intent( in) :: len
+    integer,                       intent(out) :: dimid
+
+integer function nf90mpi_inq_dimid(ncid, name, dimid)
+    integer,          intent( in) :: ncid
+    character(len=*), intent( in) :: name
+    integer,          intent(out) :: dimid
+
+integer function nf90mpi_inquire_dimension(ncid, dimid, name, len)
+    integer,                                 intent( in) :: ncid
+    integer,                                 intent( in) :: dimid
+    character(len=*),              optional, intent(out) :: name
+    integer(kind=MPI_OFFSET_KIND), optional, intent(out) :: len
+
+integer function nf90mpi_rename_dim(ncid, dimid, name)
+    integer,          intent( in) :: ncid
+    character(len=*), intent( in) :: name
+    integer,          intent( in) :: dimid
+</pre></div>
+
+<a name="attr_005finq_005fapi90"></a><a name="Attribute-inquiry-APIs-1"></a>
+<h3 class="heading">Attribute inquiry APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_inquire_attribute(ncid, varid, name, xtype, len, attnum)
+    integer,                                 intent( in) :: ncid
+    integer,                                 intent( in) :: varid
+    character(len = *),                      intent( in) :: name
+    integer,                       optional, intent(out) :: xtype
+    integer,                       optional, intent(out) :: attnum
+    integer(kind=MPI_OFFSET_KIND), optional, intent(out) :: len
+
+integer function nf90mpi_inq_attname(ncid, varid, attnum, name)
+    integer,          intent( in) :: ncid
+    integer,          intent( in) :: varid
+    integer,          intent( in) :: attnum
+    character(len=*), intent(out) :: name
+
+integer function nf90mpi_copy_att(ncid_in, varid_in, name, ncid_out, varid_out)
+    integer,          intent(in) :: ncid_in
+    integer,          intent(in) :: varid_in
+    character(len=*), intent(in) :: name
+    integer,          intent(in) :: ncid_out
+    integer,          intent(in) :: varid_out
+
+integer function nf90mpi_rename_att(ncid, varid, curname, newname)
+    integer,          intent(in) :: ncid
+    integer,          intent(in) :: varid
+    character(len=*), intent(in) :: curname
+    character(len=*), intent(in) :: newname
+
+integer function nf90mpi_del_att(ncid, varid, name)
+    integer,          intent(in) :: ncid
+    integer,          intent(in) :: varid
+    character(len=*), intent(in) :: name
+</pre></div>
+
+<a name="attr_005fapi90"></a><a name="Attribute-put_002fget-APIs-1"></a>
+<h3 class="heading">Attribute put/get APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_put_att(ncid, varid, name, values)
+    integer,                                     intent(in) :: ncid
+    integer,                                     intent(in) :: varid
+    character(len=*),                            intent(in) :: name
+    &lt;any valid type, scalar or array of rank 1&gt;, intent(in) :: values
+
+integer function nf90mpi_get_att(ncid, varid, name, values)
+    integer,                                     intent( in) :: ncid
+    integer,                                     intent( in) :: varid
+    character(len=*),                            intent( in) :: name
+    &lt;any valid type, scalar or array of rank 1&gt;, intent(out) :: values
+</pre></div>
+
+<a name="def_005fvar_005fapi90"></a><a name="General-variable-APIs-1"></a>
+<h3 class="heading">General variable APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_def_var(ncid, name, xtype, dimids, varid)
+    integer,               intent( in) :: ncid
+    character(len = *),    intent( in) :: name
+    integer,               intent( in) :: xtype
+    integer, dimension(:), intent( in) :: dimids ! omitted for scalar
+
+integer function nf90mpi_inq_varid(ncid, name, varid)
+    integer,          intent( in) :: ncid
+    character(len=*), intent( in) :: name
+    integer,          intent(out) :: varid
+
+integer function nf90mpi_inquire_variable(ncid, varid, name, xtype, ndims, dimids, nAtts)
+    integer,                         intent( in) :: ncid
+    integer,                         intent( in) :: varid
+    character(len=*),      optional, intent(out) :: name
+    integer,               optional, intent(out) :: xtype
+    integer,               optional, intent(out) :: ndims
+    integer, dimension(*), optional, intent(out) :: dimids
+    integer,               optional, intent(out) :: nAtts
+
+integer function nf90mpi_inq_varoffset(ncid, varid, offset)
+    integer,                       intent( in) :: ncid, varid
+    integer(kind=MPI_OFFSET_KIND), intent(out) :: offset
+
+integer function nf90mpi_rename_var(ncid, varid, newname)
+    integer,          intent( in) :: ncid
+    integer,          intent( in) :: varid
+    character(len=*), intent( in) :: newname
+
+integer function nf90mpi_def_var_fill(ncid, varid, no_fill, fill_value)
+    integer,          intent( in) :: ncid
+    integer,          intent( in) :: varid
+    integer,          intent( in) :: no_fill
+    &lt;any valid type&gt;, intent( in) :: fill_value
+
+integer function nf90mpi_inq_var_fill(ncid, varid, no_fill, fill_value)
+    integer,          intent( in) :: ncid
+    integer,          intent( in) :: varid
+    integer,          intent(out) :: no_fill
+    &lt;any valid type&gt;, intent(out) :: fill_value
+
+integer function nf90mpi_fill_var_rec(ncid, varid, recno)
+    integer,                       intent( in) :: ncid
+    integer,                       intent( in) :: varid
+    integer(kind=MPI_OFFSET_KIND), intent( in) :: recno
+</pre></div>
+
+<a name="var_005fapi90"></a><a name="Blocking-put_002fget-variable-APIs"></a>
+<h3 class="heading">Blocking put/get variable APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_put_var(ncid, varid, values, start, stride, map, bufcount, buftype)
+    integer,                                                intent(in   ) :: ncid
+    integer,                                                intent(in   ) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,          intent(inout) :: values
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: count
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: stride
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: map
+    integer (kind=MPI_OFFSET_KIND),               optional, intent(in   ) :: bufcount
+    integer,                                      optional, intent(in   ) :: buftype
+
+integer function nf90mpi_put_var_all(ncid, varid, values, start, stride, map, bufcount, buftype)
+    integer,                                                intent(in   ) :: ncid
+    integer,                                                intent(in   ) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,          intent(inout) :: values
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: count
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: stride
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: map
+    integer (kind=MPI_OFFSET_KIND),               optional, intent(in   ) :: bufcount
+    integer,                                      optional, intent(in   ) :: buftype
+
+integer function nf90mpi_get_var(ncid, varid, values, start, stride, map, bufcount, buftype)
+    integer,                                                intent( in) :: ncid
+    integer,                                                intent( in) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,          intent(out) :: values
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: count
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: stride
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: map
+    integer (kind=MPI_OFFSET_KIND),               optional, intent( in) :: bufcount
+    integer,                                      optional, intent( in) :: buftype
+
+integer function nf90mpi_get_var_all(ncid, varid, values, start, stride, map, bufcount, buftype)
+    integer,                                                intent( in) :: ncid
+    integer,                                                intent( in) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,          intent(out) :: values
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: count
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: stride
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: map
+    integer (kind=MPI_OFFSET_KIND),               optional, intent( in) :: bufcount
+    integer,                                      optional, intent( in) :: buftype
+</pre></div>
+
+<a name="i_005fvar_005fapi90"></a><a name="Nonblocking-put_002fget-variable-APIs"></a>
+<h3 class="heading">Nonblocking put/get variable APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_iput_var(ncid, varid, values, req, start, stride, map, bufcount, buftype)
+    integer,                                                intent(in   ) :: ncid
+    integer,                                                intent(in   ) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,          intent(inout) :: values
+    integer,                                                intent(  out) :: req
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: count
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: stride
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: map
+    integer (kind=MPI_OFFSET_KIND),               optional, intent(in   ) :: bufcount
+    integer,                                      optional, intent(in   ) :: buftype
+
+integer function nf90mpi_iget_var(ncid, varid, values, req, start, stride, map, bufcount, buftype)
+    integer,                                                intent( in) :: ncid
+    integer,                                                intent( in) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,          intent(out) :: values
+    integer,                                                intent(out) :: req
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: count
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: stride
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent( in) :: map
+    integer (kind=MPI_OFFSET_KIND),               optional, intent( in) :: bufcount
+    integer,                                      optional, intent( in) :: buftype
+</pre></div>
+
+<a name="b_005fvar_005fapi90"></a><a name="Nonblocking-buffered-put-variable-APIs"></a>
+<h3 class="heading">Nonblocking buffered put variable APIs</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_bput_var(ncid, varid, values, req, start, stride, map, bufcount, buftype)
+    integer,                                                intent(in   ) :: ncid
+    integer,                                                intent(in   ) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,          intent(inout) :: values
+    integer,                                                intent(  out) :: req
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: count
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: stride
+    integer (kind=MPI_OFFSET_KIND), dimension(:), optional, intent(in   ) :: map
+    integer (kind=MPI_OFFSET_KIND),               optional, intent(in   ) :: bufcount
+    integer,                                      optional, intent(in   ) :: buftype
+
+integer function nf90mpi_buffer_attach(ncid, bufsize)
+    integer,                        intent( in) :: ncid
+    integer (kind=MPI_OFFSET_KIND), intent( in) :: bufsize
+
+integer function nf90mpi_buffer_detach(ncid)
+    integer,                       intent( in) :: ncid
+
+integer function nf90mpi_inq_buffer_size(ncid, buf_size)
+    integer,                        intent( in) :: ncid
+    integer (kind=MPI_OFFSET_KIND), intent(out) :: buf_size
+
+integer function nf90mpi_inq_buffer_usage(ncid, usage)
+    integer,                        intent( in) :: ncid
+    integer (kind=MPI_OFFSET_KIND), intent(out) :: usage
+</pre></div>
+
+<a name="vard_005fapi90"></a><a name="Blocking-put_002fget-an-array-of-values-using-filetype-1"></a>
+<h3 class="heading">Blocking put/get an array of values using filetype</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_put_vard(ncid, varid, filetype, buf, bufcount, buftype)
+    integer,                                       intent(in   ) :: ncid
+    integer,                                       intent(in   ) :: varid
+    integer,                                       intent(in   ) :: filetype
+    &lt;any valid type, scalar or array of any rank&gt;, intent(inout) :: buf
+    integer (kind=MPI_OFFSET_KIND),                intent(in   ) :: bufcount
+    integer,                                       intent(in   ) :: buftype
+
+integer function nf90mpi_put_vard_all(ncid, varid, filetype, buf, bufcount, buftype)
+    integer,                                       intent(in   ) :: ncid
+    integer,                                       intent(in   ) :: varid
+    integer,                                       intent(in   ) :: filetype
+    &lt;any valid type, scalar or array of any rank&gt;, intent(inout) :: buf
+    integer (kind=MPI_OFFSET_KIND),                intent(in   ) :: bufcount
+    integer,                                       intent(in   ) :: buftype
+
+integer function nf90mpi_get_vard(ncid, varid, filetype, buf, bufcount, buftype)
+    integer,                                       intent( in) :: ncid
+    integer,                                       intent( in) :: varid
+    integer,                                       intent( in) :: filetype
+    &lt;any valid type, scalar or array of any rank&gt;, intent(out) :: buf
+    integer (kind=MPI_OFFSET_KIND),                intent( in) :: bufcount
+    integer,                                       intent( in) :: buftype
+
+integer function nf90mpi_get_vard_all(ncid, varid, filetype, buf, bufcount, buftype)
+    integer,                                       intent( in) :: ncid
+    integer,                                       intent( in) :: varid
+    integer,                                       intent( in) :: filetype
+    &lt;any valid type, scalar or array of any rank&gt;, intent(out) :: buf
+    integer (kind=MPI_OFFSET_KIND),                intent( in) :: bufcount
+    integer,                                       intent( in) :: buftype
+</pre></div>
+
+<a name="varn_005fapi90"></a><a name="Blocking-and-nonblocking-put_002fget-a-list-of-subarrays-1"></a>
+<h3 class="heading">Blocking and nonblocking put/get a list of subarrays</h3>
+<div class="example">
+<pre class="example">integer function nf90mpi_put_varn(ncid, varid, values, num, start, count)
+    integer,                                                  intent(in   ) :: ncid
+    integer,                                                  intent(in   ) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,            intent(inout) :: values
+    integer,                                                  intent(in   ) :: num
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:),           intent(in   ) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:), optional, intent(in   ) :: count
+
+integer function nf90mpi_put_varn_all(ncid, varid, values, num, start, count)
+    integer,                                                  intent(in   ) :: ncid
+    integer,                                                  intent(in   ) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,            intent(inout) :: values
+    integer,                                                  intent(in   ) :: num
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:),           intent(in   ) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:), optional, intent(in   ) :: count
+
+integer function nf90mpi_get_varn(ncid, varid, values, num, start, count)
+    integer,                                                  intent( in) :: ncid
+    integer,                                                  intent( in) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,            intent(out) :: values
+    integer,                                                  intent( in) :: num
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:),           intent( in) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:), optional, intent( in) :: count
+
+integer function nf90mpi_get_varn_all(ncid, varid, values, num, start, count)
+    integer,                                                  intent( in) :: ncid
+    integer,                                                  intent( in) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,            intent(out) :: values
+    integer,                                                  intent( in) :: num
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:),           intent( in) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:), optional, intent( in) :: count
+
+integer function nf90mpi_iput_varn(ncid, varid, values, req, num, start, count)
+    integer,                                                  intent(in   ) :: ncid
+    integer,                                                  intent(in   ) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,            intent(inout) :: values
+    integer,                                                  intent(out  ) :: req
+    integer,                                                  intent(in   ) :: num
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:),           intent(in   ) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:), optional, intent(in   ) :: count
+
+integer function nf90mpi_iget_varn(ncid, varid, values, req, num, start, count)
+    integer,                                                  intent( in) :: ncid
+    integer,                                                  intent( in) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,            intent(out) :: values
+    integer,                                                  intent(out) :: req
+    integer,                                                  intent( in) :: num
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:),           intent( in) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:), optional, intent( in) :: count
+
+integer function nf90mpi_bput_varn(ncid, varid, values, req, num, start, count)
+    integer,                                                  intent(in   ) :: ncid
+    integer,                                                  intent(in   ) :: varid
+    &lt;any valid type, scalar or array of any rank&gt;,            intent(inout) :: values
+    integer,                                                  intent(  out) :: req
+    integer,                                                  intent(in   ) :: num
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:),           intent(in   ) :: start
+    integer (kind=MPI_OFFSET_KIND), dimension(:,:), optional, intent(in   ) :: count
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Error-Codes.html#Error-Codes" accesskey="n" rel="next">Error Codes</a>, Previous: <a href="Summary-of-Fortran-77-Interface.html#Summary-of-Fortran-77-Interface" accesskey="p" rel="prev">Summary of Fortran 77 Interface</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_put_att_&lt;type&gt; (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_put_att_&lt;type&gt; (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_put_att_&lt;type&gt; (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Attributes.html#Attributes" rel="up" title="Attributes">
+<link href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family" rel="next" title="ncmpi_inq_att Family">
+<link href="Attributes-Introduction.html#Attributes-Introduction" rel="prev" title="Attributes Introduction">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fput_005fatt_005f_003ctype_003e"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family" accesskey="n" rel="next">ncmpi_inq_att Family</a>, Previous: <a href="Attributes-Introduction.html#Attributes-Introduction" accesskey="p" rel="prev">Attributes Introduction</a>, Up: <a href="Attributes.html#Attributes" accesskey="u" rel="up">Attributes</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Create-an-Attribute_003a-ncmpi_005fput_005fatt_005f_003ctype_003e"></a>
+<h3 class="section">5.2 Create an Attribute: ncmpi_put_att_<var>&lt;type&gt;</var></h3>
+<a name="index-ncmpi_005fput_005fatt"></a>
+<a name="index-ncmpi_005fput_005fatt_005ftext"></a>
+<a name="index-ncmpi_005fput_005fatt_005fuchar"></a>
+<a name="index-ncmpi_005fput_005fatt_005fschar"></a>
+<a name="index-ncmpi_005fput_005fatt_005fshort"></a>
+<a name="index-ncmpi_005fput_005fatt_005fint"></a>
+<a name="index-ncmpi_005fput_005fatt_005ffloat"></a>
+<a name="index-ncmpi_005fput_005fatt_005fdouble"></a>
+<a name="index-ncmpi_005fput_005fatt_005fushort"></a>
+<a name="index-ncmpi_005fput_005fatt_005funit"></a>
+<a name="index-ncmpi_005fput_005fatt_005flonglong"></a>
+<a name="index-ncmpi_005fput_005fatt_005fulonglong"></a>
+<a name="index-ncmpi_005fput_005fatt_005ftext_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005fuchar_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005fschar_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005fshort_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005fint_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005ffloat_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005fdouble_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005fushort_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005funit_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005flonglong_002c-example"></a>
+<a name="index-ncmpi_005fput_005fatt_005fulonglong_002c-example"></a>
+<a name="index-attributes_002c-creating"></a>
+<a name="index-attributes_002c-writing"></a>
+<a name="index-writing-attributes"></a>
+
+<p>The function ncmpi_put_att_<var>&lt;type&gt;</var> adds or changes a variable attribute or
+global attribute of an opened netCDF file. If this attribute is new,
+or if the space required to store the attribute is greater than
+before, the netCDF file must be in define mode.
+</p>
+<a name="Data-types-18"></a>
+<h3 class="heading">Data types</h3>
+<table cellpadding="4" border="1">
+<tr class="spacer" align=center>
+    <td> &lt;<b>type  </b>&gt; for API names </td>
+    <td> &lt;<b>C type</b>&gt; for API arguments </td>
+</tr>
+<tr align=center> <td>text     </td> <td>char             </td> </tr>
+<tr align=center> <td>schar    </td> <td>signed char      </td> </tr>
+<tr align=center> <td>short    </td> <td>short            </td> </tr>
+<tr align=center> <td>int      </td> <td>int              </td> </tr>
+<tr align=center> <td>float    </td> <td>float            </td> </tr>
+<tr align=center> <td>double   </td> <td>double           </td> </tr>
+<tr align=center> <td>uchar    </td> <td>unsigned char    </td> </tr>
+<tr align=center> <td>ushort   </td> <td>unsigned short   </td> </tr>
+<tr align=center> <td>uint     </td> <td>unsigned int     </td> </tr>
+<tr align=center> <td>longlong </td> <td>long long        </td> </tr>
+<tr align=center> <td>ulonglong</td> <td>unsigned longlong</td> </tr>
+</table>
+
+<a name="Operational-Mode-59"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>These APIs are collective subroutines.
+</p>
+<p>These APIs must be called while the file is in define mode.
+</p>
+<a name="Usage-59"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_put_att        (int              ncid,
+                          int              varid,
+                          const char      *name,
+                          nc_type          xtype,
+                          MPI_Offset       nelems,
+                          const char      *buf);
+
+int ncmpi_put_att_text   (int              ncid,
+                          int              varid,
+                          const char      *name,
+                          MPI_Offset       nelems,
+                          const char      *buf);
+
+int ncmpi_put_att_<strong>&lt;type&gt;</strong>(int              ncid,
+                          int              varid,
+                          const char      *name,
+                          nc_type          xtype,
+                          MPI_Offset       nelems,
+                          const <strong>&lt;C type&gt;</strong> *buf);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>varid</code></dt>
+<dd><p>Variable ID of the variable to which the attribute will be assigned or
+NC_GLOBAL for a global attribute.
+</p>
+</dd>
+<dt><code>name</code></dt>
+<dd><p>Attribute name. Must be a legal netCDF identifier.
+For CDF-1, a legal identifier is any sequence of one or more alphabetic
+characters, digits, and the following special characters:
+&rsquo;_&rsquo;, &rsquo;.&rsquo;, &rsquo;-&rsquo;, &rsquo;@&rsquo;, and &rsquo;+&rsquo;. The identifier must, however, start with an
+alphabetic character or underscore. Case is significant
+and names commencing with underscore are reserved for system use.
+Starting from CDF-2, more characters are allowed.
+Please refer to <a href="CDF_002d2-file-format-specification.html#CDF_002d2-file-format-specification">CDF-2 file format specification</a> and <a href="CDF_002d5-file-format-specification.html#CDF_002d5-file-format-specification">CDF-5 file format specification</a>.
+Attribute name conventions are assumed by
+some netCDF generic applications, e.g., units as the name for a string
+attribute that gives the units for a netCDF variable. For examples of
+attribute conventions see <a href="../netcdf/Attribute-Conventions.html#Attribute-Conventions">Attribute Conventions</a> in <cite>The PnetCDF Users Guide</cite>.
+</p>
+</dd>
+<dt><code>xtype</code></dt>
+<dd><p>One of the set of predefined netCDF external data types. The type of
+this parameter, nc_type, is defined in the netCDF header file. The
+valid netCDF external data types are NC_BYTE, NC_CHAR, NC_SHORT,
+NC_INT, NC_FLOAT, and NC_DOUBLE. Although it&rsquo;s possible to create
+attributes of all types, NC_CHAR and NC_DOUBLE attributes are adequate
+for most purposes.
+For CDF-5 file format, the following data types are also supported: NC_UBYTE, NC _USHORT, NC_UINT, NC_INT64, and NC_UINT64.
+</p>
+</dd>
+<dt><code>nelems</code></dt>
+<dd><p>Number of values provided for the attribute.
+</p>
+</dd>
+<dt><code>buf</code></dt>
+<dd><p>Pointer to one or more values. If the type of values differs from the
+netCDF attribute type specified as xtype, type conversion will
+occur.
+</p></dd>
+</dl>
+
+<a name="Return-Error-Codes-56"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_put_att_<var>&lt;type&gt;</var> returns the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_EPERM: Attempt write operations in read-only file.
+</li><li> NC_ENOTVAR: The input or output variable ID is invalid for the specified netCDF file.
+</li><li> NC_EGLOBAL: Using NC_GLOBAL is illegal in this context.
+</li><li> NC_EINVAL: nelems &lt; 0, or nelems &gt; 0 when buf is NULL, or must be 1 for fill attribute.
+</li><li> NC_EBADNAME: Name contains illegal characters.
+</li><li> NC_EBADTYPE: Fill value must be of the same type.
+</li><li> NC_ESTRICTCDF2: Attempting CDF-5 operation on strict CDF or CDF-2 file (the NC data type specified in xtype is only valid in CDF-5 files).
+</li><li> NC_ECHAR: Attempt to convert numerical values to or from text data.
+</li><li> NC_ENOTINDEFINE: The specified netCDF file is in data mode when adding a new attribute or the new name of an existing attribute is longer than the old name.
+NC_EMAXATTS: Maximum number of attributes exceeds the limit, NC_MAX_ATTRS.
+</li><li> NC_EMULTIDEFINE_ATTR_NAME: Attribute name is inconsistent among processes.
+</li><li> NC_EMULTIDEFINE_ATTR_LEN: Attribute length is inconsistent among processes.
+</li><li> NC_EMULTIDEFINE_ATTR_TYPE: Attribute type is inconsistent among processes.
+</li><li> NC_EMULTIDEFINE_ATTR_VAL: Attribute value is inconsistent among processes.
+</li><li> NC_EMULTIDEFINE_FNC_ARGS: Inconsistent function arguments used in collective API.
+</li></ul>
+
+<a name="Example-58"></a>
+<h3 class="heading">Example</h3>
+
+<p>Here is an example using ncmpi_put_att_double to add a variable attribute
+named valid_range for a netCDF variable named rh and a global
+attribute named title to an existing netCDF file named foo.nc:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int  status;                            /* error status */
+int  ncid;                              /* netCDF ID */
+int  rh_id;                             /* variable ID */
+static double rh_range[] = {0.0, 100.0};/* attribute vals */
+static char title[] = &quot;example netCDF file&quot;;
+   ...
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_WRITE, MPI_INFO_NULL,  &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005fredef.html#ncmpi_005fredef">ncmpi_redef</a>(ncid);                /* enter define mode */
+if (status != NC_NOERR) handle_error(status);
+status = <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid">ncmpi_inq_varid</a>(ncid, &quot;rh&quot;, &amp;rh_id);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="#ncmpi_005fput_005fatt_005f_003ctype_003e">ncmpi_put_att_double</a>(ncid, rh_id, &quot;valid_range&quot;, NC_DOUBLE, 2, rh_range);
+if (status != NC_NOERR) handle_error(status);
+status = <a href="#ncmpi_005fput_005fatt_005f_003ctype_003e">ncmpi_put_att_text</a>(ncid, NC_GLOBAL, &quot;title&quot;, strlen(title), title)
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005fenddef.html#ncmpi_005fenddef">ncmpi_enddef</a>(ncid);               /* leave define mode */
+if (status != NC_NOERR) handle_error(status);
+</pre></div>
+
+<a name="Full-example-C-program-17"></a>
+<h3 class="heading">Full example C program</h3>
+<ul>
+<li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/global_attributes.c">global_attributes.c</a>
+</li><li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/put_vara.c">put_vara.c</a>
+</li><li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/fill_mode.c">fill_mode.c</a>
+</li><li> The above programs are available in all PnetCDF releases under directory examples/C.
+</li></ul>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005finq_005fatt-Family.html#ncmpi_005finq_005fatt-Family" accesskey="n" rel="next">ncmpi_inq_att Family</a>, Previous: <a href="Attributes-Introduction.html#Attributes-Introduction" accesskey="p" rel="prev">Attributes Introduction</a>, Up: <a href="Attributes.html#Attributes" accesskey="u" rel="up">Attributes</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

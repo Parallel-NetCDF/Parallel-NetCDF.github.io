@@ -1,0 +1,434 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_put_varm_&lt;type&gt; (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_put_varm_&lt;type&gt; (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_put_varm_&lt;type&gt; (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Variables.html#Variables" rel="up" title="Variables">
+<link href="ncmpi_005fput_005fvarn_005f_003ctype_003e.html#ncmpi_005fput_005fvarn_005f_003ctype_003e" rel="next" title="ncmpi_put_varn_&lt;type&gt;">
+<link href="ncmpi_005fput_005fvars_005f_003ctype_003e.html#ncmpi_005fput_005fvars_005f_003ctype_003e" rel="prev" title="ncmpi_put_vars_&lt;type&gt;">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005fput_005fvarm_005f_003ctype_003e"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fput_005fvarn_005f_003ctype_003e.html#ncmpi_005fput_005fvarn_005f_003ctype_003e" accesskey="n" rel="next">ncmpi_put_varn_<var>&lt;type&gt;</var></a>, Previous: <a href="ncmpi_005fput_005fvars_005f_003ctype_003e.html#ncmpi_005fput_005fvars_005f_003ctype_003e" accesskey="p" rel="prev">ncmpi_put_vars_<var>&lt;type&gt;</var></a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Write-a-Mapped-Array-of-Values_003a-ncmpi_005fput_005fvarm_005f_003ctype_003e"></a>
+<h3 class="section">4.13 Write a Mapped Array of Values: ncmpi_put_varm_<var>&lt;type&gt;</var></h3>
+<a name="index-ncmpi_005fput_005fvarm_005ftext"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fuchar"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fschar"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fshort"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fint"></a>
+<a name="index-ncmpi_005fput_005fvarm_005ffloat"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fdouble"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fushort"></a>
+<a name="index-ncmpi_005fput_005fvarm_005funit"></a>
+<a name="index-ncmpi_005fput_005fvarm_005flonglong"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fulonglong"></a>
+<a name="index-ncmpi_005fput_005fvarm_005ftext_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fuchar_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fschar_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fshort_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fint_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005ffloat_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fdouble_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fushort_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005funit_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005flonglong_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fulonglong_005fall"></a>
+<a name="index-ncmpi_005fput_005fvarm_005ftext_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fuchar_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fschar_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fshort_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fint_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005ffloat_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fdouble_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fushort_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005funit_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005flonglong_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fulonglong_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005ftext_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fuchar_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fschar_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fshort_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fint_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005ffloat_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fdouble_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fushort_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005funit_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005flonglong_005fall_002c-example"></a>
+<a name="index-ncmpi_005fput_005fvarm_005fulonglong_005fall_002c-example"></a>
+<a name="index-array_002c-writing-mapped"></a>
+<a name="index-writing-mapped-array"></a>
+<a name="index-mapped-array_002c-writing"></a>
+
+<p>The ncmpi_put_varm_<var>&lt;type&gt;</var> family of functions writes a mapped array
+section of values into a netCDF variable of an opened netCDF
+file. The mapped array section is specified by giving a corner, a
+vector of counts, a stride vector, and an index mapping vector. The
+index mapping vector is a vector of integers that specifies the
+mapping between the dimensions of a netCDF variable and the in-memory
+structure of the internal data array. No assumptions are made about
+the ordering or length of the dimensions of the data array.
+</p>
+<p>The most common use case for this API is to write a matrix-transposed array.
+See an example below.
+</p>
+<a name="Data-types-4"></a>
+<h3 class="heading">Data types</h3>
+<table cellpadding="4" border="1">
+<tr class="spacer" align=center>
+    <td> &lt;<b>type  </b>&gt; for API names </td>
+    <td> &lt;<b>C type</b>&gt; for API arguments </td>
+</tr>
+<tr align=center> <td>text     </td> <td>char             </td> </tr>
+<tr align=center> <td>schar    </td> <td>signed char      </td> </tr>
+<tr align=center> <td>short    </td> <td>short            </td> </tr>
+<tr align=center> <td>int      </td> <td>int              </td> </tr>
+<tr align=center> <td>float    </td> <td>float            </td> </tr>
+<tr align=center> <td>double   </td> <td>double           </td> </tr>
+<tr align=center> <td>uchar    </td> <td>unsigned char    </td> </tr>
+<tr align=center> <td>ushort   </td> <td>unsigned short   </td> </tr>
+<tr align=center> <td>uint     </td> <td>unsigned int     </td> </tr>
+<tr align=center> <td>longlong </td> <td>long long        </td> </tr>
+<tr align=center> <td>ulonglong</td> <td>unsigned longlong</td> </tr>
+</table>
+
+<a name="Operational-Mode-38"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>These API must be called while the file is in data mode.
+</p>
+<a name="Collective-I_002fO-4"></a>
+<h3 class="heading">Collective I/O</h3>
+<p>The corresponding collective APIs have the suffix name &quot;_all&quot; and must be called in collective data mode.
+</p>
+<a name="Usage-38"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_put_varm_<strong>&lt;type&gt;</strong>     (int                  ncid,
+                                int                 varid,
+                                const MPI_Offset    start[],
+                                const MPI_Offset    count[],
+                                const MPI_Offset    stride[],
+                                const MPI_Offset    imap[],
+                                const <strong>&lt;C type&gt;</strong>     *buf);
+
+int ncmpi_put_varm             (int                 ncid,
+                                int                 varid,
+                                const MPI_Offset    start[],
+                                const MPI_Offset    count[],
+                                const MPI_Offset    stride[],
+                                const MPI_Offset    imap[],
+                                const void         *buf,
+                                MPI_Offset          bufcount,
+                                MPI_Datatype        buftype);
+
+int ncmpi_put_varm_<strong>&lt;type&gt;</strong>_all (int                  ncid,
+                                int                 varid,
+                                const MPI_Offset    start[],
+                                const MPI_Offset    count[],
+                                const MPI_Offset    stride[],
+                                const MPI_Offset    imap[],
+                                const <strong>&lt;C type&gt;</strong>     *buf);
+
+int ncmpi_put_varm_all         (int                 ncid,
+                                int                 varid,
+                                const MPI_Offset    start[],
+                                const MPI_Offset    count[],
+                                const MPI_Offset    stride[],
+                                const MPI_Offset    imap[],
+                                const void         *buf,
+                                MPI_Offset          bufcount,
+                                MPI_Datatype        buftype);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p>
+</dd>
+<dt><code>varid</code></dt>
+<dd><p>Variable ID. Different MPI processes may use different variable IDs.
+</p>
+</dd>
+<dt><code>start</code></dt>
+<dd><p>A vector of MPI_Offset integers specifying the index in the variable
+where the first of the data values will be written. The indices are
+relative to 0, so for example, the first data value of a variable
+would have index (0, 0, ... , 0). The elements of start correspond, in
+order, to the variable&rsquo;s dimensions. Hence, if the variable is a
+record variable, the first index corresponds to the starting record
+number for writing the data values.
+</p>
+</dd>
+<dt><code>count</code></dt>
+<dd><p>A vector of MPI_Offset integers specifying the number of indices selected
+along each dimension. To write a single value, for example, specify
+count as (1, 1, ... , 1). The elements of count correspond, in order,
+to the variable&rsquo;s dimensions. Hence, if the variable is a record
+variable, the first element of count corresponds to a count of the
+number of records to write.
+</p>
+</dd>
+<dt><code>stride</code></dt>
+<dd><p>A vector of MPI_Offset integers that specifies the sampling interval
+along each dimension of the netCDF variable. The elements of the
+stride vector correspond, in order, to the netCDF variable&rsquo;s
+dimensions (stride[0] gives the sampling interval along the most
+slowly varying dimension of the netCDF variable). Sampling intervals
+are specified in type-independent units of elements (a value of 1
+selects consecutive elements of the netCDF variable along the
+corresponding dimension, a value of 2 selects every other element,
+etc.). A NULL stride argument is treated as (1, 1, ... , 1).
+</p>
+</dd>
+<dt><code>imap</code></dt>
+<dd><p>A vector of MPI_Offset integers that specifies the mapping between the
+dimensions of a netCDF variable and the in-memory structure of the
+internal data array. The elements of the index mapping vector
+correspond, in order, to the netCDF variable&rsquo;s dimensions (imap[0]
+gives the distance between elements of the internal array
+corresponding to the most slowly varying dimension of the netCDF
+variable). Distances between elements are specified in
+type-independent units of elements (the distance between internal
+elements that occupy adjacent memory locations is 1 and not the
+element&rsquo;s byte-length as in netCDF 2). A NULL argument means the
+memory-resident values have the same structure as the associated
+netCDF variable.
+</p>
+</dd>
+<dt><code>buf</code></dt>
+<dd><p>Pointer to the location used for computing where the data values will
+be found; the data should be of the type appropriate for the function
+called. If the type of data values differs from the netCDF variable
+type, type conversion will occur.
+</p>
+</dd>
+<dt><code>bufcount</code></dt>
+<dd><p>An integer indicates the number of MPI derived data type elements in the buf to be written to the file.
+</p>
+</dd>
+<dt><code>buftype</code></dt>
+<dd><p>An MPI derived data type that describes the memory layout of buf.
+Starting from PnetCDF version 1.6.0, buftype can be MPI_DATATYPE_NULL.
+In this case, bufcount is ignored and the buf&rsquo;s data type must match the type
+of the variable defined in the file - no data conversion will be done.
+</p>
+</dd>
+</dl>
+
+<a name="Layout-Illustration-for-Write-Buffer-in-Memory-and-Data-Written-in-File-2"></a>
+<h3 class="heading">Layout Illustration for Write Buffer in Memory and Data Written in File</h3>
+<div align="center"><img src="images/put_varm.png" alt="put_varm mapping">
+</div>
+<a name="Return-Error-Codes-35"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_put_varm_<var>&lt;type&gt;</var> returns the value NC_NOERR if no errors
+occurred. Otherwise, the returned status indicates an error. Possible
+causes of errors include:
+</p><ul>
+<li> NC_EBADID: Bad ncid.  The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_EPERM: Attempt write operations in read-only file.
+</li><li> NC_ENOTVAR: The variable ID is invalid for the specified netCDF file.
+</li><li> NC_EGLOBAL: NC_GLOBAL is considered invalid for these APIs.
+</li><li> NC_EINVALCOORDS: The specified corner indices were out of range for the rank of the specified variable. For example, a negative index, or an index that is larger than the corresponding dimension length will cause an error.
+</li><li> NC_EEDGE: The specified edge lengths added to the specified corner would have referenced data out of range for the rank of the specified variable. For example, an edge length that is larger than the corresponding dimension length minus the corner index will cause an error.
+</li><li> NC_ERANGE: One or more of the specified values are out of the range of values representable by the external data type of the variable. (Does not apply to the ncmpi_put_vars() and ncmpi_put_vars_all()).
+</li><li> NC_EINDEFINE: Operation not allowed in define mode.
+</li><li> NC_ECHAR: Attempt to convert numerical values to or from text data.
+</li><li> NC_ENOMEM: Out of memory.
+</li><li> NC_EINDEP: Attempt collective I/O operations in independent data mode.
+</li><li> NC_ENOTINDEP: Attempt independent I/O operations in collective data mode.
+</li><li> NC_EIOMISMATCH: The number of variable elements requested in (bufcount, buftype) mismatches the one calculated from count. This error may only occur for flexible APIs.
+</li><li> NC_ENOTSUPPORT: Flexible APIs for NetCDF-4 files is not yet supported.
+</li></ul>
+
+<a name="Example-37"></a>
+<h3 class="heading">Example</h3>
+
+<p>The following imap vector maps in the trivial way a 4x3x2 netCDF
+variable and an internal array of the same shape:
+</p>
+<div class="example">
+<pre class="example">float a[4][3][2];       /* same shape as netCDF variable */
+int   imap[3] = {6, 2, 1};
+                        /* netCDF dimension       inter-element distance */
+                        /* ----------------       ---------------------- */
+                        /* most rapidly varying       1                  */
+                        /* intermediate               2 (=imap[2]*2)     */
+                        /* most slowly varying        6 (=imap[1]*3)     */
+</pre></div>
+
+<p>Using the imap vector above with ncmpi_put_varm_float_all obtains the same
+result as simply using ncmpi_put_var_float.
+</p>
+<p>Here is an example of using ncmpi_put_varm_float_all to write &ndash; from a
+transposed, internal array &ndash; a netCDF variable named rh which is
+described by the C declaration float rh[6][4] (note the size and order
+of the dimensions):
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+#define NDIM 2                    /* rank of netCDF variable */
+int ncid;                         /* netCDF ID */
+int status;                       /* error status */
+int rhid;                         /* variable ID */
+MPI_Offset start[NDIM] = {0, 0};  /* netCDF variable start point: first element */
+MPI_Offset count[NDIM] = {6, 4};  /* size of internal array: entire netCDF variable; order corresponds to netCDF variable -- not internal array */
+MPI_Offset stride[NDIM] = {1, 1}; /* variable subsampling intervals: sample every netCDF element */
+MPI_Offset imap[NDIM] = {1, 6};   /* internal array inter-element distances; would be {4, 1} if not transposing */
+float buf[4][6];                  /* note transposition of netCDF variable dimensions */
+   ...
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_WRITE, MPI_INFO_NULL,  &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid">ncmpi_inq_varid</a>(ncid, &quot;rh&quot;, &amp;rhid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="#ncmpi_005fput_005fvarm_005f_003ctype_003e">ncmpi_put_varm_float_all</a>(ncid, rhid, start, count, stride, imap, buf);
+if (status != NC_NOERR) handle_error(status);
+
+   In memory:                   In file:
+     buf is a memory buffer       rh is a netCDF variable
+
+     buf[4][6] = a b c d e f      rh[6][4] =  a g m s
+                 g h i j k l                  b h n t
+                 m n o p q r                  c i o u
+                 s t u v w x                  d j p v
+                                              e k q w
+                                              f l r x
+</pre></div>
+
+<p>Here is another example of using ncmpi_put_varm_float_all to write &ndash; from a
+transposed, internal array &ndash; a subsample of the same netCDF variable,
+by writing every other point of the netCDF variable:
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+#define NDIM 2                    /* rank of netCDF variable */
+int ncid;                         /* netCDF ID */
+int status;                       /* error status */
+int rhid;                         /* variable ID */
+MPI_Offset start[NDIM] = {0, 0};  /* netCDF variable start point: first element */
+MPI_Offset count[NDIM] = {3, 2};  /* size of internal array: entire (subsampled) netCDF variable; order of dimensions corresponds to netCDF variable -- not internal array */
+MPI_Offset stride[NDIM] = {2, 2}; /* variable subsampling intervals: sample every other netCDF element */
+MPI_Offset imap[NDIM] = {1, 3};   /* internal array inter-element distances; would be {2, 1} if not transposing */
+float buf[2][3];                  /* note transposition of (subsampled) netCDF variable dimensions */
+   ...
+status = <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>(MPI_COMM_WORLD, &quot;foo.nc&quot;, NC_WRITE, MPI_INFO_NULL,  &amp;ncid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="ncmpi_005finq_005fvarid.html#ncmpi_005finq_005fvarid">ncmpi_inq_varid</a>(ncid, &quot;rh&quot;, &amp;rhid);
+if (status != NC_NOERR) handle_error(status);
+   ...
+status = <a href="#ncmpi_005fput_005fvarm_005f_003ctype_003e">ncmpi_put_varm_float_all</a>(ncid, rhid, start, count, stride, imap, buf);
+if (status != NC_NOERR) handle_error(status);
+
+   In memory:                   In file:
+     buf is a memory buffer       rh is a netCDF variable
+
+     buf[2][3] = a b c            rh[6][4] =  a _ d _
+                 d e f                        _ _ _ _
+                                              b _ e _
+                                              _ _ _ _
+                                              c _ f _
+                                              _ _ _ _
+</pre></div>
+
+<a name="Full-example-C-program-8"></a>
+<h3 class="heading">Full example C program</h3>
+<ul>
+<li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/transpose.c">transpose.c</a>
+</li><li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/ghost_cell.c">ghost_cell.c</a>
+</li><li> The above programs are available in all PnetCDF releases under directory examples/C.
+</li></ul>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fput_005fvarn_005f_003ctype_003e.html#ncmpi_005fput_005fvarn_005f_003ctype_003e" accesskey="n" rel="next">ncmpi_put_varn_<var>&lt;type&gt;</var></a>, Previous: <a href="ncmpi_005fput_005fvars_005f_003ctype_003e.html#ncmpi_005fput_005fvars_005f_003ctype_003e" accesskey="p" rel="prev">ncmpi_put_vars_<var>&lt;type&gt;</var></a>, Up: <a href="Variables.html#Variables" accesskey="u" rel="up">Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

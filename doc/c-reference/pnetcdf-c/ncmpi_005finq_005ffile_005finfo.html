@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncmpi_inq_file_info (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncmpi_inq_file_info (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncmpi_inq_file_info (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Files.html#Files" rel="up" title="Files">
+<link href="ncmpi_005fget_005ffile_005finfo.html#ncmpi_005fget_005ffile_005finfo" rel="next" title="ncmpi_get_file_info">
+<link href="ncmpi_005fdelete.html#ncmpi_005fdelete" rel="prev" title="ncmpi_delete">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncmpi_005finq_005ffile_005finfo"></a>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fget_005ffile_005finfo.html#ncmpi_005fget_005ffile_005finfo" accesskey="n" rel="next">ncmpi_get_file_info</a>, Previous: <a href="ncmpi_005fdelete.html#ncmpi_005fdelete" accesskey="p" rel="prev">ncmpi_delete</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Obtain-the-MPI-Info-object-that-contains-all-the-I_002fO-hints-currently-used_003a-ncmpi_005finq_005ffile_005finfo"></a>
+<h3 class="section">2.26 Obtain the MPI Info object that contains all the I/O hints currently used: ncmpi_inq_file_info</h3>
+<a name="index-ncmpi_005finq_005ffile_005finfo"></a>
+<a name="index-ncmpi_005finq_005ffile_005finfo_002c-example"></a>
+
+<p>The function ncmpi_inq_file_info returns an MPI info object containing all the file hints used by PnetCDF library.
+</p>
+<a name="Operational-Mode-22"></a>
+<h3 class="heading">Operational Mode</h3>
+<p>This API is an independent subroutine and can be called while the file is in either define or data mode (collective or independent).
+</p>
+<a name="Usage-22"></a>
+<h3 class="heading">Usage</h3>
+<div class="example">
+<pre class="example">int ncmpi_inq_file_info(int       ncid,
+                        MPI_Info *info_used);
+</pre></div>
+
+<dl compact="compact">
+<dt><code>ncid</code></dt>
+<dd><p>NetCDF ID, from a previous call to ncmpi_open or ncmpi_create.
+</p></dd>
+<dt><code>info_used</code></dt>
+<dd><p>MPI info object, containing file hints used by PnetCDF library. Note that the
+returned file hints may be different from the ones set by users, as PnetCDF
+adjusts the hint values based on some information available from the file
+system underneath.
+The user is responsible for freeing info_used via calling MPI_Info_free().
+</p></dd>
+</dl>
+
+<a name="Return-Error-Codes-19"></a>
+<h3 class="heading">Return Error Codes</h3>
+<p>ncmpi_inq_file_info returns the value NC_NOERR if no errors occurred. Otherwise,
+the returned status indicates an error. Possible causes of errors include:
+</p><ul>
+<li> NC_EBADID: The specified netCDF ID does not refer to an opened netCDF file.
+</li><li> NC_ENOTSUPPORT: Inquiring MPI-IO info object for NetCDF-4 file is not yet supported.
+</li></ul>
+
+<a name="Example-21"></a>
+<h3 class="heading">Example</h3>
+<p>Here is an example using ncmpi_inq_file_info.
+</p>
+<div class="example">
+<pre class="example">#include &lt;pnetcdf.h&gt;
+   ...
+int ncid, status, i, nkeys;
+MPI_Info info_used;
+   ...
+status = <a href="#ncmpi_005finq_005ffile_005finfo">ncmpi_inq_file_info</a>(ncid, &amp;info_used);
+if (status != NC_NOERR) handle_error(status);
+
+MPI_Info_inq_nkeys(info_used, &amp;nkeys);
+printf(&quot;MPI File Info: nkeys = %d\n&quot;,nkeys);
+for (i=0; i&lt;nkeys; i++) {
+    char key[MPI_MAX_INFO_KEY], value[MPI_MAX_INFO_VAL];
+    int  valuelen, flag;
+
+    MPI_Info_get_nthkey(info_used, i, key);
+    MPI_Info_get_valuelen(info_used, key, &amp;valuelen, &amp;flag);
+    MPI_Info_get(info_used, key, valuelen+1, value, &amp;flag);
+    printf(&quot;MPI File Info: [%2d] key = %25s, value = %s\n&quot;,i,key,value);
+}
+MPI_Info_free(&amp;info_used);
+</pre></div>
+
+<a name="Full-example-C-program-3"></a>
+<h3 class="heading">Full example C program</h3>
+<ul>
+<li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/collective_write.c">collective_write.c</a>
+</li><li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/hints.c">hints.c</a>
+</li><li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/get_info.c">get_info.c</a>
+</li><li> <a href="https://github.com/Parallel-NetCDF/PnetCDF/tree/master/examples/C/nonblocking_write.c">nonblocking_write.c</a>
+</li><li> The above programs are available in all PnetCDF releases under directory examples/C.
+</li></ul>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncmpi_005fget_005ffile_005finfo.html#ncmpi_005fget_005ffile_005finfo" accesskey="n" rel="next">ncmpi_get_file_info</a>, Previous: <a href="ncmpi_005fdelete.html#ncmpi_005fdelete" accesskey="p" rel="prev">ncmpi_delete</a>, Up: <a href="Files.html#Files" accesskey="u" rel="up">Files</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

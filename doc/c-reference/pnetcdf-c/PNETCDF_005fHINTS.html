@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>PNETCDF_HINTS (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="PNETCDF_HINTS (PnetCDF C Interface Guide)">
+<meta name="keywords" content="PNETCDF_HINTS (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Run_002dtime-Environment-Variables.html#Run_002dtime-Environment-Variables" rel="up" title="Run-time Environment Variables">
+<link href="Utility-programs.html#Utility-programs" rel="next" title="Utility programs">
+<link href="PNETCDF_005fVERBOSE_005fDEBUG_005fMODE.html#PNETCDF_005fVERBOSE_005fDEBUG_005fMODE" rel="prev" title="PNETCDF_VERBOSE_DEBUG_MODE">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="PNETCDF_005fHINTS"></a>
+<div class="header">
+<p>
+Previous: <a href="PNETCDF_005fVERBOSE_005fDEBUG_005fMODE.html#PNETCDF_005fVERBOSE_005fDEBUG_005fMODE" accesskey="p" rel="prev">PNETCDF_VERBOSE_DEBUG_MODE</a>, Up: <a href="Run_002dtime-Environment-Variables.html#Run_002dtime-Environment-Variables" accesskey="u" rel="up">Run-time Environment Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="node-heading">PNETCDF_HINTS</h4>
+<a name="index-PNETCDF_005fHINTS"></a>
+<a name="index-nc_005fheader_005falign_005fsize-1"></a>
+<a name="index-nc_005fvar_005falign_005fsize-1"></a>
+<a name="index-nc_005frecord_005falign_005fsize-1"></a>
+<a name="index-nc_005fheader_005fread_005fchunk_005fsize-2"></a>
+<a name="index-pnetcdf_005fsubfiling"></a>
+<a name="index-nc_005fin_005fplace_005fswap"></a>
+
+<p>Starting from release of 1.4.0 version, this environment variable allows users
+to pass I/O hints to PnetCDF library.  Hints can be a combination of both
+PnetCDF and MPI-IO hints.
+</p>
+<p>The value is a string of hints separated by &quot;;&quot; and each hint is in the form of &quot;hint=value&quot;. E.g. under csh/tcsh environment, use command:
+</p><div class="example">
+<pre class="example">setenv PNETCDF_HINTS &quot;romio_ds_write=disable;nc_header_align_size=1048576&quot;
+</pre></div>
+<p>Under bash environment, use command:
+</p><div class="example">
+<pre class="example">export PNETCDF_HINTS=&quot;romio_ds_write=disable;nc_header_align_size=1048576&quot;
+</pre></div>
+
+<p>Note the environment variables precede the (hint) values set in the application
+program, i.e. through MPI info object passed to See <a href="ncmpi_005fcreate.html#ncmpi_005fcreate">ncmpi_create</a> and
+See <a href="ncmpi_005fopen.html#ncmpi_005fopen">ncmpi_open</a>. Hints nc_header_align_size, nc_var_align_size, and
+nc_record_align_size precede the arguments v_align and r_align passed to
+See <a href="ncmpi_005f_005fenddef.html#ncmpi_005f_005fenddef">ncmpi__enddef</a>.
+</p>
+<a name="Available-PnetCDF-hints"></a>
+<h3 class="heading">Available PnetCDF hints</h3>
+<dl compact="compact">
+<dt><code>nc_header_align_size</code></dt>
+<dd><p>(Before version 1.4.0)
+It aligns the size of header extent of a newly created file.
+This hint was first introduced in version 1.1.0, but can only be passed to
+PnetCDF through an MPI info object, rather than setting the environment
+variable PNETCDF_HINTS.
+</p>
+<p>(Between version 1.4.0 and 1.13.0)
+It aligns the size of header extent of a newly created file. The default is 512
+bytes. If the file striping size is known and the total size of all fixed-size
+variables is larger than 4 times the file striping size, then this hint will be
+set to the file striping size, i.e. the size of header extent will be the
+smallest multiple of striping size that is larger than the file header size.
+Set the value to 1 to disable the alignment.
+</p>
+<p>(Version 1.13.0 and later)
+Starting from 1.13.0, the file striping size is no longer used to set the
+file header extent. This is because it can result in a large header extent
+than wanted, especially when the file striping size is large, e.g. 16 MB, and
+the header size is much smaller, e.g. less than 1 MB.
+</p></dd>
+<dt><code>nc_var_align_size</code></dt>
+<dd><p>(Before version 1.4.0)
+It aligns the size of header extent of a newly created file.
+This hint was first introduced in version 1.1.0, but can only be passed to
+PnetCDF through an MPI info object, rather than setting the environment
+variable PNETCDF_HINTS.
+</p>
+<p>(Between version 1.4.0 and 1.13.0)
+This hint aligns the starting file offsets of individual fixed-size variables.
+In PnetCDF version 1.10.0 and prior, the default is 512 bytes if file striping
+size is not obtainable by PnetCDF. If the file striping size is known and the
+total size of all fixed-size variables is larger than 4 times the file striping
+size, then the starting file offsets of all individual fixed-size variables are
+aligned to the file striping size, i.e. the smallest multiple of stripe size
+that is larger than the end offset of the variable defined immediately prior to
+this variable. Set the value to 1 to disable the alignment. Starting from
+version 1.11.0, the default has changed to 1, i.e. no alignment. If
+applications use PnetCDF nonblocking APIs to aggregate write requests to
+multiple variables, then the best practice is to disable the alignment.
+Disabling this alignment will prevent creating gaps in file space between two
+consecutive variables and thus the writes to file system can be contiguous.
+</p>
+<p>(Version 1.13.0 and later)
+Starting from version 1.13.0, this hint will only align the starting offset of
+the entire data section, rather than individual fixed-size variables.
+</p></dd>
+<dt><code>nc_header_read_chunk_size</code></dt>
+<dd><p>(version 1.4.0 and later)
+PnetCDF reads the file headers in chunks. This hint indicates the chunk size
+(in bytes). The default is 256 KB.
+</p></dd>
+<dt><code>nc_record_align_size</code></dt>
+<dd><p>(version 1.5.0 and later)
+This hint aligns the starting file offset of the record variable section. Note
+this is for the entire section, not individual records.
+</p></dd>
+<dt><code>pnetcdf_subfiling</code></dt>
+<dd><p>(version 1.6.0 and later)
+This hint enables or disables the subfiling feature.  Its string value is
+either &quot;enable&quot; or &quot;disable&quot;.
+</p></dd>
+<dt><code>nc_in_place_swap</code></dt>
+<dd><p>(version 1.10.0 and later)
+This hint enables or disables in-place byte swap on Little Endian
+architectures.  When the hint is set to &quot;enable&quot;, PnetCDF performs byte swap on
+user I/O buffers whenever possible. This option results in the least amount of
+internal memory usage. However, if an immutable user buffer is used,
+segmentation fault may occur when byte swap is performed on user buffer in
+place.  When the hint is set to &quot;disabled&quot;, PnetCDF allocates an internal
+buffer for byte swap without altering the contents of user buffer, when byte
+swap is required.  This option will increase internal memory footprint.  When
+the hint is set to &quot;auto&quot;, PnetCDF allocates an internal buffer for byte swap
+only when the I/O request size is less than 4 KiB. For larger requests, user
+buffers are used for in-place byte swap.  Note this hint takes effect only on
+Little Endian machines, as no byte swap is necessary on Big Endian machines.
+</p></dd>
+<dt><code>nc_ibuf_size</code></dt>
+<dd><p>(version 1.11.0 and later)
+It sets the size of a temporal buffer to be allocated by PnetCDF internally to
+pack noncontiguous user write buffers supplied to the nonblocking requests into
+a contiguous space. Similarly for read case to unpack the temporal buffer to
+user read buffers if they are noncontiguous. This affects both blocking and
+nonblocking APIs. On some systems, using noncontiguous user buffers in MPI
+collective read/write functions performs significantly worse than using
+contiguous buffers. Note if the size of aggregated user buffers is larger than
+<tt>nc_ibuf_size</tt>, packing/unpacking will be disabled to save memory footprint.
+The default value is 16 MiB.
+</p></dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="PNETCDF_005fVERBOSE_005fDEBUG_005fMODE.html#PNETCDF_005fVERBOSE_005fDEBUG_005fMODE" accesskey="p" rel="prev">PNETCDF_VERBOSE_DEBUG_MODE</a>, Up: <a href="Run_002dtime-Environment-Variables.html#Run_002dtime-Environment-Variables" accesskey="u" rel="up">Run-time Environment Variables</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

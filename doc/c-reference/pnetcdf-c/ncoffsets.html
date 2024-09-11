@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ncoffsets (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="ncoffsets (PnetCDF C Interface Guide)">
+<meta name="keywords" content="ncoffsets (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Utility-programs.html#Utility-programs" rel="up" title="Utility programs">
+<link href="ncvalidator.html#ncvalidator" rel="next" title="ncvalidator">
+<link href="pnetcdf_005fversion.html#pnetcdf_005fversion" rel="prev" title="pnetcdf_version">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="ncoffsets"></a>
+<div class="header">
+<p>
+Next: <a href="ncvalidator.html#ncvalidator" accesskey="n" rel="next">ncvalidator</a>, Previous: <a href="pnetcdf_002dconfig.html#pnetcdf_002dconfig" accesskey="p" rel="prev">pnetcdf-config</a>, Up: <a href="Utility-programs.html#Utility-programs" accesskey="u" rel="up">Utility programs</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="node-heading">ncoffsets</h4>
+<a name="index-ncoffsets"></a>
+<p><b>ncoffsets</b> prints the file offsets of variables defined in a given
+netCDF file. The print order is fixed-size variables first followed by record
+variables. The ending offsets reported are exclusive offsets, i.e. 1 byte more
+than the last byte occupied by the variable. In other words, the ending offset
+is equal to the sum of starting offset and the variable size. For record
+variables, only the offsets of first record are printed. Adding option -r
+prints the offsets of all records.
+</p>
+<p>If no argument is given, command usage information is printed.
+</p>
+<p>Note this utility checks only the file header and does not report any file
+offset violation against the CDF file format specifications. For validating
+a given netCDF file, use utility <a href="ncvalidator.html#ncvalidator">ncvalidator</a>.
+</p>
+<a name="Synopsis-2"></a>
+<h3 class="heading">Synopsis</h3>
+<div class="example">
+<pre class="example">ncoffsets [-h] | [-x] | [-sgr] [-v var1[,...]]  file
+</pre></div>
+
+<a name="Command_002dline-Options-2"></a>
+<h3 class="heading">Command-line Options</h3>
+<dl compact="compact">
+<dt><code>-v var1[,...]</code></dt>
+<dd><p>The output include starting file offsets for the specified variables.
+One or more variables must be specified by names in a comma-delimited
+list following this option. The list must be a single
+argument to the command, hence cannot contain blanks or other
+white space characters. The named variables must be valid
+netCDF variables defined in the input file. The default, without this
+option is to print the starting offsets for all variables.
+</p></dd>
+<dt><code>-s</code></dt>
+<dd><p>Print the variable size in bytes. For record variables, only the size of one
+record is printed.
+</p></dd>
+<dt><code>-g</code></dt>
+<dd><p>Print the gap in bytes of a variable&rsquo;s starting offset from its immediately
+previous variable. For the first defined
+variable, print the gap from the end of file header. For record variables,
+there is no gap between records.
+</p></dd>
+<dt><code>-r</code></dt>
+<dd><p>Output the offset information for all records of the selected record variables.
+Without this option, only the offsets of first record are printed.
+</p></dd>
+<dt><code>-x</code></dt>
+<dd><p>Check all fixed-size variable for file space gaps in between any two
+immediately adjacent variables. It prints &quot;1&quot; on stdout if gaps are found,
+&quot;0&quot; for otherwise. This option disables all other options.
+</p></dd>
+<dt><code>-h</code></dt>
+<dd><p>Print the available command-line options
+</p></dd>
+</dl>
+
+<a name="Example-65"></a>
+<h3 class="heading">Example</h3>
+<p>Print the file offset information for all variables in a netCDF file.
+</p><div class="example">
+<pre class="example">% ncoffsets -sg testfile.nc
+netcdf test_double.nc {
+//file format: CDF-1
+
+file header:
+        size   = 340 bytes
+        extent = 340 bytes
+
+dimensions:
+        x = 100
+        y = 100
+        z = 100
+        time = UNLIMITED // (100 currently)
+
+fixed-size variables:
+        double square(x, y):
+               start file offset =         340
+               end   file offset =       80340
+               size in bytes     =       80000
+               gap from prev var =           0
+        double cube(x, y, z):
+               start file offset =       80340
+               end   file offset =     8080340
+               size in bytes     =     8000000
+               gap from prev var =           0
+
+record variables:
+        double time(time):
+               start file offset =     8080340    (record 0)
+               end   file offset =     8081140    (record 0)
+               size in bytes     =           8    (of one record)
+               gap from prev var =           0
+        double xytime(time, x, y):
+               start file offset =     8080348    (record 0)
+               end   file offset =    16080348    (record 0)
+               size in bytes     =       80000    (of one record)
+               gap from prev var =           0
+}
+</pre></div>
+<p>Check if there are gaps in between two adjacent fixed-size variables.
+</p><div class="example">
+<pre class="example">% ncoffsets -x testfile.nc
+0
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="ncvalidator.html#ncvalidator" accesskey="n" rel="next">ncvalidator</a>, Previous: <a href="pnetcdf_002dconfig.html#pnetcdf_002dconfig" accesskey="p" rel="prev">pnetcdf-config</a>, Up: <a href="Utility-programs.html#Utility-programs" accesskey="u" rel="up">Utility programs</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

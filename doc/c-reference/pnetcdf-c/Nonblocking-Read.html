@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Nonblocking Read (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="Nonblocking Read (PnetCDF C Interface Guide)">
+<meta name="keywords" content="Nonblocking Read (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="Use-of-the-PnetCDF-Library.html#Use-of-the-PnetCDF-Library" rel="up" title="Use of the PnetCDF Library">
+<link href="Errors.html#Errors" rel="next" title="Errors">
+<link href="Nonblocking-Write.html#Nonblocking-Write" rel="prev" title="Nonblocking Write">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Nonblocking-Read"></a>
+<div class="header">
+<p>
+Next: <a href="Errors.html#Errors" accesskey="n" rel="next">Errors</a>, Previous: <a href="Nonblocking-Write.html#Nonblocking-Write" accesskey="p" rel="prev">Nonblocking Write</a>, Up: <a href="Use-of-the-PnetCDF-Library.html#Use-of-the-PnetCDF-Library" accesskey="u" rel="up">Use of the PnetCDF Library</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Nonblocking-Read-1"></a>
+<h3 class="section">1.6 Nonblocking Read</h3>
+<a name="index-ncmpi_005figet_005fvar_002c-typical-use"></a>
+<a name="index-ncmpi_005fwait_005fall_002c-typical-use-1"></a>
+<a name="index-nonblocking-read-from-a-netCDF-variable"></a>
+
+<p>PnetCDF nonblocking APIs allow users to aggregate multiple (small) requests
+into a single large one, and hence to achieve a better I/O performance.
+Programming of nonblocking APIs consists of two parts: posting the nonblocking
+requests and later committing the requests. APIs ncmpi_wait_all and
+ncmpi_wait commit the pending requests by aggregating them into a single MPI-IO
+call. Here is a typical sequence of PnetCDF API calls to use nonblocking APIs
+to read from a netCDF file:
+</p>
+<div class="example">
+<pre class="example">    ncmpi_open                          /* open an existing netCDF file: enter data mode */
+         ...
+       ncmpi_iget_var<var>&lt;kind&gt;</var>_<var>&lt;type&gt;</var>      /* post a nonblocking read request to a variable */
+         ...
+       ncmpi_iget_var<var>&lt;kind&gt;</var>_<var>&lt;type&gt;</var>      /* post another nonblocking read request to the same or a different variable */
+         ...
+       ncmpi_wait_all                   /* commit the posted nonblocking requests */
+         ...
+    ncmpi_close                         /* close the netCDF file */
+</pre></div>
+
+<p>Nonblocking APIs are not collective. They can be called in either collective or
+independent data mode. Starting from 1.7.0, the nonblocking APIs can be called
+in define mode as well. Multiple nonblocking I/O requests can be posted and the
+number of nonblocking requests can be different among MPI processes.
+</p>
+<p>There are two wait APIs: ncmpi_wait_all() is to be called in the collective
+data mode and ncmpi_wait() in the independent data mode.
+</p>
+<a name="Limitations-1"></a>
+<h3 class="heading">Limitations</h3>
+<p>For &quot;iget&quot; APIs, users should not alter the contents of the read buffer once
+the request is posted until the wait API call is returned. Any change to the
+buffer in between will result in unexpected error.
+</p>
+<p>The read buffer used in one &quot;iget&quot; call should not be reused in another
+&quot;get/put&quot; API call (blocking or nonblocking) and two buffers used in different
+&quot;iget/get/iput/put&quot; API calls should not overlap. Currently, PnetCDF does not
+detect whether user buffers are reused or overlapped.
+</p>
+<a name="Examples-1"></a>
+<h3 class="heading">Examples</h3>
+
+<div class="example">
+<pre class="example">int req[NUM_VARS], statuses[NUM_VARS];
+
+/* read from one variable at a time using iget */
+for (i=0; i&lt;NUM_VARS; i++) {
+     err = <a href="ncmpi_005figet_005fvar_003ckind_003e_005f_003ctype_003e.html#ncmpi_005figet_005fvar_003ckind_003e_005f_003ctype_003e">ncmpi_iget_vara_int</a>(ncid, varids[i], starts, counts, buf[i], &amp;req[i]);
+     handle_error(err);
+}
+
+/* wait for the nonblocking reads to complete */
+err = <a href="ncmpi_005fwait_002fwait_005fall.html#ncmpi_005fwait_002fwait_005fall">ncmpi_wait_all</a>(ncid, NUM_VARS, req, statuses);
+if (err != NC_NOERR) {
+    handle_error(err);
+
+    /* check errors for individual requests */
+    for (i=0; i&lt;NUM_VARS; i++)
+        handle_error(statuses[i]);
+}
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Errors.html#Errors" accesskey="n" rel="next">Errors</a>, Previous: <a href="Nonblocking-Write.html#Nonblocking-Write" accesskey="p" rel="prev">Nonblocking Write</a>, Up: <a href="Use-of-the-PnetCDF-Library.html#Use-of-the-PnetCDF-Library" accesskey="u" rel="up">Use of the PnetCDF Library</a> &nbsp; [<a href="Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
