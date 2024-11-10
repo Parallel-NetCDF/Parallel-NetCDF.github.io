@@ -209,6 +209,22 @@ contiguous buffers. Note if the size of aggregated user buffers is larger than
 <tt>nc_ibuf_size</tt>, packing/unpacking will be disabled to save memory footprint.
 The default value is 16 MiB.
 </p></dd>
+<dt><code>nc_num_aggrs_per_node</code></dt>
+<dd><p>(version 1.14.0 and later)
+The intra-node aggregation is a new feature introduced in version 1.14.0, which
+is designed for the I/O patterns that contain many noncontiguous requests
+interleaved among processes, and spreading across a wide range of file space.
+It is particularly useful when the number of MPI processes allocated to a
+compute node is large. Setting this hint to a positive integral value to
+indicate the desired number of processes per compute node to be selected as the
+intra-node I/O aggregators. Each process is assigned a unique aggregator. The
+non-aggregators send their requests to the assigned aggregators, and then the
+aggregators make MPI-IO requests to the file. Such strategy can effectively
+reduce communication congestion due to many pending asynchronous messages
+produced in the collective write inside of MPI-IO.  Setting this hint to 0
+disables the aggregation, the default mode.
+</p>
+</dd>
 </dl>
 
 <hr>
