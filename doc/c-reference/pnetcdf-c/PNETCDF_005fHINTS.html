@@ -79,7 +79,29 @@ ul.no-bullet {list-style: none}
 -->
 </style>
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src='https://www.googletagmanager.com/gtag/js?id=G-CJ8LEHVTXW'></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-CJ8LEHVTXW');
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+
+  ga('send', 'pageview');
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
 </head>
 
 <body lang="en">
@@ -180,7 +202,13 @@ this is for the entire section, not individual records.
 <dt><code>pnetcdf_subfiling</code></dt>
 <dd><p>(version 1.6.0 and later)
 This hint enables or disables the subfiling feature.  Its string value is
-either &quot;enable&quot; or &quot;disable&quot;.
+either &quot;enable&quot; or &quot;disable&quot;. The default is &quot;disable&quot;.
+</p></dd>
+<dt><code>nc_num_subfiles</code></dt>
+<dd><p>(version 1.6.0 and later)
+This hint sets the number of subfiles to be created. It takes effect only when
+hint pnetcdf_subfiling is set to &quot;enable&quot;. Its default value is 0, equivalent
+to turning off subfiling feature.
 </p></dd>
 <dt><code>nc_in_place_swap</code></dt>
 <dd><p>(version 1.10.0 and later)
@@ -223,6 +251,40 @@ aggregators make MPI-IO requests to the file. Such strategy can effectively
 reduce communication congestion due to many pending asynchronous messages
 produced in the collective write inside of MPI-IO.  Setting this hint to 0
 disables the aggregation, the default mode.
+</p></dd>
+<dt><code>nc_hash_size_dim</code></dt>
+<dd><p>(version 1.13.0 and later)
+This hint sets the size of internal hash table used to store the dimension
+names. When the number of dimensions is large, increasing the value of this
+hint can improve the performance of dimension name lookup operations. The
+default value is 256.
+</p></dd>
+<dt><code>nc_hash_size_var</code></dt>
+<dd><p>(version 1.13.0 and later)
+This hint sets the size of internal hash table used to store the variable
+names. When the number of variables is large, increasing the value of this hint
+can improve the performance of variable name lookup operations. The default
+value is 256.
+</p></dd>
+<dt><code>nc_hash_size_gattr</code></dt>
+<dd><p>(version 1.13.0 and later)
+This hint sets the size of internal hash table used to store the global
+attribute names. When the number of global attributes is large, increasing the
+value of this hint can improve the performance of global attribute name lookup
+operations. The default value is 64.
+</p></dd>
+<dt><code>nc_hash_size_vattr</code></dt>
+<dd><p>(version 1.13.0 and later)
+This hint sets the size of internal hash tables used to store the attribute
+names of each variable. When the number of variable&rsquo;s attributes is large,
+increasing the value of this hint can improve the performance of attribute name
+lookup operations. The default value is 8.
+</p></dd>
+<dt><code>nc_pncio</code></dt>
+<dd><p>(version 1.15.0 and later)
+This hint enables/disables the use of an internal I/O driver, named pncio,
+which implements several strategies for performance improvement. Its string
+value is either &quot;enable&quot; or &quot;disable&quot;. The default value is &quot;enable&quot;.
 </p>
 </dd>
 </dl>

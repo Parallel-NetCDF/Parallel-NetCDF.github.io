@@ -11001,7 +11001,12 @@ this is for the entire section, not individual records.
 @item pnetcdf_subfiling
 (version 1.6.0 and later)
 This hint enables or disables the subfiling feature.  Its string value is
-either "enable" or "disable".
+either "enable" or "disable". The default is "disable".
+@item nc_num_subfiles
+(version 1.6.0 and later)
+This hint sets the number of subfiles to be created. It takes effect only when
+hint pnetcdf_subfiling is set to "enable". Its default value is 0, equivalent
+to turning off subfiling feature.
 @item nc_in_place_swap
 (version 1.10.0 and later)
 This hint enables or disables in-place byte swap on Little Endian
@@ -11041,6 +11046,35 @@ aggregators make MPI-IO requests to the file. Such strategy can effectively
 reduce communication congestion due to many pending asynchronous messages
 produced in the collective write inside of MPI-IO.  Setting this hint to 0
 disables the aggregation, the default mode.
+@item nc_hash_size_dim
+(version 1.13.0 and later)
+This hint sets the size of internal hash table used to store the dimension
+names. When the number of dimensions is large, increasing the value of this
+hint can improve the performance of dimension name lookup operations. The
+default value is 256.
+@item nc_hash_size_var
+(version 1.13.0 and later)
+This hint sets the size of internal hash table used to store the variable
+names. When the number of variables is large, increasing the value of this hint
+can improve the performance of variable name lookup operations. The default
+value is 256.
+@item nc_hash_size_gattr
+(version 1.13.0 and later)
+This hint sets the size of internal hash table used to store the global
+attribute names. When the number of global attributes is large, increasing the
+value of this hint can improve the performance of global attribute name lookup
+operations. The default value is 64.
+@item nc_hash_size_vattr
+(version 1.13.0 and later)
+This hint sets the size of internal hash tables used to store the attribute
+names of each variable. When the number of variable's attributes is large,
+increasing the value of this hint can improve the performance of attribute name
+lookup operations. The default value is 8.
+@item nc_pncio
+(version 1.15.0 and later)
+This hint enables/disables the use of an internal I/O driver, named pncio,
+which implements several strategies for performance improvement. Its string
+value is either "enable" or "disable". The default value is "enable".
 
 @end table
 
